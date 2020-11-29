@@ -3,8 +3,8 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.1              
 -- * Generator date: Dec 19 2018              
--- * Generation date: Sun Nov 29 15:34:18 2020 
--- * LUN file: /home/sempro/Scrivania/BrokeAF_0.2.lun 
+-- * Generation date: Sun Nov 29 17:10:59 2020 
+-- * LUN file: /home/sempro/brokeaf/DatabaseBrokeAF/BrokeAF_0.2.lun 
 -- * Schema: BrokeAF_Logic/1-1 
 -- ********************************************* 
 
@@ -20,7 +20,6 @@ use BrokeAF_Logic;
 -- _____________ 
 
 create table Category (
-     name char(10) not null,
      keywords char(20) not null,
      category char(10) not null,
      constraint ID primary key (category));
