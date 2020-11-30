@@ -6,6 +6,7 @@
 - Item creation
 - Notifications
 - Order confirmation
+- Orders
 - Shopping cart
 - Seller information
 - Seller registration
