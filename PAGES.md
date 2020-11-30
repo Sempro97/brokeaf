@@ -1,5 +1,6 @@
 # Pages
 
+- Categories
 - Checkout
 - Index
 - Item page
