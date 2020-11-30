@@ -4,6 +4,7 @@
 - Index
 - Item page
 - Item creation
+- Notifications
 - Order confirmation
 - Shopping cart
 - Seller information
