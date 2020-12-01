@@ -44,6 +44,8 @@
 
 ### Update item information
 
+### See orders deteils
+
 ## Wow elements
 
 ### Choose address at checkout
@@ -59,3 +61,7 @@
 ### Private items
 
 ### Shopping cart with cookies
+
+## User and Seller
+
+### View notifications linked to an event
