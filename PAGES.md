@@ -1,10 +1,13 @@
 # Pages
 
+- Categories
 - Checkout
 - Index
 - Item page
 - Item creation
+- Notifications
 - Order confirmation
+- Users order
 - Shopping cart
 - Seller information
 - Seller registration

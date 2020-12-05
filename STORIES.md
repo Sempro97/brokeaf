@@ -58,6 +58,8 @@
 
 ### Multiple payment options
 
+### Collect points
+
 ### Private items
 
 ### Shopping cart with cookies
