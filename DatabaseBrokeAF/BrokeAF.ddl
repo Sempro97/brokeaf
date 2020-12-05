@@ -3,7 +3,7 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.1              
 -- * Generator date: Dec 19 2018              
--- * Generation date: Sat Dec  5 11:42:17 2020 
+-- * Generation date: Sat Dec  5 19:07:25 2020 
 -- * LUN file: /home/sempro/brokeaf/DatabaseBrokeAF/BrokeAF_0.4.lun 
 -- * Schema: BrokeAF_Logic/1-1 
 -- ********************************************* 
@@ -49,23 +49,23 @@ create table Item (
 
 create table ListItems (
      total char(10) not null,
-     IdList bigint not null,
+     idList bigint not null,
      idShoppingCart char(10) not null,
-     constraint IDListItem primary key (IdList),
+     constraint IDListItem primary key (idList),
      constraint FKhold_ID unique (idShoppingCart));
 
 create table NotificationSeller (
-     emailSeller char(10) not null,
-     description char(1) not null,
+     emailSeller char(254) not null,
+     description char(32) not null,
      path char(20) not null,
-     date date not null,
+     date char(12) not null,
      constraint IDNotificationSeller primary key (emailSeller, date));
 
 create table NotificationUser (
-     emailUser char(10) not null,
-     description char(10) not null,
-     path char(20) not null,
-     date date not null,
+     emailUser char(254) not null,
+     description char(32) not null,
+     path char(32) not null,
+     date char(12) not null,
      constraint IDNotificationUser primary key (emailUser, date));
 
 create table Order (
@@ -77,21 +77,21 @@ create table Order (
      phoneNumber char(12) not null,
      province char(6) not null,
      address char(10) not null,
-     datePayment date not null,
+     datePayment char(12) not null,
      IdList bigint not null,
      constraint IDOrder primary key (emailUser, datePayment),
      constraint FKcontain_ID unique (IdList));
 
 create table Seller (
      cap int not null,
-     address char(10) not null,
+     address char(32) not null,
      city char(10) not null,
-     companyAddress char(10) not null,
-     companyName char(10) not null,
-     email char(10) not null,
+     companyAddress char(32) not null,
+     companyName char(32) not null,
+     email char(254) not null,
      name char(10) not null,
      surname char(10) not null,
-     password char(16) not null,
+     password char(32) not null,
      phoneNumber char(12) not null,
      province char(6) not null,
      constraint IDSeller primary key (email));
@@ -104,18 +104,18 @@ create table User (
      cap int not null,
      address char(10) not null,
      city char(10) not null,
-     email char(10) not null,
+     email char(254) not null,
      idShoppingCart char(10),
      name char(10) not null,
      surname char(10) not null,
-     password char(16) not null,
+     password char(32) not null,
      phoneNumber char(12) not null,
      province char(6) not null,
      constraint IDUser primary key (email),
      constraint FKwhant_ID unique (idShoppingCart));
 
 create table Visitor (
-     lastSeen date not null,
+     lastSeen char(12) not null,
      idVisitor char(8) not null,
      idShoppingCart char(10),
      constraint IDVisitor primary key (idVisitor),
@@ -131,7 +131,7 @@ alter table DetailsItem add constraint FKitemise
 
 alter table DetailsItem add constraint FKincorporates
      foreign key (IdList)
-     references ListItems (IdList);
+     references ListItems (idList);
 
 alter table Image add constraint FKvisualize
      foreign key (serialCode)
@@ -168,7 +168,7 @@ alter table Order add constraint FKbuy
 
 alter table Order add constraint FKcontain_FK
      foreign key (IdList)
-     references ListItems (IdList);
+     references ListItems (idList);
 
 -- Not implemented
 -- alter table ShoppingCart add constraint IDShoppingCart_CHK
