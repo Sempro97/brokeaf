@@ -3,8 +3,8 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.1              
 -- * Generator date: Dec 19 2018              
--- * Generation date: Sun Nov 29 17:10:59 2020 
--- * LUN file: /home/sempro/brokeaf/DatabaseBrokeAF/BrokeAF_0.2.lun 
+-- * Generation date: Sat Dec  5 11:42:17 2020 
+-- * LUN file: /home/sempro/brokeaf/DatabaseBrokeAF/BrokeAF_0.4.lun 
 -- * Schema: BrokeAF_Logic/1-1 
 -- ********************************************* 
 
@@ -20,77 +20,106 @@ use BrokeAF_Logic;
 -- _____________ 
 
 create table Category (
-     keywords char(20) not null,
-     category char(10) not null,
-     constraint ID primary key (category));
+     name char(10) not null,
+     keywords char(10) not null,
+     constraint IDCategory primary key (name));
 
 create table DetailsItem (
-     idShoppingCart char(12) not null,
-     serialCode char(12) not null,
+     serialCode char(10) not null,
      positionIndex int not null,
-     quantity int not null,
-     price float(8) not null,
-     constraint IDDetailsItem primary key (idShoppingCart, serialCode));
+     quantity char(4) not null,
+     price char(10) not null,
+     IdList bigint not null);
+
+create table Image (
+     path char(20) not null,
+     serialCode char(10) not null,
+     constraint IDImage primary key (path));
 
 create table Item (
-     email char(15) not null,
+     quantity int not null,
+     isVisible char not null,
+     description char(20) not null,
+     price char(10) not null,
      name char(10) not null,
-     price float(8) not null,
-     serialCode char(12) not null,
+     serialCode char(10) not null,
      category char(10) not null,
-     constraint IDItem_1 primary key (serialCode));
+     emailSeller char(10) not null,
+     constraint IDItem_ID primary key (serialCode));
 
-create table itemToVerify (
-     name char(10) not null,
-     price float(8) not null,
-     serialCode char(12) not null,
-     constraint IDitemToVerify_ID primary key (serialCode));
+create table ListItems (
+     total char(10) not null,
+     IdList bigint not null,
+     idShoppingCart char(10) not null,
+     constraint IDListItem primary key (IdList),
+     constraint FKhold_ID unique (idShoppingCart));
 
-create table propose (
-     serialCode char(12) not null,
-     email char(15) not null,
-     constraint IDpropose primary key (serialCode, email));
+create table NotificationSeller (
+     emailSeller char(10) not null,
+     description char(1) not null,
+     path char(20) not null,
+     date date not null,
+     constraint IDNotificationSeller primary key (emailSeller, date));
 
-create table Seller (
-     address char(20) not null,
-     city char(12) not null,
-     email char(15) not null,
+create table NotificationUser (
+     emailUser char(10) not null,
+     description char(10) not null,
+     path char(20) not null,
+     date date not null,
+     constraint IDNotificationUser primary key (emailUser, date));
+
+create table Order (
+     emailUser char(10) not null,
+     cap int not null,
+     city char(10) not null,
      name char(10) not null,
      surname char(10) not null,
-     password bigint not null,
-     phoneNumber char(15) not null,
-     province char(8) not null,
-     companyAddress char(15) not null,
-     companyName char(15) not null,
-     serialCode char(12) not null,
+     phoneNumber char(12) not null,
+     province char(6) not null,
+     address char(10) not null,
+     datePayment date not null,
+     IdList bigint not null,
+     constraint IDOrder primary key (emailUser, datePayment),
+     constraint FKcontain_ID unique (IdList));
+
+create table Seller (
+     cap int not null,
+     address char(10) not null,
+     city char(10) not null,
+     companyAddress char(10) not null,
+     companyName char(10) not null,
+     email char(10) not null,
+     name char(10) not null,
+     surname char(10) not null,
+     password char(16) not null,
+     phoneNumber char(12) not null,
+     province char(6) not null,
      constraint IDSeller primary key (email));
 
 create table ShoppingCart (
-     idShoppingCart char(12) not null,
-     email char(12) not null,
-     date date not null,
-     total float(8) not null,
-     payment date,
-     constraint IDShoppingCart primary key (idShoppingCart),
-     constraint FKwhant_ID unique (email));
+     idShoppingCart char(10) not null,
+     constraint IDShoppingCart_ID primary key (idShoppingCart));
 
 create table User (
-     address char(20) not null,
-     city char(12) not null,
-     email char(15) not null,
+     cap int not null,
+     address char(10) not null,
+     city char(10) not null,
+     email char(10) not null,
+     idShoppingCart char(10),
      name char(10) not null,
      surname char(10) not null,
-     password bigint not null,
-     phoneNumber char(15) not null,
-     province char(8) not null,
-     constraint IDUser primary key (email));
+     password char(16) not null,
+     phoneNumber char(12) not null,
+     province char(6) not null,
+     constraint IDUser primary key (email),
+     constraint FKwhant_ID unique (idShoppingCart));
 
 create table Visitor (
      lastSeen date not null,
-     idVisitor int not null,
-     address char(20) not null,
-     idShoppingCart char(12),
-     constraint IDVisitor primary key (idVisitor));
+     idVisitor char(8) not null,
+     idShoppingCart char(10),
+     constraint IDVisitor primary key (idVisitor),
+     constraint FKwish_ID unique (idShoppingCart));
 
 
 -- Constraints Section
@@ -100,32 +129,62 @@ alter table DetailsItem add constraint FKitemise
      foreign key (serialCode)
      references Item (serialCode);
 
-alter table DetailsItem add constraint FKhold
+alter table DetailsItem add constraint FKincorporates
+     foreign key (IdList)
+     references ListItems (IdList);
+
+alter table Image add constraint FKvisualize
+     foreign key (serialCode)
+     references Item (serialCode);
+
+-- Not implemented
+-- alter table Item add constraint IDItem_CHK
+--     check(exists(select * from Image
+--                  where Image.serialCode = serialCode)); 
+
+alter table Item add constraint FKkind
+     foreign key (category)
+     references Category (name);
+
+alter table Item add constraint FKbelong
+     foreign key (emailSeller)
+     references Seller (email);
+
+alter table ListItems add constraint FKhold_FK
      foreign key (idShoppingCart)
      references ShoppingCart (idShoppingCart);
 
-alter table Item add constraint FKIte_cat
-     foreign key (category)
-     references Category (category);
-
--- Not implemented
--- alter table itemToVerify add constraint IDitemToVerify_CHK
---     check(exists(select * from propose
---                  where propose.serialCode = serialCode)); 
-
-alter table propose add constraint FKR_Sel
-     foreign key (email)
+alter table NotificationSeller add constraint FKnotify_Seller
+     foreign key (emailSeller)
      references Seller (email);
 
-alter table propose add constraint FKR_ite
-     foreign key (serialCode)
-     references itemToVerify (serialCode);
-
-alter table ShoppingCart add constraint FKwhant_FK
-     foreign key (email)
+alter table NotificationUser add constraint FKnotify_User
+     foreign key (emailUser)
      references User (email);
 
-alter table Visitor add constraint FKwish
+alter table Order add constraint FKbuy
+     foreign key (emailUser)
+     references User (email);
+
+alter table Order add constraint FKcontain_FK
+     foreign key (IdList)
+     references ListItems (IdList);
+
+-- Not implemented
+-- alter table ShoppingCart add constraint IDShoppingCart_CHK
+--     check(exists(select * from Visitor
+--                  where Visitor.idShoppingCart = idShoppingCart)); 
+
+-- Not implemented
+-- alter table ShoppingCart add constraint IDShoppingCart_CHK
+--     check(exists(select * from User
+--                  where User.idShoppingCart = idShoppingCart)); 
+
+alter table User add constraint FKwhant_FK
+     foreign key (idShoppingCart)
+     references ShoppingCart (idShoppingCart);
+
+alter table Visitor add constraint FKwish_FK
      foreign key (idShoppingCart)
      references ShoppingCart (idShoppingCart);
 
