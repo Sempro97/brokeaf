@@ -11,32 +11,33 @@
 
 -- Database Section
 -- ________________ 
+DROP TABLE IF EXISTS `BrokeAF`;
 
-create database BrokeAF_Logic;
-use BrokeAF_Logic;
+create database BrokeAF;
+use BrokeAF;
 
 
 -- Tables Section
 -- _____________ 
 
-create table Category (
+create table Categories (
      name char(10) not null,
      keywords char(10) not null,
      constraint IDCategory primary key (name));
 
-create table DetailsItem (
+create table DetailsItems (
      serialCode char(10) not null,
      positionIndex int not null,
      quantity char(4) not null,
      price char(10) not null,
      IdList bigint not null);
 
-create table Image (
+create table Images (
      path char(20) not null,
      serialCode char(10) not null,
      constraint IDImage primary key (path));
 
-create table Item (
+create table Items (
      quantity int not null,
      isVisible char not null,
      description char(20) not null,
@@ -47,28 +48,28 @@ create table Item (
      emailSeller char(10) not null,
      constraint IDItem_ID primary key (serialCode));
 
-create table ListItems (
+create table ListsItems (
      total char(10) not null,
      idList bigint not null,
      idShoppingCart char(10) not null,
      constraint IDListItem primary key (idList),
      constraint FKhold_ID unique (idShoppingCart));
 
-create table NotificationSeller (
+create table NotificationsSeller (
      emailSeller char(254) not null,
      description char(32) not null,
      path char(20) not null,
      date char(12) not null,
      constraint IDNotificationSeller primary key (emailSeller, date));
 
-create table NotificationUser (
+create table NotificationsUser (
      emailUser char(254) not null,
      description char(32) not null,
      path char(32) not null,
      date char(12) not null,
      constraint IDNotificationUser primary key (emailUser, date));
 
-create table Order (
+create table Orders (
      emailUser char(10) not null,
      cap int not null,
      city char(10) not null,
@@ -82,7 +83,7 @@ create table Order (
      constraint IDOrder primary key (emailUser, datePayment),
      constraint FKcontain_ID unique (IdList));
 
-create table Seller (
+create table Sellers (
      cap int not null,
      address char(32) not null,
      city char(10) not null,
@@ -96,11 +97,11 @@ create table Seller (
      province char(6) not null,
      constraint IDSeller primary key (email));
 
-create table ShoppingCart (
+create table ShoppingCarts (
      idShoppingCart char(10) not null,
      constraint IDShoppingCart_ID primary key (idShoppingCart));
 
-create table User (
+create table Users (
      cap int not null,
      address char(10) not null,
      city char(10) not null,
@@ -114,7 +115,7 @@ create table User (
      constraint IDUser primary key (email),
      constraint FKwhant_ID unique (idShoppingCart));
 
-create table Visitor (
+create table Visitors (
      lastSeen char(12) not null,
      idVisitor char(8) not null,
      idShoppingCart char(10),
@@ -125,50 +126,50 @@ create table Visitor (
 -- Constraints Section
 -- ___________________ 
 
-alter table DetailsItem add constraint FKitemise
+alter table DetailsItems add constraint FKitemise
      foreign key (serialCode)
-     references Item (serialCode);
+     references Items (serialCode);
 
-alter table DetailsItem add constraint FKincorporates
+alter table DetailsItems add constraint FKincorporates
      foreign key (IdList)
-     references ListItems (idList);
+     references ListsItems (idList);
 
-alter table Image add constraint FKvisualize
+alter table Images add constraint FKvisualize
      foreign key (serialCode)
-     references Item (serialCode);
+     references Items (serialCode);
 
 -- Not implemented
 -- alter table Item add constraint IDItem_CHK
 --     check(exists(select * from Image
 --                  where Image.serialCode = serialCode)); 
 
-alter table Item add constraint FKkind
+alter table Items add constraint FKkind
      foreign key (category)
-     references Category (name);
+     references Categories (name);
 
-alter table Item add constraint FKbelong
+alter table Items add constraint FKbelong
      foreign key (emailSeller)
-     references Seller (email);
+     references Sellers (email);
 
-alter table ListItems add constraint FKhold_FK
+alter table ListsItems add constraint FKhold_FK
      foreign key (idShoppingCart)
-     references ShoppingCart (idShoppingCart);
+     references ShoppingCarts (idShoppingCart);
 
-alter table NotificationSeller add constraint FKnotify_Seller
+alter table NotificationsSeller add constraint FKnotify_Seller
      foreign key (emailSeller)
-     references Seller (email);
+     references Sellers (email);
 
-alter table NotificationUser add constraint FKnotify_User
+alter table NotificationsUser add constraint FKnotify_User
      foreign key (emailUser)
-     references User (email);
+     references Users (email);
 
-alter table Order add constraint FKbuy
+alter table Orders add constraint FKbuy
      foreign key (emailUser)
-     references User (email);
+     references Users (email);
 
-alter table Order add constraint FKcontain_FK
+alter table Orders add constraint FKcontain_FK
      foreign key (IdList)
-     references ListItems (idList);
+     references ListsItems (idList);
 
 -- Not implemented
 -- alter table ShoppingCart add constraint IDShoppingCart_CHK
@@ -180,11 +181,11 @@ alter table Order add constraint FKcontain_FK
 --     check(exists(select * from User
 --                  where User.idShoppingCart = idShoppingCart)); 
 
-alter table User add constraint FKwhant_FK
+alter table Users add constraint FKwhant_FK
      foreign key (idShoppingCart)
      references ShoppingCart (idShoppingCart);
 
-alter table Visitor add constraint FKwish_FK
+alter table Visitors add constraint FKwish_FK
      foreign key (idShoppingCart)
      references ShoppingCart (idShoppingCart);
 
