@@ -9,20 +9,39 @@
         <div class="header">
         </div>
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="total">
-                    <h2>Cart amount:</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="checkout">
+                <div class="col">
+                    <p class="h2">Cart amount: 0 €</p>
                     <button type="button" class="btn btn-primary btn-lg btn-block">Checkout</button>
-                </div>
+                </div>               
             </div>
-            <div class="row">
-                <div class="item">
-                    <img src="meme.jpg" alt="Your Item" class="img-thumbnail">
+            <div class="item">
+                <div class="row">
+                    <div class="col-">
+                        <img src="meme.jpg" alt="Your Item" width="200" height="200" class="img-responsive">
+                    </div>
+                    <div class="col">
+                        <p class="h2">Name</p>
+                        <p class="h2">0 €</p>
+                        <p class="h2">Available</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-">
+                        <button type="button" class="btn btn-primary btn-sm">-</button>
+                    </div>
+                    <div class="col-">
+                        <input form="form-control" id="quantity" type="text" placeholder="1">
+                    </div>
+                    <div class="col-">
+                        <button type="button" class="btn btn-primary btn-sm">+</button>
+                    </div>
+                    <div class="col">
+                        <div class="col-">
+                            <button type="button" class="btn btn-primary btn-sm">Rimuovi</button>
+                        </div>
+                    </div>             
                 </div>
             </div>
         </div>
