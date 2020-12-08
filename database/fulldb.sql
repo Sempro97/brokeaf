@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `BrokeAF` DEFAULT CHARACTER SET latin1;
+CREATE DATABASE IF NOT EXISTS `BrokeAF` DEFAULT CHARACTER SET utf8mb4;
 USE `BrokeAF`;
 
 
@@ -8,10 +8,10 @@ USE `BrokeAF`;
 DROP TABLE IF EXISTS `Categories`;
 
 CREATE TABLE `Categories` (
-  `name` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `keywords` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `name` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `keywords` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Categories` (`name`, `keywords`) VALUES ('aqua', 'Temporibus');
 INSERT INTO `Categories` (`name`, `keywords`) VALUES ('black', 'Ut quia qu');
@@ -34,12 +34,12 @@ INSERT INTO `Categories` (`name`, `keywords`) VALUES ('yellow', 'Deserunt n');
 DROP TABLE IF EXISTS `DetailsItemss`;
 
 CREATE TABLE `DetailsItemss` (
-  `serialCode` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `serialCode` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `positionIndex` int(11) NOT NULL,
-  `quantity` char(4) COLLATE utf8_unicode_ci NOT NULL,
-  `price` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `quantity` char(4) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `price` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `IdList` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `DetailsItemss` (`serialCode`, `positionIndex`, `quantity`, `price`, `IdList`) VALUES ('ae7659', 1, '1', '961.65', '66');
 INSERT INTO `DetailsItemss` (`serialCode`, `positionIndex`, `quantity`, `price`, `IdList`) VALUES ('ai5638', 1, '4', '751.49', '124');
@@ -150,10 +150,10 @@ INSERT INTO `DetailsItemss` (`serialCode`, `positionIndex`, `quantity`, `price`,
 DROP TABLE IF EXISTS `Images`;
 
 CREATE TABLE `Images` (
-  `path` char(20) COLLATE utf8_unicode_ci NOT NULL,
-  `serialCode` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `path` char(20) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `serialCode` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`path`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Images` (`path`, `serialCode`) VALUES ('1', 'js0303');
 INSERT INTO `Images` (`path`, `serialCode`) VALUES ('10', 'zo1709');
@@ -265,15 +265,15 @@ DROP TABLE IF EXISTS `Items`;
 
 CREATE TABLE `Items` (
   `quantity` int(11) NOT NULL,
-  `isVisible` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `description` char(20) COLLATE utf8_unicode_ci NOT NULL,
-  `price` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `name` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `serialCode` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `Categories` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `emailSeller` char(254) COLLATE utf8_unicode_ci NOT NULL,
+  `isVisible` char(1) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` char(20) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `price` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `serialCode` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Categories` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `emailSeller` char(254) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`serialCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Items` (`quantity`, `isVisible`, `description`, `price`, `name`, `serialCode`, `Categories`, `emailSeller`) VALUES (28, '', 'Dolor harum porro pa', '2.06', 'consequunt', 'ae7659', 'fuchsia', 'esmith@example.net');
 INSERT INTO `Items` (`quantity`, `isVisible`, `description`, `price`, `name`, `serialCode`, `Categories`, `emailSeller`) VALUES (446, '1', 'Harum odit minus et', '6.04', 'est', 'ai5638', 'green', 'rkoelpin@example.com');
@@ -384,12 +384,12 @@ INSERT INTO `Items` (`quantity`, `isVisible`, `description`, `price`, `name`, `s
 DROP TABLE IF EXISTS `ListsItems`;
 
 CREATE TABLE `ListsItems` (
-  `total` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `total` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `IdList` bigint(20) NOT NULL,
-  `idShoppingCart` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `idShoppingCart` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`IdList`),
   UNIQUE KEY `FKhold_ID` (`idShoppingCart`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `ListsItems` (`total`, `IdList`, `idShoppingCart`) VALUES ('', '66', '4710');
 INSERT INTO `ListsItems` (`total`, `IdList`, `idShoppingCart`) VALUES ('', '124', '53443011');
@@ -500,12 +500,12 @@ INSERT INTO `ListsItems` (`total`, `IdList`, `idShoppingCart`) VALUES ('', '9900
 DROP TABLE IF EXISTS `NotificationsSellers`;
 
 CREATE TABLE `NotificationsSellers` (
-  `emailSeller` char(254) COLLATE utf8_unicode_ci NOT NULL,
-  `description` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `path` char(20) COLLATE utf8_unicode_ci NOT NULL,
-  `date` char(12) COLLATE utf8_unicode_ci NOT NULL,
+  `emailSeller` char(254) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` char(1) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `path` char(20) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `date` char(12) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`emailSeller`,`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `NotificationsSellers` (`emailSeller`, `description`, `path`, `date`) VALUES ('abigale31@example.net', 'I', 'http://lorempixel.co', '1137394945');
 INSERT INTO `NotificationsSellers` (`emailSeller`, `description`, `path`, `date`) VALUES ('alan.heller@example.org', 'Q', 'http://lorempixel.co', '1381553356');
@@ -616,12 +616,12 @@ INSERT INTO `NotificationsSellers` (`emailSeller`, `description`, `path`, `date`
 DROP TABLE IF EXISTS `NotificationsUsers`;
 
 CREATE TABLE `NotificationsUsers` (
-  `emailUsers` char(254) COLLATE utf8_unicode_ci NOT NULL,
-  `description` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `path` char(20) COLLATE utf8_unicode_ci NOT NULL,
-  `date` char(12) COLLATE utf8_unicode_ci NOT NULL,
+  `emailUsers` char(254) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `path` char(20) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `date` char(12) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`emailUsers`,`date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `NotificationsUsers` (`emailUsers`, `description`, `path`, `date`) VALUES ('abernathy.helene@example.net', 'Similique', 'http://torp.com/', '829609560');
 INSERT INTO `NotificationsUsers` (`emailUsers`, `description`, `path`, `date`) VALUES ('alvera.howell@example.org', 'Ad omnis e', 'http://okeefe.com/', '976377474');
@@ -726,29 +726,6 @@ INSERT INTO `NotificationsUsers` (`emailUsers`, `description`, `path`, `date`) V
 
 
 #
-# TABLE STRUCTURE FOR: Orders
-#
-
-DROP TABLE IF EXISTS `Orders`;
-
-CREATE TABLE `Orders` (
-  `emailUsers` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `cap` int(11) NOT NULL,
-  `city` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `name` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `surname` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `phoneNumber` char(12) COLLATE utf8_unicode_ci NOT NULL,
-  `province` char(6) COLLATE utf8_unicode_ci NOT NULL,
-  `address` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `datePayment` char(12) COLLATE utf8_unicode_ci NOT NULL,
-  `IdList` bigint(20) NOT NULL,
-  PRIMARY KEY (`emailUsers`,`datePayment`),
-  UNIQUE KEY `FKcontain_ID` (`IdList`),
-  CONSTRAINT `FKbuy` FOREIGN KEY (`emailUsers`) REFERENCES `Users` (`email`),
-  CONSTRAINT `FKcontain_FK` FOREIGN KEY (`IdList`) REFERENCES `ListsItems` (`idList`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-#
 # TABLE STRUCTURE FOR: Sellers
 #
 
@@ -756,18 +733,18 @@ DROP TABLE IF EXISTS `Sellers`;
 
 CREATE TABLE `Sellers` (
   `cap` int(11) NOT NULL,
-  `address` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `city` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `companyAddress` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `companyName` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `email` char(254) COLLATE utf8_unicode_ci NOT NULL,
-  `name` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `surname` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `password` char(32) COLLATE utf8_unicode_ci NOT NULL,
-  `phoneNumber` char(12) COLLATE utf8_unicode_ci NOT NULL,
-  `province` char(6) COLLATE utf8_unicode_ci NOT NULL,
+  `address` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `city` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `companyAddress` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `companyName` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` char(254) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `surname` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` char(32) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `phoneNumber` char(12) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `province` char(6) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Sellers` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (28065, '4892 Vaugh', 'East Giova', '1509 Marvi', 'Roberts LL', 'abigale31@example.net', 'Eudora', 'Jaskolski', '017ce99ce1fea363098bc509b105b48d', '353-839-6605', 'NM');
 INSERT INTO `Sellers` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (18854, '1700 Fredd', 'Williambur', '35782 Nata', 'Stanton-Br', 'alan.heller@example.org', 'Glennie', 'Williamson', '367e2a6ac2d52ff362a82f38d9fdc7b4', '+27(3)156034', 'MS');
@@ -878,9 +855,9 @@ INSERT INTO `Sellers` (`cap`, `address`, `city`, `companyAddress`, `companyName`
 DROP TABLE IF EXISTS `ShoppingCarts`;
 
 CREATE TABLE `ShoppingCarts` (
-  `idShoppingCart` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `idShoppingCart` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`idShoppingCart`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `ShoppingCarts` (`idShoppingCart`) VALUES ('');
 INSERT INTO `ShoppingCarts` (`idShoppingCart`) VALUES ('106');
@@ -992,18 +969,18 @@ DROP TABLE IF EXISTS `Users`;
 
 CREATE TABLE `Users` (
   `cap` int(11) NOT NULL,
-  `address` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `city` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `email` char(254) COLLATE utf8_unicode_ci NOT NULL,
-  `idShoppingCart` char(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `surname` char(10) COLLATE utf8_unicode_ci NOT NULL,
-  `password` char(32) COLLATE utf8_unicode_ci NOT NULL,
-  `phoneNumber` char(12) COLLATE utf8_unicode_ci NOT NULL,
-  `province` char(6) COLLATE utf8_unicode_ci NOT NULL,
+  `address` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `city` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` char(254) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `idShoppingCart` char(10) COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `name` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `surname` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` char(32) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `phoneNumber` char(12) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `province` char(6) COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`email`),
   UNIQUE KEY `FKwhant_ID` (`idShoppingCart`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (76846, '219 Nienow', 'Rafaelasid', 'abernathy.helene@example.net', '912', 'Noe', 'Kautzer', '6ef176dba0e92873ca5fdd7e5fe862f1', '027.573.6741', 'LA');
 INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (99530, '342 Hoppe', 'North Cono', 'alvera.howell@example.org', '772773311', 'Everardo', 'Reilly', 'fbc1d7ce5e0bcc9041d525cb26677159', '871.507.5761', 'KY');
@@ -1106,6 +1083,29 @@ INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`
 INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (75184, '9115 Manue', 'Bradfordha', 'zbeatty@example.net', '18708306', 'Durward', 'Robel', '8dc40d6103a09f16a6ca773ca4e27f51', '1-578-208-75', 'SD');
 INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (3157, '31334 Patr', 'Agnesberg', 'zulauf.brandi@example.com', '266598', 'Maeve', 'Hoppe', '8212dd73a3f94c7e5139e7e8fb2f5744', '375-945-4668', 'PA');
 
+#
+# TABLE STRUCTURE FOR: Orders
+#
+
+DROP TABLE IF EXISTS `Orders`;
+
+CREATE TABLE `Orders` (
+  `emailUsers` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `cap` int(11) NOT NULL,
+  `city` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `surname` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `phoneNumber` char(12) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `province` char(6) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `address` char(10) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `datePayment` char(12) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `IdList` bigint(20) NOT NULL,
+  PRIMARY KEY (`emailUsers`,`datePayment`),
+  UNIQUE KEY `FKcontain_ID` (`IdList`),
+  CONSTRAINT `FKbuy` FOREIGN KEY (`emailUsers`) REFERENCES `Users` (`email`),
+  CONSTRAINT `FKcontain_FK` FOREIGN KEY (`IdList`) REFERENCES `ListsItems` (`idList`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 #
 # TABLE STRUCTURE FOR: Visitors
@@ -1114,12 +1114,12 @@ INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`
 DROP TABLE IF EXISTS `Visitors`;
 
 CREATE TABLE `Visitors` (
-  `lastSeen` char(12) COLLATE utf8_unicode_ci NOT NULL,
-  `idVisitor` char(8) COLLATE utf8_unicode_ci NOT NULL,
-  `idShoppingCart` char(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastSeen` char(12) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `idVisitor` char(8) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `idShoppingCart` char(10) COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`idVisitor`),
   UNIQUE KEY `FKwish_ID` (`idShoppingCart`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Visitors` (`lastSeen`, `idVisitor`, `idShoppingCart`) VALUES ('392461332', '1024', '621269297');
 INSERT INTO `Visitors` (`lastSeen`, `idVisitor`, `idShoppingCart`) VALUES ('830147847', '109', '77701');
