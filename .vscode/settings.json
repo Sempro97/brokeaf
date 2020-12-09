@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
-  "telemetry.enableTelemetry": false,
   "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
   "prettier.printWidth": 120
 }
