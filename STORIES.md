@@ -44,7 +44,7 @@
 
 ### Update item information
 
-### See orders deteils
+### See orders details
 
 ## Wow elements
 
@@ -73,6 +73,7 @@
 - Order shipment
 
 #### Seller
+
 - Item sold out
 - Item has been sold
-- Item is/not visible 
+- Item is/not visible
