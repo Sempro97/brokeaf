@@ -66,13 +66,13 @@
 
 ## View notifications linked to an event
 
-#### User
+### User
 
 - Item in cart not in stock
 - Price changed in cart
 - Order shipment
 
-#### Seller
+### Seller
 
 - Item sold out
 - Item has been sold
