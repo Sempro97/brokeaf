@@ -3,7 +3,6 @@ FROM node:15
 ARG VNU_VERSION=20.6.30
 
 RUN apt-get update && \
-    apt-cache madison figlet && \
     apt-get -y install --no-install-recommends figlet && \
     rm -rf /var/lib/apt/lists/*
 
