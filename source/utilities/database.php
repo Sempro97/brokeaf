@@ -23,12 +23,7 @@ class Database
         return self::$instance;
     }
 
-    public function get_random_items($count)
-    {
-        return null;
-    }
-
-    public function user_exists($email)
+    public function account_exists($email)
     {
         $query = "SELECT email FROM Users WHERE email=?";
         $statement = self::$instance->prepare($query);
@@ -36,6 +31,20 @@ class Database
         $statement->execute();
         $result = $statement->get_result();
         return $result->num_rows === 1;
+    }
+
+    public function account_login($email, $password)
+    {
+    }
+
+    public function get_random_items($count)
+    {
+        $query = "SELECT * FROM Items ORDER BY RAND() LIMIT ?";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('i', $count);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function register_user()
