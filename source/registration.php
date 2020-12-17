@@ -8,16 +8,21 @@
     <script src="js/jquery.caret.js" type="text/javascript"></script>
     <script src="js/jquery.mobilePhoneNumber.js" type="text/javascript"></script>
     <script src="js/utils.js" type="text/javascript"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="font-awesome/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   </head>
+
   <body>
     <div class="container mt-2 mb-4">
       <div class="row justify-content-md-center">
         <div class="col-sm-4 border border-primary shadow rounded pt-2">
-          <div class="text-center"><img src="https://placehold.it/80x80" class="rounded-circle border p-1" /></div>
           <div class="col-sm-12">
             <form method="post" id="singnupFrom" onSubmit="return validation();">
               <div class="form-group">
@@ -77,7 +82,8 @@
                   >
                 </div>
                 <div class="form-group">
-                  <div class="g-recaptcha" data-sitekey="6LeXKIkUAAAAAJrVaP2rbXY7r8uWLr13YX3X_c3r"></div>
+                  <div class="g-recaptcha" data-callback='onSubmit' 
+        data-action='submit' data-sitekey="6LfkcwoaAAAAALbVIvDe9PSD4L0FOUpAk989ZLRQ"></div>
                 </div>
                 <div class="form-group">
                   <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
