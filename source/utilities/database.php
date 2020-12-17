@@ -25,7 +25,7 @@ class Database
 
     public function account_exists($email)
     {
-        $query = "SELECT email FROM Users WHERE email=?";
+        $query = "SELECT email FROM Users WHERE email=? LIMIT 1";
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
