@@ -23,14 +23,12 @@ function validation() {
 
   if ($("#password").val() != $("#cpassword").val()) {
     $("#cpassword").addClass("is-invalid");
-    $("#cp").html(
-      '<span class="text-danger">Password and confirm password not matched!</span>'
-    );
+    $("#cp").html('<span class="text-danger">Password and confirm password not matched!</span>');
     return false;
   }
 }
-$(document).ready(function(e) {
-  $("#username").on("keyup", function() {
+$(document).ready(function (e) {
+  $("#username").on("keyup", function () {
     if ($("#username").val() == "") {
       $("#username").addClass("is-invalid");
       return false;
@@ -38,7 +36,7 @@ $(document).ready(function(e) {
       $("#username").removeClass("is-invalid");
     }
   });
-  $("#phone").on("keyup", function() {
+  $("#phone").on("keyup", function () {
     if ($("#phone").val() == "") {
       $("#phone").addClass("is-invalid");
       return false;
@@ -46,7 +44,7 @@ $(document).ready(function(e) {
       $("#phone").removeClass("is-invalid");
     }
   });
-  $("#password").on("keyup", function() {
+  $("#password").on("keyup", function () {
     if ($("#password").val() == "") {
       $("#password").addClass("is-invalid");
       return false;
@@ -54,7 +52,7 @@ $(document).ready(function(e) {
       $("#password").removeClass("is-invalid");
     }
   });
-  $("#cpassword").on("keyup", function() {
+  $("#cpassword").on("keyup", function () {
     if ($("#cpassword").val() == "") {
       $("#cpassword").addClass("is-invalid");
       return false;
@@ -62,15 +60,12 @@ $(document).ready(function(e) {
       $("#cpassword").removeClass("is-invalid");
     }
   });
-  
-  jQuery(function($) {
+
+  jQuery(function ($) {
     var input = $("[type=tel]");
     input.mobilePhoneNumber({ allowPhoneWithoutPrefix: "+1" });
-    input.bind("country.mobilePhoneNumber", function(e, country) {
+    input.bind("country.mobilePhoneNumber", function (e, country) {
       $(".country").text(country || "");
     });
   });
-  
 });
-
-

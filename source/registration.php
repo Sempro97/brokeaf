@@ -4,8 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>BrokeAF</title>
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.caret.js" type="text/javascript"></script>
+    <script src="js/jquery.mobilePhoneNumber.js" type="text/javascript"></script>
+    <script src="js/utils.js" type="text/javascript"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="font-awesome/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   </head>
   <body>
