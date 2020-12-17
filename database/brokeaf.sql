@@ -1221,5 +1221,3 @@ INSERT INTO `Visitors` (`lastSeen`, `idVisitor`, `idShoppingCart`) VALUES ('9949
 INSERT INTO `Visitors` (`lastSeen`, `idVisitor`, `idShoppingCart`) VALUES ('212451940', '9676', '13557678');
 INSERT INTO `Visitors` (`lastSeen`, `idVisitor`, `idShoppingCart`) VALUES ('348993104', '968', '3828342');
 INSERT INTO `Visitors` (`lastSeen`, `idVisitor`, `idShoppingCart`) VALUES ('1353448331', '9968', '29061');
-
-

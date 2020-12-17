@@ -1,3 +1,19 @@
+<?php
+  include 'config.php'; 
+  // require_once('config.php');
+  // session_start(); 
+  
+  if(isset($_POST['but_submit'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    if(login($email, $password, $mysqli) == true) {
+      // Login eseguito
+      header("Location: index.php");
+    }
+  }
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,20 +32,21 @@
         <p class="text-center">Log In</p>
       </div>
 
+    <form method="post" action="login.php" name="signin-form">
       <div class="form-group">
-        <label>Username</label>
-        <input type="text" class="form-control" required="required" />
+        <label>Email</label>
+        <input type="text" name="email" class="form-control" required="required" />
       </div>
 
       <div class="form-group">
         <label>Password</label>
-        <input type="password" class="form-control" required="required" />
+        <input type="password" name="password" class="form-control" required="required" />
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        <input type="submit" class="btn btn-primary btn-block" value="Log In" name="but_submit" id="but_submit" />
       </div>
-
+    </form>
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block">Create account</button>
       </div>
