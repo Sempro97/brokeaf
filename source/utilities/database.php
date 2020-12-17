@@ -28,9 +28,14 @@ class Database
         return null;
     }
 
-    public function user_exists()
+    public function user_exists($email)
     {
-        return true;
+        $query = "SELECT email FROM Users WHERE email=?";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->num_rows === 1;
     }
 
     public function register_user()
