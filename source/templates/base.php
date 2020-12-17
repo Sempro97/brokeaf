@@ -9,6 +9,7 @@
     <title><?php echo $template["title"]; ?></title>
   </head>
   <body>
+<?php require("templates/header.php"); ?>
 <?php require($template["content"]); ?>
   </body>
 </html>
