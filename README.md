@@ -1,29 +1,13 @@
-# README #
+# BrokeAF
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## How to start the website
 
-### What is this repository for? ###
+`docker-compose up --build`
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## How to use the linter
 
-### How do I get set up? ###
+You must have Python 3 installed and have it accessible from the CLI.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+If you are on Windows, make sure the line endings in the `start.sh` script are compatible with Unix systems.
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Go to the root folder of the project and run the `linter.py` script.
