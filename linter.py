@@ -12,32 +12,34 @@ def print_title(text):
     print(text)
 
 
+def run_docker(folder="/source", image="", parameters=""):
+    os.system(
+        f"docker run --rm --volume {current_path}/source:{folder} {image} {parameters}"
+    )
+
+
 @click.command()
 @click.option("--html", is_flag=True)
 @click.option("--php", is_flag=True)
 def main(html, php):
     if html:
         os.system("docker build ./docker/linter/ -t linter")
-        os.system(f"docker run --rm --volume {current_path}/source:/source linter")
+        run_docker(image="linter")
     if php:
         print_title("PHP CS Fixer")
-        os.system(
-            f"docker run --rm --volume {current_path}/source:/source cytopia/php-cs-fixer fix /source"
-        )
+        run_docker(image="cytopia/php-cs-fixer", parameters="fix /source")
 
         print_title("PHP Parallel Lint")
-        os.system(
-            f"docker run --rm --volume {current_path}/source:/source milchundzucker/php-parallel-lint /source"
-        )
+        run_docker(image="milchundzucker/php-parallel-lint", parameters="/source")
 
         print_title("PHPCS")
-        os.system(
-            f"docker run --rm --volume {current_path}/source:/source cytopia/phpcs --extensions=php /source"
-        )
+        run_docker(image="cytopia/phpcs", parameters="--extensions=php /source")
 
         print_title("PHPStan")
-        os.system(
-            f"docker run --rm --volume {current_path}/source:/app ghcr.io/phpstan/phpstan analyse --level 8 ."
+        run_docker(
+            folder="/app",
+            image="ghcr.io/phpstan/phpstan",
+            parameters="analyse --level 8 .",
         )
 
 
