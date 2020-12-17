@@ -982,7 +982,7 @@ CREATE TABLE `Users` (
   UNIQUE KEY `FKwhant_ID` (`idShoppingCart`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO Users (cap, address, city, email, idShoppingCart, name, surname, password, phoneNumber, province) VALUES (80147, 'Casa Mia', 'Napoli', 'pasquale@gmail.com', '654523', 'Pasquale', 'Lo Carmine', '123stella', '0382 6688932', 'NA');
+INSERT INTO `Users` (cap, address, city, email, idShoppingCart, name, surname, password, phoneNumber, province) VALUES (80147, 'Casa Mia 22', 'Napoli', 'pasquale@gmail.com', '654523', 'Pasquale', 'Lo Carmine', '123stella', '0382 6688932', 'NA');
 INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (76846, '219 Nienow', 'Rafaelasid', 'abernathy.helene@example.net', '912', 'Noe', 'Kautzer', '6ef176dba0e92873ca5fdd7e5fe862f1', '027.573.6741', 'LA');
 INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (99530, '342 Hoppe', 'North Cono', 'alvera.howell@example.org', '772773311', 'Everardo', 'Reilly', 'fbc1d7ce5e0bcc9041d525cb26677159', '871.507.5761', 'KY');
 INSERT INTO `Users` (`cap`, `address`, `city`, `email`, `idShoppingCart`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES (60330, '77462 Farr', 'Hanetown', 'amckenzie@example.net', '437580', 'Maximus', 'Flatley', '84279c666f312009d742715e7331fe15', '698-928-4093', 'NM');
