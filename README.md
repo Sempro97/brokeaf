@@ -9,8 +9,7 @@
 ### Requirements
 
 1. You must have Python 3 installed and have it accessible from the CLI
-2. You must have the packages `click` and `pyfiglet` installed
-   - You can get them by running the following command: `pip install click pyfiglet`
+2. You must have the packages `click` and `pyfiglet` installed (you can get them by running the following command: `pip install click pyfiglet`)
 3. If you are on Windows, make sure the line endings in the `start.sh` script are compatible with Unix systems (I.e. LF)
 
 ### How to use it
