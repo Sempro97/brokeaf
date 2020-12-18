@@ -65,7 +65,7 @@
                   <input type="password" name="password" id="password" class="form-control" placeholder="***********" />
                 </div>
                 <div class="form-group">
-                  <label class="font-weight-bold">Confirm Password</label>
+                        <label class="font-weight-bold">Confirm Password</label>
                   <input
                     type="password"
                     name="cpassword"
@@ -81,10 +81,12 @@
                     <a href="javascript:;">Terms & Conditions</a> for Registration.</label
                   >
                 </div>
-                <div class="form-group">
-                  <div class="g-recaptcha" data-callback='onSubmit' 
-        data-action='submit' data-sitekey="6LfkcwoaAAAAALbVIvDe9PSD4L0FOUpAk989ZLRQ"></div>
-                </div>
+                <!-- captcha -->
+                  <!-- <div class="form-group">
+                      <div class="g-recaptcha" data-sitekey="6LfkcwoaAAAAALbVIvDe9PSD4L0FOUpAk989ZLRQ"></div>
+                        <input class="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha">
+                                  <div class="help-block with-errors"></div>
+                    </div> -->
                 <div class="form-group">
                   <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
                 </div>
