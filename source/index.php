@@ -1,28 +1,19 @@
 <?php
-
-$serverName = "mysql";
-$username = "root";
-$password = "root";
-$dbname = "brokeaf";
-
-$connection = new mysqli($serverName, $username, $password, $dbname);
+session_start();
+require_once("utilities/database.php");
+$db = new Database();
 
 // Check connection
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
-$sql = "SELECT name,keywords FROM Categories";
-$result = $connection->query($sql);
-
-if ($result->num_rows > 0) {
-  // output data of each row
-  while($row = $result->fetch_assoc()) {
-    echo "name: " . $row["name"]. " - keywords: " . $row["keywords"]. " " . $row["lastname"]. "<br>";
+$items = $db->get_random_items(5);
+$insert_items = array();
+foreach($items as $item){
+  echo "<h2>" . $item["name"] . "</h2>";
+  array_push($insert_items, $item["name"]);
+  echo "<p> Insert " . $item["name"] . " in array of inserted </p>";
   }
-} else {
-  echo "0 results";
-}
-$connection->close();
-echo "Connected successfully";
-
 ?>
+
+<html>
+<body>
+</body>
+</html>
