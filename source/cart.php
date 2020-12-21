@@ -1,3 +1,11 @@
+<?php
+  $cart = new shoppingCart();
+  $template["cart"] = $cart;
+
+
+  //il mio carrrello è ListItems e i suoi elementi che si riferiscono al carrello sono DetailsItems
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -114,7 +122,7 @@
     <!--Section: Block Content-->
   </div>
 
-  <!--
+  
   <body>
     <div class="header"></div>
 
@@ -161,5 +169,5 @@
         </div>
       </div>
     </div>
-  </body>//-->
+  </body>//
 </html>
