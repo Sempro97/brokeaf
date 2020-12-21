@@ -57,3 +57,4 @@ class Database
         return true;
     }
 }
+?>
