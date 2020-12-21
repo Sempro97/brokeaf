@@ -34,7 +34,7 @@
       <div class="d-block d-md-none">
         <div class="row">
           <div class="col-12">
-            <div class="input-group">
+            <div class="input-group pb-4">
               <label for="search-small" class="sr-only">Search: </label>
               <input type="text" id="search-small" class="form-control" />
               <div class="input-group-append">
