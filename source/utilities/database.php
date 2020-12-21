@@ -56,4 +56,23 @@ class Database
     {
         return true;
     }
+
+    public function get_cart($email) {
+        $query = "SELECT DetailsItems.serialCode, DetailsItems.positionIndex, DetailsItems.quantity, DetailsItems.price, Items.name, ListsItems.total, Items.quantity AS stock
+        FROM ((((ShoppingCarts 
+        INNER JOIN ListsItems
+        ON ShoppingCarts.idShoppingCart = ListsItems.idShoppingCart)
+        INNER JOIN DetailsItems
+        ON ListsItems.IdList = DetailsItems.IdList)
+        INNER JOIN Items
+        ON DetailsItems.serialCode = Items.serialCode)
+        INNER JOIN Users
+        ON ShoppingCarts.idShoppingCart = Users.idShoppingCart) WHERE Users.email=?";
+
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
