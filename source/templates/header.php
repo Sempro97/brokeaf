@@ -13,10 +13,11 @@
             <!-- This search bar is only visible for wider than small (sm) screens -->
             <div class="p-2 d-none d-md-block flex-fill">
               <div class="input-group">
-                <input type="text" class="form-control" />
+                <label for="search-big" class="sr-only">Search: </label>
+                <input type="text" id="search-big" class="form-control" />
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" type="button">
-                    <i class="fas fa-search"></i>
+                    <span class="fas fa-search"></span>
                   </button>
                 </div>
               </div>
@@ -34,7 +35,8 @@
         <div class="row">
           <div class="col-12">
             <div class="input-group">
-              <input type="text" class="form-control" />
+              <label for="search-small" class="sr-only">Search: </label>
+              <input type="text" id="search-small" class="form-control" />
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button">
                   <span class="fas fa-search"></span>
