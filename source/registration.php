@@ -26,7 +26,10 @@
           <div class="col-sm-12">
             <form method="post" id="singnupFrom" onSubmit="return validation();">
               <div class="form-group">
-                <label class="font-weight-bold">Email</label>
+                <label class="font-weight-bold"
+                  >Email
+                  <small class="text-danger"><em>This will be your login email!</em></small>
+                </label>
                 <div class="input-group">
                   <input type="email" name="email" id="email" class="form-control" placeholder="Enter valid email" />
                   <div class="input-group-append">
@@ -38,9 +41,7 @@
               </div>
               <div id="next-form" class="collapse">
                 <div class="form-group">
-                  <label class="font-weight-bold">  User Name 
-                    <small class="text-danger"><em>This will be your login name!</em></small>
-                  </label>
+                  <label class="font-weight-bold">User Name</label>
                   <input
                     type="text"
                     name="username"
@@ -65,7 +66,7 @@
                   <input type="password" name="password" id="password" class="form-control" placeholder="***********" />
                 </div>
                 <div class="form-group">
-                        <label class="font-weight-bold">Confirm Password</label>
+                  <label class="font-weight-bold">Confirm Password</label>
                   <input
                     type="password"
                     name="cpassword"
@@ -78,46 +79,22 @@
 
                 <div class="form-group">
                   <label class="font-weight-bold">CAP</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    class="tel form-control"
-                    autocomplete="postal-code"
-                  />
+                  <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="postal-code" />
                 </div>
 
                 <div class="form-group">
                   <label class="font-weight-bold">Address</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    class="tel form-control"
-                    autocomplete="address-line1"
-                  />
+                  <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="address-line1" />
                 </div>
 
                 <div class="form-group">
                   <label class="font-weight-bold">City</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    class="tel form-control"
-                    autocomplete="address-level2"
-                  />
+                  <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="address-level2" />
                 </div>
 
                 <div class="form-group">
                   <label class="font-weight-bold">Province</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    class="tel form-control"
-                    autocomplete="address-level1"
-                  />
+                  <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="address-level1" />
                 </div>
 
                 <div class="form-group">
@@ -127,7 +104,7 @@
                   >
                 </div>
                 <!-- captcha -->
-                  <!-- <div class="form-group">
+                <!-- <div class="form-group">
                       <div class="g-recaptcha" data-sitekey="6LfkcwoaAAAAALbVIvDe9PSD4L0FOUpAk989ZLRQ"></div>
                         <input class="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha">
                                   <div class="help-block with-errors"></div>
