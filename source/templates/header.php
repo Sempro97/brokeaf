@@ -7,7 +7,7 @@
                 <span class="fas fa-bars"></span>
               </button>
             </div>
-            <div class="p-2">
+            <div class="p-2 pt-3">
               <h1 class="text-center">BrokeAF</h1>
             </div>
             <!-- This search bar is only visible for wider than small (sm) screens -->
