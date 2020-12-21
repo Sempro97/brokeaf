@@ -9,7 +9,7 @@
     <title><?php echo $template["title"]; ?></title>
   </head>
   <body>
-<?php require("templates/header.php"); ?>
-<?php require($template["content"]); ?>
+<?php require_once "templates/header.php"; ?>
+<?php require_once $template["content"]; ?>
   </body>
 </html>
