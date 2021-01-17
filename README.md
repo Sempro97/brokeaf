@@ -1,14 +1,4 @@
-# BrokeAF MySQL database
-
-Simple database to store market information
-
-### Logic scheme
-
-![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/2bca4ed03e32f5626784cc9a7a0331b56378d972/DatabaseBrokeAF/LogicScheme.png)
-
-### E/R scheme
-
-![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/2bca4ed03e32f5626784cc9a7a0331b56378d972/DatabaseBrokeAF/E-R_Scheme.png)
+# BrokeAF MySQL
 
 ## How to start the website
 
@@ -26,3 +16,8 @@ Simple database to store market information
 
 1. Go to the root folder of the project
 2. Run the `linter.py` script with either the `--html` or `--php` flag (you can also use both at the same time)
+
+## DB scheme
+
+![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/c401b20eea43cb1d74165b2ec755b16fdd1e619a/img/BrokeAF.png)
+
