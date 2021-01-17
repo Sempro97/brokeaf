@@ -44,7 +44,7 @@ create table Img (
 
 create table Item (
      isVerificated char not null,
-     description char(40) not null,
+     description char(120) not null,
      price char(10) not null,
      name char(30) not null,
      serialCode char(10) not null,
@@ -177,16 +177,16 @@ INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`,
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('71773', '927 Noble Lock Suite 652', 'South Vicky', '80617 Kutch Meadow Apt. 008\nAn', 'Koch, Hickle and Balistreri', 'mckenzie.christine@example.net', 'Simone', 'Gutmann', '2', '3453479794', 'Mauritania');
 
 
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '7.91', '', '1313932365', 'mckenzie.christine@example.net', 'Informatica');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '5.32', '', '1952322448', 'mckenzie.christine@example.net', 'Informatica');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '8.9', '', '3438720877', 'irenner@example.org', 'Informatica');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '7.62', '', '3577771822', 'irenner@example.org', 'Informatica');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '8.21', '', '3773158679', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '3.85', '', '4943693566', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '5.22', '', '7775972008', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '4.62', '', '8791859210', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '7.38', '', '9150815034', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', '', '4.38', '', '9876711578', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a taglio', '7.91', 'Cacciavite a taglio', '1313932365', 'mckenzie.christine@example.net', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Avanzatissimo strumento di calcolo, e in grado di rappresentare gran parte dei numeri naturali, '5.32', 'Calcolatrice', '1952322448', 'mckenzie.christine@example.net', 'Informatica');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Rocchetto che fara impazzire qualsiasi casalinga annoiata', '8.9', 'Rocchetto di filo', '3438720877', 'irenner@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano gran parte delle viti esistenti ', '7.62', 'Cacciavite Multifunzione', '3577771822', 'irenner@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Portafoglio in pelle sintetica', '8.21', 'Portafoglio', '3773158679', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Forbici ergonomiche adatte a tagliare la carta', '3.85', 'Forbici', '4943693566', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a croce', '5.22', 'Cacciavite a croce', '7775972008', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Strumento segnatempo in acciaio inossidabile', '4.62', 'Orologio', '8791859210', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Prestante lucchetto di sicurezza, impossibile da scalfire', '7.38', 'Lucchetto', '9150815034', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Memoria di massa dalle alte prestazioni, 5 Mb/s in lettura e scrittura', '4.38', 'Chiavetta USB', '9876711578', 'hackett.eleanore@example.org', 'Informatica');
 
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('1158', '8638 Rupert Village Apt. 105', 'Wilhelmineside', 'adrain.johnson@example.com', 2, 'Jennyfer', 'Willms', '89', '3464459410', 'Bulgaria');
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('42930', '41349 Noemie Ferry', 'Lottieborough', 'ali.simonis@example.com', NULL, 'Elvie', 'Boyer', '86', '3469388846', 'Niue');
