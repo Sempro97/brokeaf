@@ -178,7 +178,7 @@ INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`,
 
 
 INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a taglio', '7.91', 'Cacciavite a taglio', '1313932365', 'mckenzie.christine@example.net', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Avanzatissimo strumento di calcolo, e in grado di rappresentare gran parte dei numeri naturali, '5.32', 'Calcolatrice', '1952322448', 'mckenzie.christine@example.net', 'Informatica');
+INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Avanzatissimo strumento di calcolo, e in grado di rappresentare gran parte dei numeri naturali', '5.32', 'Calcolatrice', '1952322448', 'mckenzie.christine@example.net', 'Informatica');
 INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Rocchetto che fara impazzire qualsiasi casalinga annoiata', '8.9', 'Rocchetto di filo', '3438720877', 'irenner@example.org', 'Utensili');
 INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano gran parte delle viti esistenti ', '7.62', 'Cacciavite Multifunzione', '3577771822', 'irenner@example.org', 'Utensili');
 INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Portafoglio in pelle sintetica', '8.21', 'Portafoglio', '3773158679', 'hackett.eleanore@example.org', 'Utensili');
