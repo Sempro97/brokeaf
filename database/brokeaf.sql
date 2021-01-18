@@ -16,8 +16,6 @@ CREATE DATABASE `brokeaf` DEFAULT CHARACTER SET utf8mb4;
 USE `brokeaf`;
 
 
-<<<<<<< HEAD
-
 -- DBSpace Section
 -- _______________
 
