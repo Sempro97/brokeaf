@@ -3,9 +3,14 @@
         <div class="col-12">
           <div class="d-flex align-items-center justify-content-between">
             <div class="pr-2">
-              <button type="button" class="btn btn-dark">
-                <span class="fas fa-bars"></span>
-              </button>
+              <div class="dropdown">
+                <button class="btn btn-dark" type="button" id="dropdown-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="fas fa-bars"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdown-button">
+                  <li><a class="dropdown-item" href="#">Notifications</a></li>
+                </ul>
+              </div>
             </div>
             <div class="p-2 pt-3">
               <h1 class="text-center">BrokeAF</h1>
