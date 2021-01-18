@@ -65,7 +65,7 @@ create table Seller (
      email char(30) not null,
      name char(30) not null,
      surname char(30) not null,
-     password numeric(16) not null,
+     password char(255) not null,
      phoneNumber char(12) not null,
      province char(30) not null,
      constraint IDSeller primary key (email));
@@ -78,7 +78,7 @@ create table UserWeb (
      IdList numeric(16),
      name char(30) not null,
      surname char(30) not null,
-     password numeric(16) not null,
+     password char(255) not null,
      phoneNumber char(12) not null,
      province char(30) not null,
      constraint IDUserWeb primary key (email),

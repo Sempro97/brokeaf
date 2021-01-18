@@ -24,6 +24,13 @@
       <div class="row">
         <div class="col-sm-12 rounded pt-2">
           <form method="post" id="singnupFrom" onSubmit="return validation();">
+          <div class="container">
+          <h2>Button States</h2>
+  <button type="button" class="btn btn-primary">Primary Button</button>
+  <button type="button" class="btn btn-primary active">Active Primary</button>
+  <button type="button" class="btn btn-primary" disabled>Disabled Primary</button>
+  <a href="#" class="btn btn-primary disabled">Disabled Link</a>
+</div>
             <div class="form-group">
               <label class="font-weight-bold"
                 >Email

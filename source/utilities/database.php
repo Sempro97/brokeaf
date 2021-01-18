@@ -66,10 +66,9 @@ class Database
     public function register_user($cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province)
     {
         
-        $query = 'INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`)
-                  VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')';
+        $query = 'INSERT INTO "UserWeb" ("cap", "address", "city", "email", "IdList", "name", "surname", "password", "phoneNumber", "province") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('isssississ', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
+        $statement->bind_param('isssisssss', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
         $statement->execute();
         $result = $statement->get_result();
 
@@ -80,10 +79,10 @@ class Database
     public function register_seller($cap, $address, $city,$companyAddres,$companyName, $email, $name, $surname, $password, $phoneNumber, $province)
     {
                 
-        $query = 'INSERT INTO `UserWeb` (`cap`, `address`, `city`, `companyAddres`,`companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`)
-                  VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')';
+        $query = 'INSERT INTO "UserWeb" ("cap", "address", "city", "companyAddres","companyName", "email", "name", "surname", "password", "phoneNumber", "province")
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('isssssssiss', $cap, $address, $city,$companyAddres,$companyName, $email, $name, $surname, $password, $phoneNumber, $province);
+        $statement->bind_param('issssssssss', $cap, $address, $city,$companyAddres,$companyName, $email, $name, $surname, $password, $phoneNumber, $province);
         $statement->execute();
         $result = $statement->get_result();
 
