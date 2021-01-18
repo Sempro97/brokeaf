@@ -63,9 +63,18 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function register_user()
+    public function register_user($cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province)
     {
-        return true;
+        
+        $query = 'INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`)
+                  VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?')';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('isssississ', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+        
     }
 
     public function register_seller()
