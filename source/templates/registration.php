@@ -40,13 +40,23 @@
             </div>
             <div id="next-form" class="collapse">
               <div class="form-group">
-                <label class="font-weight-bold">User Name</label>
+                <label class="font-weight-bold">Name</label>
                 <input
                   type="text"
-                  name="username"
-                  id="username"
+                  name="name"
+                  id="name"
                   class="form-control"
-                  placeholder="Choose your user name"
+                  placeholder="Choose your name"
+                />
+              </div>
+              <div class="form-group">
+                <label class="font-weight-bold">Surname</label>
+                <input
+                  type="text"
+                  name="surname"
+                  id="surname"
+                  class="form-control"
+                  placeholder="Insert your surname"
                 />
               </div>
               <div class="form-group">
@@ -72,22 +82,22 @@
 
               <div class="form-group">
                 <label class="font-weight-bold">CAP</label>
-                <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="postal-code" />
+                <input type="tel" name="cap" id="cap" class="tel form-control" autocomplete="postal-code" />
               </div>
 
               <div class="form-group">
                 <label class="font-weight-bold">Address</label>
-                <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="address-line1" />
+                <input type="tel" name="address" id="address" class="tel form-control" autocomplete="address-line1" />
               </div>
 
               <div class="form-group">
                 <label class="font-weight-bold">City</label>
-                <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="address-level2" />
+                <input type="tel" name="city" id="city" class="tel form-control" autocomplete="address-level2" />
               </div>
 
               <div class="form-group">
                 <label class="font-weight-bold">Province</label>
-                <input type="tel" name="phone" id="phone" class="tel form-control" autocomplete="address-level1" />
+                <input type="tel" name="province" id="province" class="tel form-control" autocomplete="address-level1" />
               </div>
 
               <div class="form-group">
