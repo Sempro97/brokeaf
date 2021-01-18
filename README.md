@@ -2,17 +2,6 @@
 
 ## How to start the website
 
-<<<<<<< HEAD
-`docker-compose up --build`
-
-## How to use the linter
-
-You must have Python 3 installed and have it accessible from the CLI.
-
-If you are on Windows, make sure the line endings in the `start.sh` script are compatible with Unix systems.
-
-Go to the root folder of the project and run the `linter.py` script.
-=======
 1. Run the command `docker-compose up --build`
 
 ## Linter
@@ -27,4 +16,7 @@ Go to the root folder of the project and run the `linter.py` script.
 
 1. Go to the root folder of the project
 2. Run the `linter.py` script with either the `--html` or `--php` flag (you can also use both at the same time)
->>>>>>> origin/master
+
+## DB scheme
+
+![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/c401b20eea43cb1d74165b2ec755b16fdd1e619a/img/BrokeAF.png)
