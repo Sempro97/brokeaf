@@ -41,9 +41,22 @@ class Database
 
     public function get_random_items($count)
     {
-        $query = 'SELECT * FROM Items ORDER BY RAND() LIMIT ?';
+        $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('i', $count);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function get_img_item($serialCode)
+    {
+        $query = 'SELECT Img.path FROM Img,Item 
+                  WHERE Item.serialCode = Img.serialCode AND
+                  Item.serialCode = ? ';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $serialCode);
         $statement->execute();
         $result = $statement->get_result();
 
