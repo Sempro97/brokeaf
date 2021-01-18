@@ -27,7 +27,9 @@ def main(html, php):
         run_docker(image="linter")
     if php:
         print_title("PHP CS Fixer")
-        run_docker(image="cytopia/php-cs-fixer", parameters="fix /source")
+        run_docker(
+            image="cytopia/php-cs-fixer", parameters="fix /source --rules=@PhpCsFixer"
+        )
 
         print_title("PHP Parallel Lint")
         run_docker(image="milchundzucker/php-parallel-lint", parameters="/source")
