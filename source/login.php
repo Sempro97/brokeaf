@@ -48,7 +48,7 @@
       </div>
     </form>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+        <button type="submit" class="btn btn-primary btn-block" onclick="window.location.href='register.php'">Create account</button>
       </div>
     </div>
   </body>
