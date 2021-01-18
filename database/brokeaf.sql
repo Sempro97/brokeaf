@@ -82,20 +82,28 @@ create table UserWeb (
      province char(30) not null,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
+
+create table Description(
+     description char(255) not null,
+     idDesc char(30) not null,
+     constraint UniqueDesc unique (description),
+     constraint IDNotificationSeller primary key (idDesc));
      
 create table NotificationSeller (
-     description char(40) not null,
      path char(20) not null,
      date datetime not null,
      email char(30) not null,
+     idDesc char(30) not null,
+     constraint FKnotify_Seller_des foreign key (idDesc) references Description(idDesc),
      constraint FKnotify_Seller foreign key (email) references Seller(email),
      constraint IDNotificationSeller primary key (email, date));
 
 create table NotificationUserWeb (
-     email char(30) not null,
-     description char(40) not null,
      path char(20) not null,
      date datetime not null,
+     email char(30) not null,
+     idDesc char(30) not null,
+     constraint FKnotify_UserWeb_des foreign key (idDesc) references Description(idDesc),
      constraint FKnotify_UserWeb foreign key (email) references UserWeb(email),
      constraint IDNotificationUserWeb primary key (email, date));
 
@@ -162,6 +170,13 @@ INSERT INTO `ListItems` (IdList) VALUES ('2');
    
 INSERT INTO `Category` (name,keywords) VALUES ('Utensili','cacciavite,fai da te');
 INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
+
+INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
+
+INSERT INTO `NotificationUserWeb` (`idDesc`,`path`,`date`,`email` VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','adrain.johnson@example.com');
+
+
+
 
 
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('15353', '0695 Norbert Burgs Apt. 013', 'Karlfort', '537 Schuppe Track\nPort Miles,', 'Rogahn Group', 'adriana90@example.net', 'Hailie', 'Oberbrunner', '1', '3470328087', 'Saint Barthelemy');
