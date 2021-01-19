@@ -1,17 +1,28 @@
 <?php
-  include 'config.php'; 
-  // require_once('config.php');
-  // session_start(); 
-  
-  if(isset($_POST['but_submit'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    if(login($email, $password, $mysqli) == true) {
-      // Login eseguito
-      header("Location: index.php");
+  require_once 'utilities/database.php';
+  $database = new Database();
+
+  $database->sec_session_start();
+  if ($database->already_logged()) {
+    header("Location: index.php");
+  }
+  else {
+    if (isset($_POST['but_submit'])) {
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      if ($database->login($email, $password)) {
+        // Login eseguito
+        $user = $database->get_user_from_email($email);
+        $database->register_user_session($user);
+        header("Location: index.php");
+      }
+      else {
+        //Login Fallito
+      }
     }
   }
   
+
 ?>
 
 <!DOCTYPE html>
