@@ -173,7 +173,7 @@ INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
 
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
 
-INSERT INTO `NotificationUserWeb` (`idDesc`,`path`,`date`,`email` VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','adrain.johnson@example.com');
+INSERT INTO `NotificationUserWeb` (`idDesc`,`path`,`date`,`email`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','adrain.johnson@example.com');
 
 
 
