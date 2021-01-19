@@ -135,8 +135,8 @@ class Database
     }
 
     public function register_user_session($user) {
-        $_SESSION["email"] = $user["email"];
-        $_SESSION["name"] = $user["name"];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['name'] = $user['name'];
     }
 
     public function get_user_from_email($email) {
@@ -145,8 +145,12 @@ class Database
         $statement->bind_param('s', $email);
         $statement->execute();
         $result = $statement->get_result();
+        $user = $result->fetch_all(MYSQLI_ASSOC)[0];
+        return $user;
+    }
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+    public function already_logged() {
+        return !empty($_SESSION['email']);
     }
 
 }

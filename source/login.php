@@ -2,7 +2,12 @@
   require_once 'utilities/database.php';
   $database = new Database();
 
-  if (isset($_POST['but_submit'])) {
+  $database->sec_session_start();
+  if ($database->already_logged()) {
+    header("Location: index.php");
+  }
+  else {
+    if (isset($_POST['but_submit'])) {
       $email = $_POST['email'];
       $password = $_POST['password'];
       if ($database->login($email, $password)) {
@@ -14,7 +19,9 @@
       else {
         //Login Fallito
       }
+    }
   }
+  
 
 ?>
 
