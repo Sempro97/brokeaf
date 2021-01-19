@@ -24,14 +24,10 @@
       <div class="row">
         <div class="col-sm-12 rounded pt-2">
           <form method="post" id="singnupFrom" onSubmit="return validation();">
-          <div class="container">
-          <h2>Button States</h2>
-  <button type="button" class="btn btn-primary">Primary Button</button>
-  <button type="button" class="btn btn-primary active">Active Primary</button>
-  <button type="button" class="btn btn-primary" disabled>Disabled Primary</button>
-  <a href="#" class="btn btn-primary disabled">Disabled Link</a>
-</div>
-            <div class="form-group">
+              <h3>Select user type</h3>
+              <button type="button" class="btn btn-primary active">User</button>
+              <a href="#" class="btn btn-primary disabled">Seller</a>
+            <div class="form-group  pt-4">
               <label class="font-weight-bold"
                 >Email
                 <small class="text-danger"><em>This will be your login email!</em></small>
@@ -130,3 +126,23 @@
     </div>
   </body>
 </html>
+
+<?php
+
+if (isset($_POST['submit'])) {
+      echo "tutto ok, procedere alla registrazione su db";
+      /* $email = $_POST['email'];
+      $password = $_POST['password'];
+      if ($database->login($email, $password)) {
+        // Login eseguito
+        $user = $database->get_user_from_email($email);
+        $database->register_user_session($user);
+        header("Location: index.php");
+      */
+      }
+      else {
+        //Login Fallito
+      }
+    
+
+?>
