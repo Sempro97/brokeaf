@@ -5,9 +5,14 @@
   if (isset($_POST['but_submit'])) {
       $email = $_POST['email'];
       $password = $_POST['password'];
-      if (true == $database->login($email, $password)) {
-          // Login eseguito
-          header("Location: index.php");
+      if ($database->login($email, $password)) {
+        // Login eseguito
+        $user = $database->get_user_from_email($email);
+        $database->register_user_session($user);
+        header("Location: index.php");
+      }
+      else {
+        //Login Fallito
       }
   }
 
