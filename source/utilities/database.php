@@ -68,11 +68,17 @@ class Database
         
         $query = 'INSERT INTO "UserWeb" ("cap", "address", "city", "email", "IdList", "name", "surname", "password", "phoneNumber", "province") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $statement = self::$instance->prepare($query);
+        $passwordHashed=password_hash($password , PASSWORD_DEFAULT);
+        if($passwordHashed){
         $statement->bind_param('isssisssss', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
         $statement->execute();
         $result = $statement->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+        }else{
+            return false;
+        }
+
         
     }
 

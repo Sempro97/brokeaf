@@ -89,29 +89,29 @@
 
               <div class="form-group">
                 <label class="font-weight-bold">CAP</label>
-                <input type="tel" name="cap" id="cap" class="tel form-control" autocomplete="postal-code" />
+                <input type="text" name="cap" id="cap" class="tel form-control" autocomplete="postal-code" />
               </div>
 
               <div class="form-group">
                 <label class="font-weight-bold">Address</label>
-                <input type="tel" name="address" id="address" class="tel form-control" autocomplete="address-line1" />
+                <input type="text" name="address" id="address" class="tel form-control" autocomplete="address-line1" />
               </div>
 
               <div class="form-group">
                 <label class="font-weight-bold">City</label>
-                <input type="tel" name="city" id="city" class="tel form-control" autocomplete="address-level2" />
+                <input type="text" name="city" id="city" class="tel form-control" autocomplete="address-level2" />
               </div>
 
               <div class="form-group">
                 <label class="font-weight-bold">Province</label>
-                <input type="tel" name="province" id="province" class="tel form-control" autocomplete="address-level1" />
+                <input type="text" name="province" id="province" class="tel form-control" autocomplete="address-level1" />
               </div>
 
               <div class="form-group">
                 <label
                   ><input type="checkbox" name="condition" id="condition" /> I agree with the
-                  <a href="javascript:;">Terms & Conditions</a> for Registration.</label
-                >
+                  <a href="javascript:;">Terms & Conditions</a> for Registration.</label>
+                  <em id="cTeC"></em>
               </div>
               <!-- captcha -->
               <!-- <div class="form-group">

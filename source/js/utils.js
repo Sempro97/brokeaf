@@ -14,11 +14,11 @@ function emailCheck() {
   }
 }
 function validation() {
-  if ($("#username, #phone, #password, #cpassword").val() == "") {
-    $("#username, #phone, #password, #cpassword").addClass("is-invalid");
+  if ($("#name, #surname, #phone, #password, #cpassword, #cap, #address, #city, #province").val() == "") {
+    $("#name, #surname, #phone, #password, #cpassword, #cap, #address, #city, #province").addClass("is-invalid");
     return false;
   } else {
-    $("#username, #phone, #password, #cpassword").removeClass("is-invalid");
+    $("#name, #surname, #phone, #password, #cpassword, #cap, #address, #city, #province").removeClass("is-invalid");
   }
 
   if ($("#password").val() != $("#cpassword").val()) {
@@ -26,14 +26,52 @@ function validation() {
     $("#cp").html('<span class="text-danger">Password and confirm password not matched!</span>');
     return false;
   }
+
+  if (!document.getElementById("condition").checked) {
+    $("#condition").addClass("is-invalid");
+    $("#cTeC").html('<span class="text-danger">You must accept T&C!</span>');
+    return false;
+  }
+  //Mark incomplete input
+  $("form input").each(function () {
+    if ($(this).val() == "") {
+      $(this).addClass("is-invalid");
+      alert("Errore campo vuoto non permesso");
+      return false;
+    }
+  });
+  //Global control
+  if ($(".is-invalid").length) {
+    return false;
+  }
 }
+
 $(document).ready(function (e) {
-  $("#username").on("keyup", function () {
-    if ($("#username").val() == "") {
-      $("#username").addClass("is-invalid");
+  $("form input").each(function () {
+    $(this).on("keyup", function () {
+      if ($(this).val() == "") {
+        $(this).addClass("is-invalid");
+        return false;
+      } else {
+        $(this).removeClass("is-invalid");
+      }
+    });
+  });
+
+  /*   $("#name").on("keyup", function () {
+    if ($("#name").val() == "") {
+      $("#name").addClass("is-invalid");
       return false;
     } else {
-      $("#username").removeClass("is-invalid");
+      $("#name").removeClass("is-invalid");
+    }
+  });
+  $("#surname").on("keyup", function () {
+    if ($("#surname").val() == "") {
+      $("#surname").addClass("is-invalid");
+      return false;
+    } else {
+      $("#surname").removeClass("is-invalid");
     }
   });
   $("#phone").on("keyup", function () {
@@ -60,6 +98,51 @@ $(document).ready(function (e) {
       $("#cpassword").removeClass("is-invalid");
     }
   });
+
+  $("#cap").on("keyup", function () {
+    if ($("#cap").val() == "") {
+      $("#cap").addClass("is-invalid");
+      return false;
+    } else {
+      $("#cap").removeClass("is-invalid");
+    }
+  });
+
+  $("#address").on("keyup", function () {
+    if ($("#address").val() == "") {
+      $("#address").addClass("is-invalid");
+      return false;
+    } else {
+      $("#address").removeClass("is-invalid");
+    }
+  });
+
+  $("#city").on("keyup", function () {
+    if ($("#city").val() == "") {
+      $("#city").addClass("is-invalid");
+      return false;
+    } else {
+      $("#city").removeClass("is-invalid");
+    }
+  });
+
+  $("#province").on("keyup", function () {
+    if ($("#province").val() == "") {
+      $("#province").addClass("is-invalid");
+      return false;
+    } else {
+      $("#province").removeClass("is-invalid");
+    }
+  });
+
+  $("#address").on("keyup", function () {
+    if ($("#address").val() == "") {
+      $("#address").addClass("is-invalid");
+      return false;
+    } else {
+      $("#address").removeClass("is-invalid");
+    }
+  }); */
 
   jQuery(function ($) {
     var input = $("[type=tel]");
