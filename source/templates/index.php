@@ -1,8 +1,7 @@
-<?php foreach ($template['items'] as $item) {
-    $img = $database->get_img_item($item['serialCode']); ?>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12 pb-2">
+    <div class="container">
+<?php foreach ($template['items'] as $item) { ?>
+      <div class="row pb-2">
+        <div class="col">
           <article class="bg-light border p-1">
             <div class="media">
               <img src="img\<?php echo $img[0]['path']; ?>.jpg" class="mr-3" alt="<?php echo $item['name']; ?>" />
@@ -14,6 +13,5 @@
           </article>
         </div>
       </div>
+<?php } ?>
     </div>
-<?php
-} ?>

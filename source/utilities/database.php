@@ -11,14 +11,18 @@ class Database
 
     public function __construct()
     {
-        $should_create_instance = false == isset(self::$instance);
-        if ($should_create_instance) {
-            self::$instance = new mysqli(
+        $should_create_connection = false == isset(self::$instance);
+        if ($should_create_connection) {
+            $instance = new mysqli(
                 self::SERVER_NAME,
                 self::USERNAME,
                 self::PASSWORD,
                 self::DATABASE_NAME
             );
+            if ($instance->connect_errno) {
+                exit('Failed to connect to MySQL server: ('.$instance->connect_errno.') '.$instance->connect_error);
+            }
+            self::$instance = $instance;
         }
 
         return self::$instance;
