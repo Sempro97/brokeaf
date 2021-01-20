@@ -16,7 +16,6 @@ CREATE DATABASE `brokeaf` DEFAULT CHARACTER SET utf8mb4;
 USE `brokeaf`;
 
 
-
 -- DBSpace Section
 -- _______________
 
@@ -65,7 +64,7 @@ create table Seller (
      email char(30) not null,
      name char(30) not null,
      surname char(30) not null,
-     password numeric(16) not null,
+     password char(255) not null,
      phoneNumber char(12) not null,
      province char(30) not null,
      constraint IDSeller primary key (email));
@@ -78,27 +77,29 @@ create table UserWeb (
      IdList numeric(16),
      name char(30) not null,
      surname char(30) not null,
-     password numeric(16) not null,
+     password char(255) not null,
      phoneNumber char(12) not null,
      province char(30) not null,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
-     
-create table NotificationSeller (
-     description char(40) not null,
-     path char(20) not null,
-     date datetime not null,
-     email char(30) not null,
-     constraint FKnotify_Seller foreign key (email) references Seller(email),
-     constraint IDNotificationSeller primary key (email, date));
 
-create table NotificationUserWeb (
-     email char(30) not null,
-     description char(40) not null,
-     path char(20) not null,
+create table Description(
+     description char(255) not null,
+     idDesc char(30) not null,
+     constraint UniqueDesc unique (description),
+     constraint IDNotificationSeller primary key (idDesc));
+
+create table NotificationUser (
+     idNotification numeric(16),
+     path char(128) not null,
      date datetime not null,
-     constraint FKnotify_UserWeb foreign key (email) references UserWeb(email),
-     constraint IDNotificationUserWeb primary key (email, date));
+     idDesc char(30) not null,
+     emailSeller char(30),
+     emailUser char(30),
+     constraint FKnotify_UserWeb_des foreign key (idDesc) references Description(idDesc),
+     constraint FKnotify_UserWeb foreign key (emailUser) references UserWeb(email),
+     constraint FKnotify_UserSeller foreign key (emailSeller) references Seller(email),
+     constraint IDNotificationUser primary key (idNotification));
 
 create table Order_UserWeb (
      email char(30) not null,
@@ -164,7 +165,6 @@ INSERT INTO `ListItems` (IdList) VALUES ('2');
 INSERT INTO `Category` (name,keywords) VALUES ('Utensili','cacciavite,fai da te');
 INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
 
-
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('15353', '0695 Norbert Burgs Apt. 013', 'Karlfort', '537 Schuppe Track\nPort Miles,', 'Rogahn Group', 'adriana90@example.net', 'Hailie', 'Oberbrunner', '1', '3470328087', 'Saint Barthelemy');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('81660', '6494 Wolff Fields Apt. 156', 'North Clydeberg', '261 Leif Fork Apt. 340\nNew Ann', 'Zulauf and Sons', 'daugherty.parker@example.com', 'Jammie', 'Goldner', '75', '3476748497', 'Singapore');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('97923', '381 Ziemann Extensions Apt. 87', 'North Erick', '75574 Upton Islands Suite 812\n', 'Purdy-Volkman', 'devin.swaniawski@example.net', 'Kamille', 'Schinner', '18', '3473147842', 'Swaziland');
@@ -175,7 +175,6 @@ INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`,
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('33295', '197 Amparo Green Suite 712', 'Brandyton', '064 Turcotte Summit\nPort Anton', 'Hayes-Gutkowski', 'pollich.bianka@example.com', 'Guillermo', 'Beier', '37', '3454150367', 'Palau');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('31291', '0354 Stevie Garden Suite 384', 'North Norma', '918 Auer Manor\nSouth Everardo,', 'Brekke, Tremblay and Quitzon', 'irenner@example.org', 'Carolina', 'Halvorson', '60', '3461641147', 'Saint Vincent and the Grenadin');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('71773', '927 Noble Lock Suite 652', 'South Vicky', '80617 Kutch Meadow Apt. 008\nAn', 'Koch, Hickle and Balistreri', 'mckenzie.christine@example.net', 'Simone', 'Gutmann', '2', '3453479794', 'Mauritania');
-
 
 INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a taglio', '7.91', 'Cacciavite a taglio', '1313932365', 'mckenzie.christine@example.net', 'Utensili');
 INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Avanzatissimo strumento di calcolo, e in grado di rappresentare gran parte dei numeri naturali', '5.32', 'Calcolatrice', '1952322448', 'mckenzie.christine@example.net', 'Informatica');
@@ -288,6 +287,10 @@ INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `sur
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('78282', '687 Marquardt Ridges', 'Port Mckenna', 'xkonopelski@example.com', NULL, 'Ashlee', 'Batz', '83', '3479186286', 'Holy See (Vatican City State)');
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('71155', '634 Schiller Highway', 'North Casey', 'yundt.selmer@example.net', NULL, 'Eduardo', 'Pacocha', '12', '3461936253', 'United Arab Emirates');
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('34747', '806 Elmo Wells Apt. 193', 'Lake Orlandview', 'zstiedemann@example.com', NULL, 'Domenica', 'Grimes', '47', '3464493252', 'Nicaragua');
+
+INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
+
+INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
 
 
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', '0');
