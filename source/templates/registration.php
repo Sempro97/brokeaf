@@ -9,7 +9,6 @@
     <script src="js/jquery.mobilePhoneNumber.js" type="text/javascript"></script>
     <script src="js/sha512.js" type="text/javascript"></script>
     <script src="js/utils.js" type="text/javascript"></script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="font-awesome/css/all.min.css" />
     <script
@@ -110,12 +109,6 @@
                   <a href="javascript:;">Terms & Conditions</a> for Registration.</label>
                   <em id="cTeC"></em>
               </div>
-              <!-- captcha -->
-              <!-- <div class="form-group">
-                      <div class="g-recaptcha" data-sitekey="6LfkcwoaAAAAALbVIvDe9PSD4L0FOUpAk989ZLRQ"></div>
-                        <input class="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha">
-                                  <div class="help-block with-errors"></div>
-                    </div> -->
               <div class="form-group">
                 <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
               </div>
