@@ -9,11 +9,6 @@
     <script src="js/jquery.mobilePhoneNumber.js" type="text/javascript"></script>
     <script src="js/sha512.js" type="text/javascript"></script>
     <script src="js/utils.js" type="text/javascript"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-      crossorigin="anonymous"
-    ></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   </head>
 
@@ -33,7 +28,7 @@
               <div class="input-group">
                 <input type="email" name="email" id="email" class="form-control" placeholder="Enter valid email" />
                 <div class="input-group-append">
-                  <button type="button" class="btn btn-primary" onClick="return emailCheck();">
+                  <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#next-form" onClick="return emailCheck();">
                     <i class="fa fa-envelope"></i>
                   </button>
                 </div>
