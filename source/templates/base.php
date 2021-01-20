@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="font-awesome/css/all.min.css" />
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <title><?php echo $template['title']; ?></title>
+    <title><?php echo 'BrokeAF - '.$template['title']; ?></title>
   </head>
   <body>
 <?php require_once 'templates/header.php'; ?>
