@@ -36,7 +36,7 @@ function validation() {
   $("form input").each(function () {
     if ($(this).val() == "") {
       $(this).addClass("is-invalid");
-      alert("Errore campo vuoto non permesso");
+      alert("Errore, campo vuoto non permesso");
       return false;
     }
   });
@@ -44,6 +44,10 @@ function validation() {
   if ($(".is-invalid").length) {
     return false;
   }
+  var password = $("#password").val();
+  var hash = rstr_sha512(password);
+  $("#password").val(hash);
+  console.log("Password is:".hash);
 }
 
 $(document).ready(function (e) {

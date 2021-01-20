@@ -7,6 +7,7 @@
     <script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="js/jquery.caret.js" type="text/javascript"></script>
     <script src="js/jquery.mobilePhoneNumber.js" type="text/javascript"></script>
+    <script src="js/sha512.js" type="text/javascript"></script>
     <script src="js/utils.js" type="text/javascript"></script>
     <script src="https://www.google.com/recaptcha/api.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
@@ -23,7 +24,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-12 rounded pt-2">
-          <form method="post" id="singnupFrom" onSubmit="return validation();">
+          <form method="post" id="singnupFrom" action="check-registration.php" onSubmit="return validation();">
               <h3>Select user type</h3>
               <button type="button" class="btn btn-primary active">User</button>
               <a href="#" class="btn btn-primary disabled">Seller</a>
@@ -129,20 +130,6 @@
 
 <?php
 
-if (isset($_POST['submit'])) {
-      echo "tutto ok, procedere alla registrazione su db";
-      /* $email = $_POST['email'];
-      $password = $_POST['password'];
-      if ($database->login($email, $password)) {
-        // Login eseguito
-        $user = $database->get_user_from_email($email);
-        $database->register_user_session($user);
-        header("Location: index.php");
-      */
-      }
-      else {
-        //Login Fallito
-      }
     
 
 ?>
