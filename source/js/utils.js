@@ -44,8 +44,9 @@ function validation() {
   if ($(".is-invalid").length) {
     return false;
   }
+  //Crypt password
   var password = $("#password").val();
-  var hash = rstr_sha512(password);
+  var hash = hex_sha512(password);
   $("#password").val(hash);
   console.log("Password is:".hash);
 }
