@@ -1,7 +1,7 @@
     <div class="container">
 <?php foreach ($template['items'] as $item) { ?>
       <div class="row pb-2">
-        <div class="col-12">
+        <div class="col">
           <article class="bg-light border p-1">
             <div class="media">
               <img src="https://via.placeholder.com/150" class="mr-3" alt="<?php echo $item['name']; ?>" />

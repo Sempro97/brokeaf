@@ -1,7 +1,7 @@
     <header>
       <div class="container">
         <div class="row">
-          <div class="col-12">
+          <div class="col">
             <div class="d-flex align-items-center justify-content-between">
               <div class="pr-2">
                 <div class="dropdown">
@@ -41,7 +41,7 @@
         <!-- This search bar is only visible for smaller than medium (md) screens -->
         <div class="d-block d-md-none">
           <div class="row">
-            <div class="col-12">
+            <div class="col">
               <div class="input-group pb-4">
                 <label for="search-small" class="sr-only">Search:</label>
                 <input type="text" id="search-small" class="form-control" />
