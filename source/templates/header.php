@@ -10,6 +10,7 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdown-button">
                     <li>
+                      <a class="dropdown-item" href="add-item.php">Add item</a>
                       <a class="dropdown-item" href="#">Notifications</a>
                     </li>
                   </ul>
