@@ -36,7 +36,7 @@
             <div id="next-form" class="collapse">
         <div class="form-group">
           <label class="font-weight-bold">Name</label>
-          <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="name" id="name" class="form-control" placeholder="Insert your name" />
         </div>
         <div class="form-group">
           <label class="font-weight-bold">Surname</label>

@@ -26,9 +26,19 @@ function registrationType() {
     alert("WARNING! The registration as Seller is only permitted to autorized Company!");
     $("#next-form").html(`
       <div id="next-form" class="collapse">
+      
+      <div class="form-group">
+          <label class="font-weight-bold">Company name</label>
+          <input type="text" name="companyName" id="companyName" class="form-control" placeholder="Insert the company name" />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Company complete address</label>
+          <input type="text" name="companyAddress" id="companyAddress" class="form-control" placeholder="Insert company complete address" />
+        </div>
+
         <div class="form-group">
           <label class="font-weight-bold">Name</label>
-          <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="name" id="name" class="form-control" placeholder="Insert your name" />
         </div>
         <div class="form-group">
           <label class="font-weight-bold">Surname</label>
