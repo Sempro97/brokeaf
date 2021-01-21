@@ -2,7 +2,12 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <form action="/add-item.php" enctype="multipart/form-data" method="post">
+          <form>
+            <!-- Image -->
+            <div class="form-group">
+              <label for="image">Image:</label>
+              <input type="file" class="form-control-file" id="image" name="image" />
+            </div>
             <!-- Name -->
             <div class="form-group">
               <label for="name">Name:</label>
@@ -11,7 +16,7 @@
             <!-- Description -->
             <div class="form-group">
               <label for="description">Description:</label>
-              <textarea type="text" class="form-control" id="description" name="description"></textarea>
+              <textarea class="form-control" id="description" name="description"></textarea>
             </div>
             <!-- Price -->
             <div class="form-group">
@@ -19,7 +24,7 @@
               <div class="input-group">
                 <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" />
                 <div class="input-group-append">
-                  <span class="input-group-text" id="price">€</span>
+                  <span class="input-group-text">€</span>
                 </div>
               </div>
             </div>
@@ -42,14 +47,14 @@
               <label for="serial_code">Serial code:</label>
               <input type="text" class="form-control" id="serial_code" name="serial_code" />
             </div>
-            <!-- Image -->
-            <div class="form-group">
-              <label for="image">Image:</label>
-              <input type="file" class="form-control-file" id="image" name="image" />
-            </div>
             <!-- Submit -->
             <button type="submit" class="btn btn-primary">Add item</button>
           </form>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="alert alert-danger d-none invisible" role="alert"></div>
         </div>
       </div>
     </div>
