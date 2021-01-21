@@ -54,6 +54,17 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function get_item($serialCode)
+    {
+        $query = 'SELECT * FROM Item WHERE Item.serialCode = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('i', $serialCode);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_img_item($serialCode)
     {
         $query = 'SELECT Img.path FROM Img,Item 
