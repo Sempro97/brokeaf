@@ -43,6 +43,24 @@ class Database
     {
     }
 
+    public function add_item($name, $description, $price, $quantity, $category, $serial_code, $image)
+    {
+        $query = 'INSERT INTO Items (name, description, price, quantity, Categories, serialCode, isVisible, emailSeller)
+                  VALUES (?, ?, ?, ?, ?, ?, \'1\', \'guiseppe.williamson@example.com\')';
+        $statement = self::$instance->prepare($query);
+        if ($statement) {
+            $statement->bind_param('ssssss', $name, $description, $price, $quantity, $category, $serial_code);
+            $statement->execute();
+        } else {
+            exit('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+        }
+        if ($statement->affected_rows < 0) {
+            exit('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+        }
+
+        return 1 === $statement->affected_rows;
+    }
+
     public function get_categories()
     {
         $query = 'SELECT name FROM Categories';
