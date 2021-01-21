@@ -1,5 +1,6 @@
     <div class="container">
-<?php foreach ($template['items'] as $item) { ?>
+<?php foreach ($template['items'] as $item) { 
+  $img = $database->get_img_item($item['serialCode']);?>
       <div class="row pb-2">
         <div class="col">
           <article class="bg-light border p-1">
