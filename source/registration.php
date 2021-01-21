@@ -1,8 +1,10 @@
 <?php
 
 require_once 'utilities/database.php';
+require_once 'utilities/functions.php';
 $database = new Database();
-$database->sec_session_start();
+$functions = new Functions();
+$functions->secure_session_start();
 $template['title'] = 'Registration';
 $template['content'] = 'templates/registration.php';
 $template['items'] = $database->get_random_items(5);
