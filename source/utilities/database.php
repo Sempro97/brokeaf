@@ -69,18 +69,20 @@ class Database
 
     public function register_user($cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province)
     {
-        $query = 'INSERT INTO "UserWeb" ("cap", "address", "city", "email", "IdList", "name", "surname", "password", "phoneNumber", "province") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        $statement = self::$instance->prepare($query);
-        $passwordHashed=password_hash($password , PASSWORD_DEFAULT);
-        if($passwordHashed){
-        $statement->bind_param('isssisssss', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
-        $statement->execute();
-        $result = $statement->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        }else{
-            return false;
+        if($statement = self::$instance->prepare($query)){
+            $statement->bind_param('isssisssss', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
+            
+        $statement->execute();
         }
+        else{
+            $error = self::$instance->errno . ' ' . self::$instance->error;
+            echo $error;
+        }
+        
+        return $statement->affected_rows;
     }
 
     public function register_seller($cap, $address, $city, $companyAddres, $companyName, $email, $name, $surname, $password, $phoneNumber, $province)

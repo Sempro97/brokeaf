@@ -9,18 +9,157 @@ function emailCheck() {
       return false;
     } else {
       $("#email").removeClass("is-invalid");
-      $("#next-form").collapse("show");
     }
   }
 }
-function validation() {
-  if ($("#name, #surname, #phone, #password, #cpassword, #cap, #address, #city, #province").val() == "") {
-    $("#name, #surname, #phone, #password, #cpassword, #cap, #address, #city, #province").addClass("is-invalid");
-    return false;
-  } else {
-    $("#name, #surname, #phone, #password, #cpassword, #cap, #address, #city, #province").removeClass("is-invalid");
-  }
 
+function changeActive() {
+  var disabled = $("button.btn-primary").removeClass("btn-primary active");
+  var enabled = $("button.btn-secondary").removeClass("btn-secondary disable");
+  disabled.addClass("btn-secondary disable");
+  enabled.addClass("btn-primary active");
+  registrationType();
+}
+
+function registrationType() {
+  if ($("#buttonSeller").hasClass("btn-primary")) {
+    alert("WARNING! The registration as Seller is only permitted to autorized Company!");
+    $("#next-form").html(`
+      <div id="next-form" class="collapse">
+        <div class="form-group">
+          <label class="font-weight-bold">Name</label>
+          <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Surname</label>
+          <input type="text" name="surname" id="surname" class="form-control" placeholder="Insert your surname" />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Phone #</label>
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            class="tel form-control"
+            placeholder="(000)-000-0000"
+            autocomplete="tel"
+          />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Password</label>
+          <input type="password" name="password" id="password" class="form-control" placeholder="***********" />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Confirm Password</label>
+          <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder="***********" />
+          <em id="cp"></em>
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">CAP</label>
+          <input type="text" name="cap" id="cap" class="tel form-control" autocomplete="postal-code" />
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">Address</label>
+          <input type="text" name="address" id="address" class="tel form-control" autocomplete="address-line1" />
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">City</label>
+          <input type="text" name="city" id="city" class="tel form-control" autocomplete="address-level2" />
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">Province</label>
+          <input type="text" name="province" id="province" class="tel form-control" autocomplete="address-level1" />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="condition" id="condition" /> I agree with the
+            <a href="javascript:;">Terms & Conditions</a> for Registration.
+          </label>
+          <em id="cTeC"></em>
+        </div>
+        <div class="form-group">
+          <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
+        </div>
+      </div>
+      `);
+  } else {
+    $("#next-form").html(`
+      <div id="next-form" class="collapse">
+        <div class="form-group">
+          <label class="font-weight-bold">Name</label>
+          <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Surname</label>
+          <input type="text" name="surname" id="surname" class="form-control" placeholder="Insert your surname" />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Phone #</label>
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            class="tel form-control"
+            placeholder="(000)-000-0000"
+            autocomplete="tel"
+          />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Password</label>
+          <input type="password" name="password" id="password" class="form-control" placeholder="***********" />
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold">Confirm Password</label>
+          <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder="***********" />
+          <em id="cp"></em>
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">CAP</label>
+          <input type="text" name="cap" id="cap" class="tel form-control" autocomplete="postal-code" />
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">Address</label>
+          <input type="text" name="address" id="address" class="tel form-control" autocomplete="address-line1" />
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">City</label>
+          <input type="text" name="city" id="city" class="tel form-control" autocomplete="address-level2" />
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold">Province</label>
+          <input type="text" name="province" id="province" class="tel form-control" autocomplete="address-level1" />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="condition" id="condition" /> I agree with the
+            <a href="javascript:;">Terms & Conditions</a> for Registration.
+          </label>
+          <em id="cTeC"></em>
+        </div>
+        <div class="form-group">
+          <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
+        </div>
+      </div>
+      `);
+  }
+  var input = $("[type=tel]");
+  input.mobilePhoneNumber({ allowPhoneWithoutPrefix: "+1" });
+  input.bind("country.mobilePhoneNumber", function (e, country) {
+    $(".country").text(country || "");
+  });
+}
+
+function validation() {
   if ($("#password").val() != $("#cpassword").val()) {
     $("#cpassword").addClass("is-invalid");
     $("#cp").html('<span class="text-danger">Password and confirm password not matched!</span>');
@@ -36,7 +175,7 @@ function validation() {
   $("form input").each(function () {
     if ($(this).val() == "") {
       $(this).addClass("is-invalid");
-      alert("Errore, campo vuoto non permesso");
+      alert("Errore, campo '" + $(this).attr("name") + "' vuoto non permesso");
       return false;
     }
   });
@@ -44,8 +183,9 @@ function validation() {
   if ($(".is-invalid").length) {
     return false;
   }
+  //Crypt password
   var password = $("#password").val();
-  var hash = rstr_sha512(password);
+  var hash = hex_sha512(password);
   $("#password").val(hash);
   console.log("Password is:".hash);
 }
@@ -61,98 +201,12 @@ $(document).ready(function (e) {
       }
     });
   });
+});
 
-  /*   $("#name").on("keyup", function () {
-    if ($("#name").val() == "") {
-      $("#name").addClass("is-invalid");
-      return false;
-    } else {
-      $("#name").removeClass("is-invalid");
-    }
-  });
-  $("#surname").on("keyup", function () {
-    if ($("#surname").val() == "") {
-      $("#surname").addClass("is-invalid");
-      return false;
-    } else {
-      $("#surname").removeClass("is-invalid");
-    }
-  });
-  $("#phone").on("keyup", function () {
-    if ($("#phone").val() == "") {
-      $("#phone").addClass("is-invalid");
-      return false;
-    } else {
-      $("#phone").removeClass("is-invalid");
-    }
-  });
-  $("#password").on("keyup", function () {
-    if ($("#password").val() == "") {
-      $("#password").addClass("is-invalid");
-      return false;
-    } else {
-      $("#password").removeClass("is-invalid");
-    }
-  });
-  $("#cpassword").on("keyup", function () {
-    if ($("#cpassword").val() == "") {
-      $("#cpassword").addClass("is-invalid");
-      return false;
-    } else {
-      $("#cpassword").removeClass("is-invalid");
-    }
-  });
-
-  $("#cap").on("keyup", function () {
-    if ($("#cap").val() == "") {
-      $("#cap").addClass("is-invalid");
-      return false;
-    } else {
-      $("#cap").removeClass("is-invalid");
-    }
-  });
-
-  $("#address").on("keyup", function () {
-    if ($("#address").val() == "") {
-      $("#address").addClass("is-invalid");
-      return false;
-    } else {
-      $("#address").removeClass("is-invalid");
-    }
-  });
-
-  $("#city").on("keyup", function () {
-    if ($("#city").val() == "") {
-      $("#city").addClass("is-invalid");
-      return false;
-    } else {
-      $("#city").removeClass("is-invalid");
-    }
-  });
-
-  $("#province").on("keyup", function () {
-    if ($("#province").val() == "") {
-      $("#province").addClass("is-invalid");
-      return false;
-    } else {
-      $("#province").removeClass("is-invalid");
-    }
-  });
-
-  $("#address").on("keyup", function () {
-    if ($("#address").val() == "") {
-      $("#address").addClass("is-invalid");
-      return false;
-    } else {
-      $("#address").removeClass("is-invalid");
-    }
-  }); */
-
-  jQuery(function ($) {
-    var input = $("[type=tel]");
-    input.mobilePhoneNumber({ allowPhoneWithoutPrefix: "+1" });
-    input.bind("country.mobilePhoneNumber", function (e, country) {
-      $(".country").text(country || "");
-    });
+jQuery(function ($) {
+  var input = $("[type=tel]");
+  input.mobilePhoneNumber({ allowPhoneWithoutPrefix: "+1" });
+  input.bind("country.mobilePhoneNumber", function (e, country) {
+    $(".country").text(country || "");
   });
 });

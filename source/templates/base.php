@@ -9,6 +9,7 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <title><?php echo $template['title']; ?></title>
+    <link rel="icon" href="img/favicon.ico" /> 
   </head>
   <body>
 <?php require_once 'templates/header.php'; ?>
