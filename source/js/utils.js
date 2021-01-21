@@ -29,16 +29,16 @@ function registrationType() {
       
       <div class="form-group">
           <label class="font-weight-bold">Company name</label>
-          <input type="text" name="companyName" id="companyName" class="form-control" placeholder="Insert the company name" />
+          <input type="text" name="companyName" id="name" class="form-control" placeholder="Choose your name" />
         </div>
         <div class="form-group">
-          <label class="font-weight-bold">Company complete address</label>
-          <input type="text" name="companyAddress" id="companyAddress" class="form-control" placeholder="Insert company complete address" />
+          <label class="font-weight-bold">Company complete addres</label>
+          <input type="text" name="companyAddrea" id="name" class="form-control" placeholder="Choose your name" />
         </div>
 
         <div class="form-group">
           <label class="font-weight-bold">Name</label>
-          <input type="text" name="name" id="name" class="form-control" placeholder="Insert your name" />
+          <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
         </div>
         <div class="form-group">
           <label class="font-weight-bold">Surname</label>
