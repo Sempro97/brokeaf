@@ -43,6 +43,17 @@ class Database
     {
     }
 
+    public function get_categories()
+    {
+        $query = 'SELECT name FROM Categories';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        return array_column($rows, 'name');
+    }
+
     public function get_random_items($count)
     {
         $query = 'SELECT * FROM Items ORDER BY RAND() LIMIT ?';
