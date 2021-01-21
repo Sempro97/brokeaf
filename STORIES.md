@@ -44,6 +44,8 @@
 
 ### Update item information
 
+### See orders details
+
 ## Wow elements
 
 ### Choose address at checkout
@@ -61,3 +63,17 @@
 ### Private items
 
 ### Shopping cart with cookies
+
+## View notifications linked to an event
+
+### User
+
+- Item in cart not in stock
+- Price changed in cart
+- Order shipment
+
+### Seller
+
+- Item sold out
+- Item has been sold
+- Item is/not visible
