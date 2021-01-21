@@ -21,7 +21,7 @@
 		</div>
 
 		<div class="form-group">
-			<input type='button' class="btn btn-primary btn-block" value="Log In" name="but_submit" id="but_submit" onClick="grabCredentials()"/>
+			<input type="submit" class="btn btn-primary btn-block" value="Log In" name="but_submit"/>
 		</div>
 	</form>
 
@@ -31,23 +31,16 @@
 </div>
 
 <script>
-	function grabCredentials() {
-		var userEmail = document.getElementById("email").value
-		var userPassword = document.getElementById("password").value
-
-		$.ajax({
-		url:"check-login.php",
-		type: "POST",
-		data: { email: userEmail, password: userPassword }
-	})
-		.done(function( error ) {
-			if (error === "true") {
-				$("#alert").removeClass();
+		$('form').on('submit', function(event) {
+          event.preventDefault();
+		  values = $(this).serializeArray();
+		  values[1].value = hex_sha512(values[1].value);
+          $.post("api/login.php", values, function(response) {
+            if (response) {
+				window.location.replace("index.php");				
 			} else {
-				window.location.replace("index.php");
+				$("#alert").removeClass();
 			}
-		});
-	}
-
-	
+          }, "json")
+    	});
 </script>

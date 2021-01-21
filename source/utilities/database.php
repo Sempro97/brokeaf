@@ -118,6 +118,7 @@ class Database
 
     public function login($email, $password)
     {
+        
         // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
         if ($statement = self::$instance->prepare('SELECT email, password FROM UserWeb WHERE email = ? LIMIT 1')) {
             $statement->bind_param('s', $email); // esegue il bind del parametro '$email'.
@@ -126,15 +127,13 @@ class Database
             $statement->bind_result($email, $db_password); // recupera il risultato della query e lo memorizza nelle relative variabili.
             $statement->fetch();
             // codifica la password usando una chiave univoca.
-           if (1 == $statement->num_rows) { // se l'utente esiste
+           if ($statement->num_rows == 1) { // se l'utente esiste
               // verifichiamo che non sia disabilitato in seguito all'esecuzione di troppi tentativi di accesso errati.
-              if ($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
+              if ($password == $db_password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
                     // Password corretta!
                     $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
-                    $user_id = preg_replace('/[^0-9]+/', '', $user_id); // ci proteggiamo da un attacco XSS
-                    $_SESSION['user_id'] = $user_id;
-                    $username = preg_replace('/[^a-zA-Z0-9_\\-]+/', '', $username); // ci proteggiamo da un attacco XSS
-                    $_SESSION['username'] = $username;
+                    //$email = preg_replace('/[^0-9]+/', '', $email); // ci proteggiamo da un attacco XSS
+                    //$_SESSION['email'] = $email;
                     $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
                     // Login eseguito con successo.
                   return true;
