@@ -53,11 +53,13 @@ class Database
             $statement->execute();
         } else {
             error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return FALSE;
+
+            return false;
         }
         if ($statement->affected_rows < 0) {
             error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return FALSE;
+
+            return false;
         }
 
         return 1 === $statement->affected_rows;
