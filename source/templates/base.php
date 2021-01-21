@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="font-awesome/css/all.min.css" />
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.caret.js" type="text/javascript"></script>
+    <script src="js/jquery.mobilePhoneNumber.js" type="text/javascript"></script>
+    <script src="js/sha512.js" type="text/javascript"></script>
+    <script src="js/utils.js" type="text/javascript"></script>
     <title><?php echo $template['title']; ?></title>
     <link rel="icon" href="img/favicon.ico" /> 
   </head>
