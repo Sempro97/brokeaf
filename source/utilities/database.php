@@ -52,10 +52,12 @@ class Database
             $statement->bind_param('ssssss', $name, $description, $price, $quantity, $category, $serial_code);
             $statement->execute();
         } else {
-            exit('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return FALSE;
         }
         if ($statement->affected_rows < 0) {
-            exit('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return FALSE;
         }
 
         return 1 === $statement->affected_rows;
