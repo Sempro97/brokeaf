@@ -75,14 +75,14 @@ class Database
         if($statement = self::$instance->prepare($query)){
             $statement->bind_param('isssisssss', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
             
-        $result = $statement->execute();
+        $statement->execute();
         }
         else{
             $error = self::$instance->errno . ' ' . self::$instance->error;
             echo $error;
         }
         
-        return $result;
+        return $statement->affected_rows;
     }
 
 
