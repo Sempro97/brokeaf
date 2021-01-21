@@ -65,7 +65,7 @@ class Database
     }
 
     public function get_cart($email) {
-        $query = "SELECT DetailsItems.serialCode, DetailsItems.positionIndex, DetailsItems.quantity, DetailsItems.price, Items.name, ListsItems.total, Items.quantity AS stock
+        $query = "SELECT DetailsItems.serialCode, DetailsItems.positionIndex, DetailsItems.quantity, DetailsItems.price, Items.name, ListsItems.IdList, ListsItems.total, Items.quantity AS stock
         FROM ((((ShoppingCarts 
         INNER JOIN ListsItems
         ON ShoppingCarts.idShoppingCart = ListsItems.idShoppingCart)
@@ -81,5 +81,18 @@ class Database
         $statement->execute();
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function obtain_item_info($code, $idList) {
+        $query = "DELETE FROM DetailsItems WHERE DetailsItems.serialCode = ? AND DetailsItems.IdList = ?";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('si', $code, $idList);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function remove_item_from_cart($item) {
+        $query = "DELETE FROM DetailsItems WHERE item";
     }
 }
