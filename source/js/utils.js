@@ -13,6 +13,7 @@ function emailCheck() {
   }
 }
 
+/* Change button state Seller/User */
 function changeActive() {
   var disabled = $("button.btn-primary").removeClass("btn-primary active");
   var enabled = $("button.btn-secondary").removeClass("btn-secondary disable");
@@ -21,6 +22,7 @@ function changeActive() {
   registrationType();
 }
 
+/* Update input fileds fot Seller/User */
 function registrationType() {
   if ($("#buttonSeller").hasClass("btn-primary")) {
     alert("WARNING! The registration as Seller is only permitted to autorized Company!");
@@ -164,13 +166,21 @@ function registrationType() {
   }
 }
 
+/* 
+Final control for empty field, password equity.
+Execute the crypt password algorithm.
+Return false on error.
+Return true on success
+*/
 function validation() {
+  /* Check equal password */
   if ($("#password").val() != $("#cpassword").val()) {
     $("#cpassword").addClass("is-invalid");
     $("#cp").html('<span class="text-danger">Password and confirm password not matched!</span>');
     return false;
   }
 
+  /* T&C check */
   if (!document.getElementById("condition").checked) {
     $("#condition").addClass("is-invalid");
     $("#cTeC").html('<span class="text-danger">You must accept T&C!</span>');
@@ -180,7 +190,7 @@ function validation() {
   $("form input").each(function () {
     if ($(this).val() == "") {
       $(this).addClass("is-invalid");
-      alert("Errore, campo '" + $(this).attr("name") + "' vuoto non permesso");
+      alert("Error, fields '" + $(this).attr("name") + "' vuoto non permesso");
       return false;
     }
   });
@@ -188,11 +198,14 @@ function validation() {
   if ($(".is-invalid").length) {
     return false;
   }
-  //Crypt password
+
+  //All good. Crypt password
   var password = $("#password").val();
   var hash = hex_sha512(password);
   $("#password").val(hash);
-  console.log("Password is:".hash);
+  console.log(hash);
+
+  return true;
 }
 
 $(document).ready(function (e) {
@@ -206,4 +219,59 @@ $(document).ready(function (e) {
       }
     });
   });
+
+  $("form").on("submit", function (event) {
+    // Stop the form from refreshing the page.
+    event.preventDefault();
+    if (validation()) {
+      // Retrieve the form values.
+      let formValues = $(this).serialize();
+      // Send the request to the server.
+      sendAddItemRequest(formValues);
+    } else {
+      showAlert("check the highlighted fields!");
+    }
+  });
 });
+
+function sendAddItemRequest(formValues) {
+  $.post({
+    url: "api/check-registration.php",
+    data: formValues,
+    dataType: "json",
+    success: function (itemAdded) {
+      console.log(itemAdded["email"]);
+      if (itemAdded["email"] == $("#email").val()) {
+        clearForm();
+        alert("Nuovo utente creato correttamente! Ora puoi continuare con lo shopping!");
+      } else if (itemAdded == "User already exist") {
+        showAlert("This email il already registred!");
+      } else if (itemAdded == "User not created, not present") {
+        showAlert("An error occurred while trying to add the user.");
+      }
+    },
+    error: function (errorMessage) {
+      showAlert("Connection error!.");
+    },
+  });
+}
+
+function showAlert(message) {
+  let duration = 5000;
+  let classes = "d-none invisible";
+  $(".d-none.invisible")
+    .hide()
+    .text(message)
+    .removeClass("d-none invisible")
+    .fadeIn()
+    .delay(duration)
+    .fadeOut(function () {
+      $(this).addClass(classes);
+    });
+}
+
+function clearForm() {
+  $("form input").each(function () {
+    $(this).val("");
+  });
+}

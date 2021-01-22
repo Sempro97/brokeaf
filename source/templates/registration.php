@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12 rounded pt-2">
-      <form method="post" id="singnupFrom" action="check-registration.php" onSubmit="return validation();">
+      <form id="singnupFrom">
         <h3>Select user type</h3>
         <button type="button" id="buttonUser" class="btn btn-primary" onCLick="changeActive();">User</button>
         <button type="button" id="buttonSeller" class="btn btn-secondary" onCLick="changeActive();">Seller</button>
@@ -82,6 +82,7 @@
             </label>
             <em id="cTeC"></em>
           </div>
+          <div class="alert alert-danger d-none invisible" role="alert"></div>
           <div class="form-group">
             <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
           </div>

@@ -43,28 +43,6 @@ class Database
     {
     }
 
-    public function add_item($name, $description, $price, $quantity, $category, $serial_code, $image)
-    {
-        $query = 'INSERT INTO Items (name, description, price, quantity, Categories, serialCode, isVisible, emailSeller)
-                  VALUES (?, ?, ?, ?, ?, ?, \'1\', \'guiseppe.williamson@example.com\')';
-        $statement = self::$instance->prepare($query);
-        if ($statement) {
-            $statement->bind_param('ssssss', $name, $description, $price, $quantity, $category, $serial_code);
-            $statement->execute();
-        } else {
-            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-
-            return false;
-        }
-        if ($statement->affected_rows < 0) {
-            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-
-            return false;
-        }
-
-        return 1 === $statement->affected_rows;
-    }
-
     public function get_categories()
     {
         $query = 'SELECT name FROM Categories';
@@ -107,15 +85,17 @@ class Database
 
         if($statement = self::$instance->prepare($query)){
             $statement->bind_param('isssisssss', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
-            
-        $statement->execute();
+            $statement->execute();
+        } else {
+            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return 0;
         }
-        else{
-            $error = self::$instance->errno . ' ' . self::$instance->error;
-            echo $error;
+        if ($statement->affected_rows == 1) {
+            return 1;
+        } else {
+            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return 0;
         }
-        
-        return $statement->affected_rows;
     }
 
 
@@ -124,21 +104,18 @@ class Database
     {
         $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
         if($statement = self::$instance->prepare($query)) {
-        $statement->bind_param('issssssssss', $cap, $address, $city, $companyAddress, $companyName, $email, $name, $surname, $password, $phoneNumber, $province);
-        $statement->execute();
-    }
-    else{
-        $error = self::$instance->errno . ' ' . self::$instance->error;
-        echo $error;
-    }
-    
-    if($statement->affected_rows == 1){
-        return 1;
-    }
-    else{
-        $error = self::$instance->errno . ' ' . self::$instance->error;
-            echo $error;
+            $statement->bind_param('issssssssss', $cap, $address, $city, $companyAddress, $companyName, $email, $name, $surname, $password, $phoneNumber, $province);
+            $statement->execute();
+        } else {
+            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return 0;
+        }
+        if($statement->affected_rows == 1){
+            return 1;
+        } else {
+            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
             return 0;
     }
 }
@@ -198,6 +175,16 @@ class Database
 
     public function get_user_from_email($email) {
         $query = 'SELECT * FROM UserWeb WHERE email = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        $user = $result->fetch_all(MYSQLI_ASSOC)[0];
+        return $user;
+    }
+
+    public function get_seller_from_email($email) {
+        $query = 'SELECT * FROM Seller WHERE email = ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
