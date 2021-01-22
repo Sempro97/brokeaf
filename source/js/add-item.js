@@ -1,67 +1,47 @@
 $(function () {
-  $("form").on("submit", function (event) {
-    // Stop the form from refreshing the page.
+  $("form").submit(function (event) {
     event.preventDefault();
-    // Retrieve the form values.
-    let formValues = $(this).serialize();
-    // Send the request to the server.
-    sendAddItemRequest(formValues);
+    let formData = new FormData(this);
+    addItem(formData);
   });
 });
 
-function sendAddItemRequest(formValues) {
+function addItem(formData) {
   $.post({
     url: "api/add-item.php",
-    data: formValues,
-    dataType: "json",
-    success: function (itemAdded) {
-      if (itemAdded === true) {
-        // The item was successfully added to the database, now we need to
-        // upload the image.
-        let image = $("#image")[0].files[0];
-        uploadImage(image);
-      } else {
-        showAlert("An error occurred while trying to add the item.");
-      }
-    },
-  });
-}
-
-function uploadImage(image) {
-  let formData = new FormData();
-  formData.append("image", image);
-  $.post({
-    url: "api/upload-image.php",
     data: formData,
     dataType: "json",
     contentType: false,
     processData: false,
-    success: function (imageUploaded) {
-      console.log(imageUploaded);
-      if (imageUploaded === true) {
-        window.location.replace("index.php");
+    success: function (response) {
+      if (response === true) {
+        showAlert("success", "Item added successfully.");
       } else {
-        let errorMessage = imageUploaded;
-        showAlert("An error occurred while trying to upload the image: " + errorMessage);
+        showAlert("danger", response);
       }
     },
-    error: function (errorMessage) {
-      showAlert("An error occurred while trying to upload the image.");
+    error: function (response) {
+      showAlert("danger");
     },
   });
 }
 
-function showAlert(message) {
-  let alert = $(".d-none.invisible");
-  let classes = "d-none invisible";
-  let duration = 5000;
-  alert
-    .hide()
-    .text(message)
-    .removeClass(classes)
-    .fadeIn()
-    .delay(duration)
-    .fadeOut(function () {
-      $(this).addClass(classes);
-    });
+function showAlert(type, message) {
+  if (type === "danger") {
+    if (message) {
+      message = "An error occurred while trying to add the item: " + message;
+    } else {
+      message = "An error occurred while trying to add the item.";
+    }
+  }
+  // Set alert to the correct type.
+  let alert = $(".alert");
+  let alertType = "alert-" + type;
+  alert.removeClass("alert-danger alert-success");
+  alert.addClass(alertType);
+  // Make the alert visible.
+  let visibilityClasses = "d-none invisible";
+  alert.removeClass(visibilityClasses);
+  // Set the alert message.
+  alert.text(message);
 }

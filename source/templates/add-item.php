@@ -54,7 +54,7 @@
       </div>
       <div class="row mt-3">
         <div class="col">
-          <div class="alert alert-danger d-none invisible" role="alert"></div>
+          <div class="alert d-none invisible" role="alert"></div>
         </div>
       </div>
     </div>

@@ -45,6 +45,7 @@ class Database
 
     public function add_image()
     {
+        // TODO: Add implementation.
         return true;
     }
 
