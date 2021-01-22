@@ -16,6 +16,7 @@ CREATE DATABASE `brokeaf` DEFAULT CHARACTER SET utf8mb4;
 USE `brokeaf`;
 
 
+
 -- DBSpace Section
 -- _______________
 
@@ -88,24 +89,18 @@ create table Description(
      idDesc char(30) not null,
      constraint UniqueDesc unique (description),
      constraint IDNotificationSeller primary key (idDesc));
-     
-create table NotificationSeller (
-     path char(20) not null,
-     date datetime not null,
-     email char(30) not null,
-     idDesc char(30) not null,
-     constraint FKnotify_Seller_des foreign key (idDesc) references Description(idDesc),
-     constraint FKnotify_Seller foreign key (email) references Seller(email),
-     constraint IDNotificationSeller primary key (email, date));
 
-create table NotificationUserWeb (
+create table NotificationUser (
+     idNotification numeric(16),
      path char(128) not null,
      date datetime not null,
-     email char(30) not null,
      idDesc char(30) not null,
+     emailSeller char(30),
+     emailUser char(30),
      constraint FKnotify_UserWeb_des foreign key (idDesc) references Description(idDesc),
-     constraint FKnotify_UserWeb foreign key (email) references UserWeb(email),
-     constraint IDNotificationUserWeb primary key (email, date));
+     constraint FKnotify_UserWeb foreign key (emailUser) references UserWeb(email),
+     constraint FKnotify_UserSeller foreign key (emailSeller) references Seller(email),
+     constraint IDNotificationUser primary key (idNotification));
 
 create table Order_UserWeb (
      email char(30) not null,
@@ -170,8 +165,6 @@ INSERT INTO `ListItems` (IdList) VALUES ('2');
    
 INSERT INTO `Category` (name,keywords) VALUES ('Utensili','cacciavite,fai da te');
 INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
-
-INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
 
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('15353', '0695 Norbert Burgs Apt. 013', 'Karlfort', '537 Schuppe Track\nPort Miles,', 'Rogahn Group', 'adriana90@example.net', 'Hailie', 'Oberbrunner', '1', '3470328087', 'Saint Barthelemy');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('81660', '6494 Wolff Fields Apt. 156', 'North Clydeberg', '261 Leif Fork Apt. 340\nNew Ann', 'Zulauf and Sons', 'daugherty.parker@example.com', 'Jammie', 'Goldner', '75', '3476748497', 'Singapore');
@@ -296,7 +289,10 @@ INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `sur
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('71155', '634 Schiller Highway', 'North Casey', 'yundt.selmer@example.net', NULL, 'Eduardo', 'Pacocha', '12', '3461936253', 'United Arab Emirates');
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('34747', '806 Elmo Wells Apt. 193', 'Lake Orlandview', 'zstiedemann@example.com', NULL, 'Domenica', 'Grimes', '47', '3464493252', 'Nicaragua');
 
-INSERT INTO `NotificationUserWeb` (`idDesc`,`path`,`date`,`email`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','adrain.johnson@example.com');
+INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
+
+INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
+
 
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', '0');
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP()-1, '1', '1');
