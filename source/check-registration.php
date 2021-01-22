@@ -13,7 +13,7 @@ if($database->get_user_from_email($_POST["email"]) != NULL){
 //User not registred will be inserted to DB
 if($_POST["companyName"]){
     echo "<br> company registration <br>";
-    $results = $database->register_seller(intval($_POST["cap"]), $_POST["address"], $_POST["city"],$_POST["companyAddres"],$_POST["companyName"], $_POST["email"], NULL, $_POST["name"], $_POST["surname"], $_POST["password"], $_POST["phone"], $_POST["province"]);
+    $results = $database->register_seller(intval($_POST["cap"]), $_POST["address"], $_POST["city"],$_POST["companyAddress"],$_POST["companyName"], $_POST["email"], $_POST["name"], $_POST["surname"], $_POST["password"], $_POST["phone"], $_POST["province"]);
 }else{
     echo "<br> user registration <br>";
     $results = $database->register_user(intval($_POST["cap"]), $_POST["address"], $_POST["city"], $_POST["email"], NULL, $_POST["name"], $_POST["surname"], $_POST["password"], $_POST["phone"], $_POST["province"]);

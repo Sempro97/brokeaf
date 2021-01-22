@@ -29,11 +29,11 @@ function registrationType() {
       
       <div class="form-group">
           <label class="font-weight-bold">Company name</label>
-          <input type="text" name="companyName" id="name" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="companyName" id="companyName" class="form-control" placeholder="Choose your name" />
         </div>
         <div class="form-group">
           <label class="font-weight-bold">Company complete addres</label>
-          <input type="text" name="companyAddrea" id="name" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="companyAddress" id="companyAddress" class="form-control" placeholder="Choose your name" />
         </div>
 
         <div class="form-group">

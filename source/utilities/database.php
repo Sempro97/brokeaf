@@ -87,12 +87,12 @@ class Database
 
 
 
-    public function register_seller($cap, $address, $city, $companyAddres, $companyName, $email, $name, $surname, $password, $phoneNumber, $province)
+    public function register_seller($cap, $address, $city, $companyAddress, $companyName, $email, $name, $surname, $password, $phoneNumber, $province)
     {
-        $query = 'INSERT INTO Seller ("cap", "address", "city", "companyAddres","companyName", "email", "name", "surname", "password", "phoneNumber", "province")
+        $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         if($statement = self::$instance->prepare($query)) {
-        $statement->bind_param('issssssssss', $cap, $address, $city, $companyAddres, $companyName, $email, $name, $surname, $password, $phoneNumber, $province);
+        $statement->bind_param('issssssssss', $cap, $address, $city, $companyAddress, $companyName, $email, $name, $surname, $password, $phoneNumber, $province);
         $statement->execute();
     }
     else{
@@ -100,8 +100,15 @@ class Database
         echo $error;
     }
     
-    return $statement->affected_rows;
+    if($statement->affected_rows == 1){
+        return 1;
     }
+    else{
+        $error = self::$instance->errno . ' ' . self::$instance->error;
+            echo $error;
+            return 0;
+    }
+}
 
     public function sec_session_start()
     {
