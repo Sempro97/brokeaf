@@ -17,23 +17,16 @@ function addItem(formData) {
       if (response === true) {
         showAlert("success", "Item added successfully.");
       } else {
-        showAlert("danger", response);
+        showAlert("danger", "An error occurred while trying to add the item: " + response);
       }
     },
     error: function (response) {
-      showAlert("danger");
+      showAlert("danger", "An error occurred while trying to add the item.");
     },
   });
 }
 
 function showAlert(type, message) {
-  if (type === "danger") {
-    if (message) {
-      message = "An error occurred while trying to add the item: " + message;
-    } else {
-      message = "An error occurred while trying to add the item.";
-    }
-  }
   // Set alert to the correct type.
   let alert = $(".alert");
   let alertType = "alert-" + type;
