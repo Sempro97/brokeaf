@@ -43,6 +43,39 @@ class Database
     {
     }
 
+    public function add_item($name, $description, $price, $quantity, $category, $serial_code, $image)
+    {
+        $query = 'INSERT INTO Items (name, description, price, quantity, Categories, serialCode, isVisible, emailSeller)
+                  VALUES (?, ?, ?, ?, ?, ?, \'1\', \'guiseppe.williamson@example.com\')';
+        $statement = self::$instance->prepare($query);
+        if ($statement) {
+            $statement->bind_param('ssssss', $name, $description, $price, $quantity, $category, $serial_code);
+            $statement->execute();
+        } else {
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        if ($statement->affected_rows < 0) {
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+
+        return 1 === $statement->affected_rows;
+    }
+
+    public function get_categories()
+    {
+        $query = 'SELECT name FROM Categories';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        return array_column($rows, 'name');
+    }
+
     public function get_random_items($count)
     {
         $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
