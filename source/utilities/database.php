@@ -43,13 +43,27 @@ class Database
     {
     }
 
-    public function add_item($name, $description, $price, $quantity, $category, $serial_code, $image)
+    public function add_image()
+    {
+        return true;
+    }
+
+    public function add_item($item, $email)
     {
         $query = 'INSERT INTO Items (name, description, price, quantity, Categories, serialCode, isVisible, emailSeller)
-                  VALUES (?, ?, ?, ?, ?, ?, \'1\', \'guiseppe.williamson@example.com\')';
+                  VALUES (?, ?, ?, ?, ?, ?, \'1\', ?)';
         $statement = self::$instance->prepare($query);
         if ($statement) {
-            $statement->bind_param('ssssss', $name, $description, $price, $quantity, $category, $serial_code);
+            $statement->bind_param(
+                'sssssss',
+                $item['name'],
+                $item['description'],
+                $item['price'],
+                $item['quantity'],
+                $item['category'],
+                $item['serial_code'],
+                $email
+            );
             $statement->execute();
         } else {
             error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
@@ -63,6 +77,19 @@ class Database
         }
 
         return 1 === $statement->affected_rows;
+    }
+
+    public function get_item($serial_code)
+    {
+        $query = 'SELECT *
+                  FROM Items
+                  WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows ? $result->fetch_all(MYSQLI_ASSOC)[0] : false;
     }
 
     public function get_categories()
