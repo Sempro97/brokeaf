@@ -13,19 +13,13 @@
           <div class="input-group">
             <input type="email" name="email" id="email" class="form-control" placeholder="Enter valid email" />
             <div class="input-group-append">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-toggle="collapse"
-                data-target="#next-form"
-                onClick="return emailCheck();"
-              >
+              <button type="button" class="btn btn-outline-primary" onClick="return emailCheck();">
                 <i class="fa fa-envelope"></i>
               </button>
             </div>
           </div>
         </div>
-        <div id="next-form" class="collapse">
+        <div id="next-form">
           <div class="form-group">
             <label class="font-weight-bold">Name</label>
             <input type="text" name="name" id="name" class="form-control" placeholder="Insert your name" />

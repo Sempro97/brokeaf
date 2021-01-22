@@ -27,7 +27,7 @@ function registrationType() {
   if ($("#buttonSeller").hasClass("btn-primary")) {
     alert("WARNING! The registration as Seller is only permitted to autorized Company!");
     $("#next-form").html(`
-      <div id="next-form" class="collapse">
+      <div id="next-form">
       
       <div class="form-group">
           <label class="font-weight-bold">Company name</label>
@@ -101,7 +101,7 @@ function registrationType() {
       `);
   } else {
     $("#next-form").html(`
-      <div id="next-form" class="collapse">
+      <div id="next-form">
         <div class="form-group">
           <label class="font-weight-bold">Name</label>
           <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
