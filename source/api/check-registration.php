@@ -9,7 +9,7 @@ $database->sec_session_start();
 //User already registred redirect to index
 if($database->get_user_from_email($_POST["email"]) != NULL || $database->get_seller_from_email($_POST["email"]) != NULL){
     error_log('User already exist');
-    echo json_encode("User already exist");
+    echo json_encode('User already exist');
 } else {
 error_log('User creation try');
 //User not registred will be inserted to DB
@@ -52,6 +52,6 @@ if($results == 1){
     $database->register_user_session($user);
     echo json_encode($user);
 }else{
-    echo json_encode("User not created, not present");
+    echo json_encode('User not created, not present');
 }
 }

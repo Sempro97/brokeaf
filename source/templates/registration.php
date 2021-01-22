@@ -3,8 +3,8 @@
     <div class="col-sm-12 rounded pt-2">
       <form id="singnupFrom">
         <h3>Select user type</h3>
-        <button type="button" id="buttonUser" class="btn btn-primary" onCLick="changeActive();">User</button>
-        <button type="button" id="buttonSeller" class="btn btn-secondary" onCLick="changeActive();">Seller</button>
+        <button type="button" id="buttonUser" class="btn btn-secondary disabled" onCLick="changeActive();" disabled>User</button>
+        <button type="button" id="buttonSeller" class="btn btn-primary active" onCLick="changeActive();">Seller</button>
         <div class="form-group pt-4">
           <label class="font-weight-bold"
             >Email

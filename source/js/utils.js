@@ -15,32 +15,32 @@ function emailCheck() {
 
 /* Change button state Seller/User */
 function changeActive() {
-  var disabled = $("button.btn-primary").removeClass("btn-primary active");
-  var enabled = $("button.btn-secondary").removeClass("btn-secondary disable");
-  disabled.addClass("btn-secondary disable");
+  var disabled = $("button.btn-primary").removeClass("btn-primary active").attr("disabled", "true");
+  var enabled = $("button.btn-secondary").removeClass("btn-secondary disabled").removeAttr("disabled");
+  disabled.addClass("btn-secondary disabled");
   enabled.addClass("btn-primary active");
   registrationType();
 }
 
 /* Update input fileds fot Seller/User */
 function registrationType() {
-  if ($("#buttonSeller").hasClass("btn-primary")) {
+  if ($("#buttonUser").hasClass("btn-primary")) {
     alert("WARNING! The registration as Seller is only permitted to autorized Company!");
     $("#next-form").html(`
       <div id="next-form">
       
       <div class="form-group">
           <label class="font-weight-bold">Company name</label>
-          <input type="text" name="companyName" id="companyName" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="companyName" id="companyName" class="form-control" placeholder="Insert your name" />
         </div>
         <div class="form-group">
           <label class="font-weight-bold">Company complete addres</label>
-          <input type="text" name="companyAddress" id="companyAddress" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="companyAddress" id="companyAddress" class="form-control" placeholder="Insert your name" />
         </div>
 
         <div class="form-group">
           <label class="font-weight-bold">Name</label>
-          <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="name" id="name" class="form-control" placeholder="Insert your name" />
         </div>
         <div class="form-group">
           <label class="font-weight-bold">Surname</label>
@@ -104,7 +104,7 @@ function registrationType() {
       <div id="next-form">
         <div class="form-group">
           <label class="font-weight-bold">Name</label>
-          <input type="text" name="name" id="name" class="form-control" placeholder="Choose your name" />
+          <input type="text" name="name" id="name" class="form-control" placeholder="Insert your name" />
         </div>
         <div class="form-group">
           <label class="font-weight-bold">Surname</label>
@@ -245,7 +245,8 @@ function sendAddItemRequest(formValues) {
         clearForm();
         alert("Nuovo utente creato correttamente! Ora puoi continuare con lo shopping!");
       } else if (itemAdded == "User already exist") {
-        showAlert("This email il already registred!");
+        showAlert("This email is already registred!");
+        clearForm();
       } else if (itemAdded == "User not created, not present") {
         showAlert("An error occurred while trying to add the user.");
       }
