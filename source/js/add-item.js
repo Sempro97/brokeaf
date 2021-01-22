@@ -16,8 +16,8 @@ function sendAddItemRequest(formValues) {
     dataType: "json",
     success: function (itemAdded) {
       if (itemAdded === true) {
-        // The item was successfully added to the database, now upload
-        // the image and redirect the user.
+        // The item was successfully added to the database, now we need to
+        // upload the image.
         let image = $("#image")[0].files[0];
         uploadImage(image);
       } else {
@@ -41,15 +41,27 @@ function uploadImage(image) {
       if (imageUploaded === true) {
         window.location.replace("index.php");
       } else {
-        showAlert("An error occurred while trying to upload the image.");
+        let errorMessage = imageUploaded;
+        showAlert("An error occurred while trying to upload the image: " + errorMessage);
       }
     },
-    error: function (error) {
+    error: function (errorMessage) {
       showAlert("An error occurred while trying to upload the image.");
     },
   });
 }
 
 function showAlert(message) {
-  $(".d-none.invisible").hide().removeClass("d-none invisible").fadeIn();
+  let alert = $(".d-none.invisible");
+  let classes = "d-none invisible";
+  let duration = 5000;
+  alert
+    .hide()
+    .text(message)
+    .removeClass(classes)
+    .fadeIn()
+    .delay(duration)
+    .fadeOut(function () {
+      $(this).addClass(classes);
+    });
 }
