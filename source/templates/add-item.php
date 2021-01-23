@@ -1,4 +1,3 @@
-    <h1 class="text-center">Add item</h1>
     <div class="container">
       <div class="row">
         <div class="col">
