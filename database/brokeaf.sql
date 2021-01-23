@@ -36,19 +36,20 @@ create table DetailsItem (
      price char(10) not null,
      constraint IDDetailsItem primary key (serialCode, IdList));
 
-create table Img (
+create table Image (
      serialCode char(10) not null,
      path char(20) not null,
-     constraint IDImg primary key (serialCode, path));
+     constraint IDImage primary key (serialCode, path));
 
 create table Item (
+     quantity int(11) NOT NULL,
      isVerificated char not null,
      description char(120) not null,
      price char(10) not null,
      name char(30) not null,
      serialCode char(10) not null,
-     email char(30) not null,
-     Kin_name char(30) not null,
+     emailSeller char(30) not null,
+     category char(30) not null,
      constraint IDItem_ID primary key (serialCode));
 
 create table ListItems (
@@ -134,16 +135,16 @@ alter table DetailsItem add constraint FKitemise
      foreign key (serialCode)
      references Item(serialCode);
 
-alter table Img add constraint FKshow
+alter table Image add constraint FKshow
      foreign key (serialCode)
      references Item(serialCode); 
 
 alter table Item add constraint FKbelong
-     foreign key (email)
+     foreign key (emailSeller)
      references Seller(email);
 
 alter table Item add constraint FKkind
-     foreign key (Kin_name)
+     foreign key (category)
      references Category(name);
 
 alter table Order_UserWeb add constraint FKcontain_FK
@@ -308,13 +309,13 @@ INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, 
 INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9876711578', '2', '3', '2', '12.73');
 
 
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('1313932365', 'img-2');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('1952322448', 'img-6');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3438720877', 'img-1');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3577771822', 'img-3');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3773158679', 'img-7');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('4943693566', 'img-4');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('7775972008', 'img-0');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('8791859210', 'img-5');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('9150815034', 'img-9');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('9876711578', 'img-8');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1313932365', 'image-2');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1952322448', 'image-6');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3438720877', 'image-1');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3577771822', 'image-3');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3773158679', 'image-7');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('4943693566', 'image-4');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('7775972008', 'image-0');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('8791859210', 'image-5');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('9150815034', 'image-9');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('9876711578', 'image-8');

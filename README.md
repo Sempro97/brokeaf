@@ -1,4 +1,4 @@
-# BrokeAF MySQL
+# BrokeAF
 
 ## How to start the website
 
@@ -17,7 +17,6 @@
 1. Go to the root folder of the project
 2. Run the `linter.py` script with either the `--html` or `--php` flag (you can also use both at the same time)
 
-## DB scheme
+## DB Scheme
 
 ![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/c401b20eea43cb1d74165b2ec755b16fdd1e619a/img/BrokeAF.png)
-
