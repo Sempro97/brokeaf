@@ -11,6 +11,7 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdown-button">
                     <li>
                       <a class="dropdown-item" href="#">Notifications</a>
+                      <a class="dropdown-item" href="user-orders.php">Orders</a>
                     </li>
                   </ul>
                 </div>
