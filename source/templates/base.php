@@ -1,3 +1,7 @@
+<?php
+// https://www.php.net/manual/en/migration70.new-features.php#migration70.new-features.null-coalesce-op
+$template['scripts'] = $template['scripts'] ?? [];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,11 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="font-awesome/css/all.min.css" />
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/sha512.js" type="text/javascript"></script>
-    <title><?php echo $template['title']; ?></title>
-    <link rel="icon" href="img/favicon.ico" /> 
+<?php foreach ($template['scripts'] as $script) { ?>
+    <script src="<?php echo $script; ?>"></script>
+<?php } ?>
+    <title><?php echo 'BrokeAF - '.$template['title']; ?></title>
   </head>
   <body>
 <?php require_once 'templates/header.php'; ?>
