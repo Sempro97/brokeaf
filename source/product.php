@@ -13,8 +13,9 @@ if($product == -1){
     $template['item'] = $database->get_item($product);
     /* Check response DB */
     if($template['item'][0] != NULL){
-        $template['imagePath'] = $database->get_img_item($template['item'][0]['serialCode'])[0]['path'];
+        $template['imagePath'] = $database->get_img_item($product)[0]['path'];
         var_dump($template['item'][0]);
+        $template['title'] = $template['item'][0]['name'];
         $template['content'] = 'templates/product.php';
     } else {
         $template['title'] = 'Articolo not found!';
