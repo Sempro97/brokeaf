@@ -36,19 +36,20 @@ create table DetailsItem (
      price char(10) not null,
      constraint IDDetailsItem primary key (serialCode, IdList));
 
-create table Img (
+create table Image (
      serialCode char(10) not null,
      path char(20) not null,
-     constraint IDImg primary key (serialCode, path));
+     constraint IDImage primary key (serialCode, path));
 
 create table Item (
+     quantity int(11) NOT NULL,
      isVerificated char not null,
      description char(120) not null,
      price char(10) not null,
      name char(30) not null,
      serialCode char(10) not null,
-     email char(30) not null,
-     Kin_name char(30) not null,
+     emailSeller char(30) not null,
+     category char(30) not null,
      constraint IDItem_ID primary key (serialCode));
 
 create table ListItems (
@@ -88,24 +89,18 @@ create table Description(
      idDesc char(30) not null,
      constraint UniqueDesc unique (description),
      constraint IDNotificationSeller primary key (idDesc));
-     
-create table NotificationSeller (
-     path char(20) not null,
-     date datetime not null,
-     email char(30) not null,
-     idDesc char(30) not null,
-     constraint FKnotify_Seller_des foreign key (idDesc) references Description(idDesc),
-     constraint FKnotify_Seller foreign key (email) references Seller(email),
-     constraint IDNotificationSeller primary key (email, date));
 
-create table NotificationUserWeb (
+create table NotificationUser (
+     idNotification numeric(16),
      path char(128) not null,
      date datetime not null,
-     email char(30) not null,
      idDesc char(30) not null,
+     emailSeller char(30),
+     emailUser char(30),
      constraint FKnotify_UserWeb_des foreign key (idDesc) references Description(idDesc),
-     constraint FKnotify_UserWeb foreign key (email) references UserWeb(email),
-     constraint IDNotificationUserWeb primary key (email, date));
+     constraint FKnotify_UserWeb foreign key (emailUser) references UserWeb(email),
+     constraint FKnotify_UserSeller foreign key (emailSeller) references Seller(email),
+     constraint IDNotificationUser primary key (idNotification));
 
 create table Order_UserWeb (
      email char(30) not null,
@@ -140,16 +135,16 @@ alter table DetailsItem add constraint FKitemise
      foreign key (serialCode)
      references Item(serialCode);
 
-alter table Img add constraint FKshow
+alter table Image add constraint FKshow
      foreign key (serialCode)
      references Item(serialCode); 
 
 alter table Item add constraint FKbelong
-     foreign key (email)
+     foreign key (emailSeller)
      references Seller(email);
 
 alter table Item add constraint FKkind
-     foreign key (Kin_name)
+     foreign key (category)
      references Category(name);
 
 alter table Order_UserWeb add constraint FKcontain_FK
@@ -170,8 +165,6 @@ INSERT INTO `ListItems` (IdList) VALUES ('2');
    
 INSERT INTO `Category` (name,keywords) VALUES ('Utensili','cacciavite,fai da te');
 INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
-
-INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
 
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('15353', '0695 Norbert Burgs Apt. 013', 'Karlfort', '537 Schuppe Track\nPort Miles,', 'Rogahn Group', 'adriana90@example.net', 'Hailie', 'Oberbrunner', '1', '3470328087', 'Saint Barthelemy');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('81660', '6494 Wolff Fields Apt. 156', 'North Clydeberg', '261 Leif Fork Apt. 340\nNew Ann', 'Zulauf and Sons', 'daugherty.parker@example.com', 'Jammie', 'Goldner', '75', '3476748497', 'Singapore');
@@ -296,7 +289,10 @@ INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `sur
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('71155', '634 Schiller Highway', 'North Casey', 'yundt.selmer@example.net', NULL, 'Eduardo', 'Pacocha', '12', '3461936253', 'United Arab Emirates');
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('34747', '806 Elmo Wells Apt. 193', 'Lake Orlandview', 'zstiedemann@example.com', NULL, 'Domenica', 'Grimes', '47', '3464493252', 'Nicaragua');
 
-INSERT INTO `NotificationUserWeb` (`idDesc`,`path`,`date`,`email`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','adrain.johnson@example.com');
+INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
+
+INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
+
 
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', '0');
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP()-1, '1', '1');
@@ -313,13 +309,13 @@ INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, 
 INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9876711578', '2', '3', '2', '12.73');
 
 
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('1313932365', 'img-2');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('1952322448', 'img-6');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3438720877', 'img-1');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3577771822', 'img-3');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3773158679', 'img-7');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('4943693566', 'img-4');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('7775972008', 'img-0');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('8791859210', 'img-5');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('9150815034', 'img-9');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('9876711578', 'img-8');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1313932365', 'image-2');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1952322448', 'image-6');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3438720877', 'image-1');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3577771822', 'image-3');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3773158679', 'image-7');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('4943693566', 'image-4');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('7775972008', 'image-0');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('8791859210', 'image-5');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('9150815034', 'image-9');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('9876711578', 'image-8');
