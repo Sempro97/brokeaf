@@ -68,24 +68,23 @@ class Database
         $query = 'INSERT INTO Items (name, description, price, quantity, Categories, serialCode, isVisible, emailSeller)
                   VALUES (?, ?, ?, ?, ?, ?, \'1\', ?)';
         $statement = self::$instance->prepare($query);
-        if ($statement) {
-            $statement->bind_param(
-                'sssssss',
-                $item['name'],
-                $item['description'],
-                $item['price'],
-                $item['quantity'],
-                $item['category'],
-                $item['serial_code'],
-                $email
-            );
-            $statement->execute();
-        } else {
+        if (false === $statement) {
             error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
             return false;
         }
-        if ($statement->affected_rows < 0) {
+        $statement->bind_param(
+            'sssssss',
+            $item['name'],
+            $item['description'],
+            $item['price'],
+            $item['quantity'],
+            $item['category'],
+            $item['serial_code'],
+            $email
+        );
+        $result = $statement->execute();
+        if (false === $result || $statement->affected_rows < 0) {
             error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
             return false;
