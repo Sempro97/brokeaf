@@ -29,18 +29,6 @@ create table Category (
      constraint IDCategory primary key (name));
 
 create table ItemDetails (
-<<<<<<< HEAD
-     serialCode char(10) not null,
-     IdList numeric(16) not null,
-     positionIndex numeric(3) not null,
-     quantity int(11) not null,
-     price char(10) not null,
-     constraint IDItemDetails primary key (serialCode, IdList));
-
-create table Image (
-     serialCode char(10) not null,
-     path char(40) not null,
-=======
      serialCode char(64) not null,
      IdList numeric(16) not null,
      positionIndex numeric(16) not null,
@@ -51,7 +39,6 @@ create table Image (
 create table Image (
      serialCode char(64) not null,
      path char(64) not null,
->>>>>>> master
      constraint IDImage primary key (serialCode, path));
 
 create table Item (
