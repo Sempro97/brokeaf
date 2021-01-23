@@ -9,6 +9,7 @@ function emailCheck() {
       return false;
     } else {
       $("#email").removeClass("is-invalid");
+      return true;
     }
   }
 }
@@ -89,13 +90,14 @@ function registrationType() {
 
         <div class="form-group">
           <label>
-            <input type="checkbox" name="condition" id="condition" /> I agree with the
+            <input type="checkbox" name="condition" id="condition" target="_blank"/> I agree with the
             <a href="javascript:;">Terms & Conditions</a> for Registration.
           </label>
           <em id="cTeC"></em>
         </div>
+        <div class="alert alert-danger d-none invisible" role="alert"></div>
         <div class="form-group">
-          <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
+          <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" target="_blank"/>
         </div>
       </div>
       `);
@@ -153,13 +155,14 @@ function registrationType() {
 
         <div class="form-group">
           <label>
-            <input type="checkbox" name="condition" id="condition" /> I agree with the
+            <input type="checkbox" name="condition" id="condition" target="_blank"/> I agree with the
             <a href="javascript:;">Terms & Conditions</a> for Registration.
           </label>
           <em id="cTeC"></em>
         </div>
+        <div class="alert alert-danger d-none invisible" role="alert"></div>
         <div class="form-group">
-          <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
+          <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" target="_blank"/>
         </div>
       </div>
       `);
@@ -173,6 +176,10 @@ Return false on error.
 Return true on success
 */
 function validation() {
+  /* Email is valid */
+  if (!emailCheck()) {
+    return false;
+  }
   /* Check equal password */
   if ($("#password").val() != $("#cpassword").val()) {
     $("#cpassword").addClass("is-invalid");
@@ -185,9 +192,11 @@ function validation() {
     $("#condition").addClass("is-invalid");
     $("#cTeC").html('<span class="text-danger">You must accept T&C!</span>');
     return false;
+  } else {
+    $("#condition").removeClass("is-invalid");
   }
   //Mark incomplete input
-  $("form input").each(function () {
+  $("form input[target!='_blank']").each(function () {
     if ($(this).val() == "") {
       $(this).addClass("is-invalid");
       alert("Error, fields '" + $(this).attr("name") + "' vuoto non permesso");
@@ -209,7 +218,7 @@ function validation() {
 }
 
 $(document).ready(function (e) {
-  $("form input").each(function () {
+  $("form input[target!='_blank']").each(function () {
     $(this).on("keyup", function () {
       if ($(this).val() == "") {
         $(this).addClass("is-invalid");
@@ -274,5 +283,6 @@ function showAlert(message) {
 function clearForm() {
   $("form input").each(function () {
     $(this).val("");
+    $(this).removeClass("is-invalid");
   });
 }

@@ -12,11 +12,6 @@
           </label>
           <div class="input-group">
             <input type="email" name="email" id="email" class="form-control" placeholder="Enter valid email" />
-            <div class="input-group-append">
-              <button type="button" class="btn btn-outline-primary" onClick="return emailCheck();">
-                <i class="fa fa-envelope"></i>
-              </button>
-            </div>
           </div>
         </div>
         <div id="next-form">
@@ -71,14 +66,14 @@
 
           <div class="form-group">
             <label>
-              <input type="checkbox" name="condition" id="condition" /> I agree with the
+              <input type="checkbox" name="condition" id="condition" target="_blank"/> I agree with the
               <a href="javascript:;">Terms & Conditions</a> for Registration.
             </label>
             <em id="cTeC"></em>
           </div>
           <div class="alert alert-danger d-none invisible" role="alert"></div>
           <div class="form-group">
-            <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" />
+            <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" target="_blank"/>
           </div>
         </div>
         <!--/.next-form-->
