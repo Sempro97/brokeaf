@@ -16,3 +16,7 @@
 
 1. Go to the root folder of the project
 2. Run the `linter.py` script with either the `--html` or `--php` flag (you can also use both at the same time)
+
+## DB Scheme
+
+![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/db585577430ed6803bb733de829086f057d9f4a3/images/BrokeAF.png)
