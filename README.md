@@ -19,4 +19,4 @@
 
 ## DB Scheme
 
-![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/c401b20eea43cb1d74165b2ec755b16fdd1e619a/img/BrokeAF.png)
+![alt text](https://bitbucket.org/FrancoRighetti/brokeaf/raw/db585577430ed6803bb733de829086f057d9f4a3/images/BrokeAF.png)
