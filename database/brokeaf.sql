@@ -24,11 +24,12 @@ USE `brokeaf`;
 -- _____________ 
 
 create table Category (
-     name char(30) not null,
-     keywords char(30) not null,
+     name char(64) not null,
+     keywords char(64) not null,
      constraint IDCategory primary key (name));
 
 create table ItemDetails (
+<<<<<<< HEAD
      serialCode char(10) not null,
      IdList numeric(16) not null,
      positionIndex numeric(3) not null,
@@ -39,17 +40,29 @@ create table ItemDetails (
 create table Image (
      serialCode char(10) not null,
      path char(40) not null,
+=======
+     serialCode char(64) not null,
+     IdList numeric(16) not null,
+     positionIndex numeric(16) not null,
+     quantity int(16) not null,
+     price char(64) not null,
+     constraint IDItemDetails primary key (serialCode, IdList));
+
+create table Image (
+     serialCode char(64) not null,
+     path char(64) not null,
+>>>>>>> master
      constraint IDImage primary key (serialCode, path));
 
 create table Item (
      quantity int(11) DEFAULT 1 NOT NULL,
      isVerified char  DEFAULT "1" not null,
      description char(120) not null,
-     price char(10) not null,
-     name char(30) not null,
-     serialCode char(10) not null,
-     emailSeller char(30) not null,
-     category char(30) not null,
+     price char(64) not null,
+     name char(64) not null,
+     serialCode char(64) not null,
+     emailSeller char(64) not null,
+     category char(64) not null,
      constraint IDItem_ID primary key (serialCode));
 
 create table ListItems (
@@ -57,36 +70,36 @@ create table ListItems (
      constraint IDListItem_ID primary key (IdList));
 
 create table Seller (
-     cap numeric(6) not null,
-     address char(30) not null,
-     city char(30) not null,
-     companyAddress char(30) not null,
-     companyName char(30) not null,
-     email char(30) not null,
-     name char(30) not null,
-     surname char(30) not null,
+     cap numeric(16) not null,
+     address char(64) not null,
+     city char(64) not null,
+     companyAddress char(64) not null,
+     companyName char(64) not null,
+     email char(64) not null,
+     name char(64) not null,
+     surname char(64) not null,
      password char(255) not null,
-     phoneNumber char(12) not null,
-     province char(30) not null,
+     phoneNumber char(16) not null,
+     province char(64) not null,
      constraint IDSeller primary key (email));
      
 create table UserWeb (
-     cap numeric(6) not null,
-     address char(30) not null,
-     city char(30) not null,
-     email char(30) not null,
+     cap numeric(16) not null,
+     address char(64) not null,
+     city char(64) not null,
+     email char(64) not null,
      IdList numeric(16),
-     name char(30) not null,
-     surname char(30) not null,
+     name char(64) not null,
+     surname char(64) not null,
      password char(255) not null,
-     phoneNumber char(12) not null,
-     province char(30) not null,
+     phoneNumber char(64) not null,
+     province char(64) not null,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
 
 create table Description(
      description char(255) not null,
-     idDesc char(30) not null,
+     idDesc char(64) not null,
      constraint UniqueDesc unique (description),
      constraint IDNotificationSeller primary key (idDesc));
 
@@ -94,23 +107,23 @@ create table NotificationUser (
      idNotification numeric(16),
      path char(128) not null,
      date datetime not null,
-     idDesc char(30) not null,
-     emailSeller char(30),
-     emailUser char(30),
+     idDesc char(64) not null,
+     emailSeller char(64),
+     emailUser char(64),
      constraint FKnotify_UserWeb_des foreign key (idDesc) references Description(idDesc),
      constraint FKnotify_UserWeb foreign key (emailUser) references UserWeb(email),
      constraint FKnotify_UserSeller foreign key (emailSeller) references Seller(email),
      constraint IDNotificationUser primary key (idNotification));
 
 create table Order_UserWeb (
-     email char(30) not null,
-     cap numeric(6) not null,
-     city char(30) not null,
-     name char(30) not null,
-     surname char(30) not null,
-     phoneNumber char(12) not null,
-     province char(30) not null,
-     address char(30) not null,
+     email char(64) not null,
+     cap numeric(16) not null,
+     city char(64) not null,
+     name char(64) not null,
+     surname char(64) not null,
+     phoneNumber char(64) not null,
+     province char(64) not null,
+     address char(64) not null,
      datePayment datetime not null,
      IdList numeric(16) not null,
      constraint IDOrder_UserWeb primary key (email, datePayment),
@@ -118,7 +131,7 @@ create table Order_UserWeb (
 
 create table Visitor (
      lastSeen datetime not null,
-     idVisitor numeric(8) not null,
+     idVisitor numeric(16) not null,
      IdList numeric(16),
      constraint IDVisitor primary key (idVisitor),
      constraint FKwish_ID unique (IdList));

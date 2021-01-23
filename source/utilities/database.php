@@ -43,6 +43,109 @@ class Database
     {
     }
 
+    public function add_image($path, $serial_code)
+    {
+        $query = 'INSERT INTO Image (path, serialCode) VALUES (?, ?)';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert image into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('ss', $path, $serial_code);
+        $result = $statement->execute();
+        if (false === $result || $statement->affected_rows < 0) {
+            error_log('Failed to insert image into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+
+        return 1 === $statement->affected_rows;
+    }
+
+    public function add_item($item, $email)
+    {
+        $query = 'INSERT INTO Item (name, description, price, quantity, Category, serialCode, emailSeller)
+                  VALUES (?, ?, ?, ?, ?, ?, ?)';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param(
+            'sssssss',
+            $item['name'],
+            $item['description'],
+            $item['price'],
+            $item['quantity'],
+            $item['category'],
+            $item['serial_code'],
+            $email
+        );
+        $result = $statement->execute();
+        if (false === $result || $statement->affected_rows < 0) {
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+
+        return 1 === $statement->affected_rows;
+    }
+
+    public function get_item($serial_code)
+    {
+        $query = 'SELECT * FROM Item WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows ? $result->fetch_all(MYSQLI_ASSOC)[0] : false;
+    }
+
+    public function get_categories()
+    {
+        $query = 'SELECT name FROM Category';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        return array_column($rows, 'name');
+    }
+
+    public function get_items_by_name($name, $count)
+    {
+        $query = 'SELECT * FROM Item';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        // Calculate Levenshtein distance for each item name.
+        $distances = [];
+        foreach ($rows as $item) {
+            $distance = levenshtein($name, $item['name']);
+            $entry = [
+                'distance' => $distance,
+                'item' => $item,
+            ];
+            array_push($distances, $entry);
+        }
+        // Sort based on distance, from low to high.
+        usort($distances, function ($a, $b) {
+            if ($a['distance'] == $b['distance']) {
+                return 0;
+            }
+
+            return ($a['distance'] < $b['distance']) ? -1 : 1;
+        });
+        // Remove the unneeded entries
+        $distances = array_slice($distances, 0, $count);
+
+        return array_column($distances, 'item');
+    }
+
     public function get_random_items($count)
     {
         $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
