@@ -1,5 +1,5 @@
 $(function () {
-  $("form").submit(function (event) {
+  $("form:not(header form)").on("submit", function (event) {
     event.preventDefault();
     let formData = new FormData(this);
     addItem(formData);
