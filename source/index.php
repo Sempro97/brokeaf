@@ -1,5 +1,4 @@
 <?php
-
 require_once 'utilities/database.php';
 $database = new Database();
 $database->sec_session_start();

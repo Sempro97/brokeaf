@@ -1,5 +1,5 @@
 <?php
-
+/* i.e. http://localhost:8080/product.php?id=4943693566 */
 require_once 'utilities/database.php';
 $database = new Database();
 $database->sec_session_start();
