@@ -7,6 +7,7 @@ $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
     'bootstrap/js/bootstrap.bundle.min.js',
 ];
+$template['header'] = 'Orders';
 $template['content'] = 'templates/user-orders.php';
 $template['orders'] = [
     [

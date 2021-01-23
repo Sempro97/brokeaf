@@ -18,7 +18,7 @@ $template['scripts'] = $template['scripts'] ?? [];
   <body>
 <?php require_once 'templates/header.php'; ?>
 <?php if ($template['header']) { ?>
-    <h1 class="text-center"><?php echo $template['header']; ?></h1>
+    <h1 class="mb-4 text-center"><?php echo $template['header']; ?></h1>
 <?php } ?>
 <?php require_once $template['content']; ?>
   </body>

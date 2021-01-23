@@ -1,4 +1,3 @@
-    <h1 class="mb-4 text-center">Orders</h1>
     <div class="container">
 <?php foreach ($template['orders'] as $order) { ?>
       <div class="row pb-3">
