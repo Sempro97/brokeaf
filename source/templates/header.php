@@ -10,20 +10,21 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdown-button">
                     <li>
+                      <a class="dropdown-item" href="add-item.php">Add item</a>
                       <a class="dropdown-item" href="#">Notifications</a>
                     </li>
                   </ul>
                 </div>
               </div>
               <div class="p-2 pt-3">
-                <h1 class="text-center">BrokeAF</h1>
+                <span class="d-block h1 text-center">BrokeAF</span>
               </div>
               <!-- This search bar is only visible for wider than small (sm) screens -->
               <div class="p-2 d-none d-md-block flex-fill">
                 <form action="index.php">
                   <div class="input-group">
                     <label for="search-big" class="sr-only">Search:</label>
-                    <input type="text" id="search-big" class="form-control" name="search" value="<?php echo $template['search']; ?>" />
+                    <input type="text" id="search-big" class="form-control rounded-left" name="search" value="<?php echo $template['search']; ?>" />
                     <div class="input-group-append">
                       <button class="btn btn-outline-secondary" type="submit">
                         <span class="fas fa-search"></span>
@@ -47,7 +48,7 @@
               <form action="index.php">
                 <div class="input-group pb-4">
                   <label for="search-small" class="sr-only">Search:</label>
-                  <input type="text" id="search-small" class="form-control" name="search" value="<?php echo $template['search']; ?>" />
+                  <input type="text" id="search-small" class="form-control rounded-left" name="search" value="<?php echo $template['search']; ?>" />
                   <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">
                       <span class="fas fa-search"></span>
