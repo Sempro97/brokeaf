@@ -45,7 +45,7 @@ class Database
 
     public function add_image($path, $serial_code)
     {
-        $query = 'INSERT INTO Images (path, serialCode) VALUES (?, ?)';
+        $query = 'INSERT INTO Image (path, serialCode) VALUES (?, ?)';
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
             error_log('Failed to insert image into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
@@ -65,8 +65,8 @@ class Database
 
     public function add_item($item, $email)
     {
-        $query = 'INSERT INTO Items (name, description, price, quantity, Categories, serialCode, isVisible, emailSeller)
-                  VALUES (?, ?, ?, ?, ?, ?, \'1\', ?)';
+        $query = 'INSERT INTO Item (name, description, price, quantity, Category, serialCode, emailSeller)
+                  VALUES (?, ?, ?, ?, ?, ?, ?)';
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
             error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
@@ -95,9 +95,7 @@ class Database
 
     public function get_item($serial_code)
     {
-        $query = 'SELECT *
-                  FROM Items
-                  WHERE serialCode=?';
+        $query = 'SELECT * FROM Item WHERE serialCode=?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $serial_code);
         $statement->execute();
@@ -108,7 +106,7 @@ class Database
 
     public function get_categories()
     {
-        $query = 'SELECT name FROM Categories';
+        $query = 'SELECT name FROM Category';
         $statement = self::$instance->prepare($query);
         $statement->execute();
         $result = $statement->get_result();
@@ -119,7 +117,7 @@ class Database
 
     public function get_items_by_name($name, $count)
     {
-        $query = 'SELECT * FROM Items';
+        $query = 'SELECT * FROM Item';
         $statement = self::$instance->prepare($query);
         $statement->execute();
         $result = $statement->get_result();
@@ -150,7 +148,7 @@ class Database
 
     public function get_random_items($count)
     {
-        $query = 'SELECT * FROM Items ORDER BY RAND() LIMIT ?';
+        $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('i', $count);
         $statement->execute();

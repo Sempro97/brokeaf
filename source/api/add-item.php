@@ -55,10 +55,11 @@ if (false === $images_folder_exists) {
 }
 // Create random unique name.
 $temporary_file = tempnam('/tmp', 'image-');
-$name = pathinfo($temporary_file, PATHINFO_BASENAME);
+$image_name = pathinfo($temporary_file, PATHINFO_BASENAME);
+$image_name = $image_name.'.'.$uploaded_image_extension;
 // Move the uploaded image to the images folder.
+$destination = IMAGES_FOLDER.$image_name;
 $uploaded_image_path = $_FILES['image']['tmp_name'];
-$destination = IMAGES_FOLDER.$name.'.'.$uploaded_image_extension;
 $result = move_uploaded_file($uploaded_image_path, $destination);
 if (false === $result) {
     exit_json('failed to move the uploaded image to the images folder.');
@@ -68,12 +69,13 @@ if (false === $result) {
 // Database //
 //////////////
 
-$result = $database->add_image($destination, $item['serial_code']);
-if (false === $result) {
-    exit_json('failed to add the image to the database.');
-}
-$result = $database->add_item($item, 'guiseppe.williamson@example.com');
+// TODO: Use email from seller session.
+$result = $database->add_item($item, 'irenner@example.org');
 if (false === $result) {
     exit_json('failed to add the item to the database.');
+}
+$result = $database->add_image($image_name, $item['serial_code']);
+if (false === $result) {
+    exit_json('failed to add the image to the database.');
 }
 exit_json(true);
