@@ -157,6 +157,25 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function get_notifications($email)
+    {
+        // $user = true;
+        // $notifications_table = $user ? 'NotificationsUser' : 'NotificationsSeller';
+        // $notifications_id = $user ? 'userEmail' : 'sellerEmail';
+        // $join_table = $user ? 'Users' : 'Sellers';
+        // $query = 'SELECT *
+        //           FROM ?
+        //           INNER JOIN ? ON ?.?=?.?
+        //           WHERE email = ?';
+        // $statement = self::$instance->prepare($query);
+        // $statement->bind_param('s', $email);
+        // $statement->execute();
+        // $result = $statement->get_result();
+
+        // return $result->fetch_all(MYSQLI_ASSOC);
+        return [];
+    }
+
     public function register_user()
     {
         return true;

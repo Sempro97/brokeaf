@@ -1,3 +1,10 @@
+<?php
+$notifications_count = count($notifications);
+$notifications_dropdown_item_text = 'Notifications';
+if ($notifications_count > 0) {
+    $notifications_dropdown_item_text .= ' 🔴';
+}
+?>
     <header>
       <div class="container">
         <div class="row">
@@ -11,7 +18,7 @@
                   <ul class="dropdown-menu" aria-labelledby="dropdown-button">
                     <li>
                       <a class="dropdown-item" href="add-item.php">Add item</a>
-                      <a class="dropdown-item" href="#">Notifications</a>
+                      <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
                     </li>
                   </ul>
                 </div>
