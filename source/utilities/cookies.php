@@ -1,8 +1,5 @@
 <?php
 
-require_once 'utilities/database.php';
-$database = new Database();
-
 function sec_session_start() {
     $session_name = 'sec_session_id'; // Imposta un nome di sessione
     $secure = false; // Imposta il parametro a true se vuoi usare il protocollo 'https'.
@@ -16,7 +13,8 @@ function sec_session_start() {
 }
 
 function login($email, $password) {
-    if($database->login($email, $password)){
+    global $db;
+    if($db->login($email, $password)){
         return true;
     } else {
         // L'utente inserito non esiste.

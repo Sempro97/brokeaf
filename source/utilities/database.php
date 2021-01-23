@@ -28,7 +28,7 @@ class Database
         return self::$instance;
     }
 
-    function login($email, $password){
+    public function login($email, $password){
             // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
         if ($stmt = self::$instance->prepare("SELECT email, password FROM Users WHERE email = ? LIMIT 1")) { 
             $stmt->bind_param('s', $email); // esegue il bind del parametro '$email'.
@@ -47,6 +47,7 @@ class Database
                      $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // ci proteggiamo da un attacco XSS
                      $_SESSION['username'] = $username;
                      $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
+                     error_log($_SESSION['login_string'])
                      // Login eseguito con successo.
                      return true;    
                } else {
