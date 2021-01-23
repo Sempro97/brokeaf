@@ -68,7 +68,7 @@ if (false === $result) {
 // Database //
 //////////////
 
-$result = $database->add_image();
+$result = $database->add_image($destination, $item['serial_code']);
 if (false === $result) {
     exit_json('failed to add the image to the database.');
 }

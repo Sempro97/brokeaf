@@ -43,10 +43,24 @@ class Database
     {
     }
 
-    public function add_image()
+    public function add_image($path, $serial_code)
     {
-        // TODO: Add implementation.
-        return true;
+        $query = 'INSERT INTO Images (path, serialCode) VALUES (?, ?)';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert image into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('ss', $path, $serial_code);
+        $result = $statement->execute();
+        if (false === $result || $statement->affected_rows < 0) {
+            error_log('Failed to insert image into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+
+        return 1 === $statement->affected_rows;
     }
 
     public function add_item($item, $email)
