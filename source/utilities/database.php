@@ -67,15 +67,21 @@ class Database
 
     public function get_img_item($serialCode)
     {
-        $query = 'SELECT Img.path FROM Img,Item 
-                  WHERE Item.serialCode = Img.serialCode AND
+        if (self::$instance->connect_error) {
+            die("Connection failed: " . self::$instance->connect_error);
+          }
+        
+        $query = 'SELECT Image.path FROM Image,Item 
+                  WHERE Item.serialCode = Image.serialCode AND
                   Item.serialCode = ? ';
-        $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $serialCode);
-        $statement->execute();
-        $result = $statement->get_result();
+        
+        if($statement = self::$instance->prepare($query)){
+            $statement->bind_param('s', $serialCode);
+            $statement->execute();
+            $result = $statement->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+        }
     }
 
     public function register_user($cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province)
