@@ -68,7 +68,6 @@ if (false === $result) {
 // Database //
 //////////////
 
-// TODO: Use email from seller session.
 $result = $database->add_item($item, $email);
 if (false === $result) {
     exit_json('failed to add the item to the database.');
