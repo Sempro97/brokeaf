@@ -114,16 +114,26 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function obtain_item_info($code, $idList) {
-        $query = "DELETE FROM DetailsItems WHERE DetailsItems.serialCode = ? AND DetailsItems.IdList = ?";
+    // public function obtain_item_info($code, $idList) {
+    //     $query = "DELETE FROM DetailsItems WHERE DetailsItems.serialCode = ? AND DetailsItems.IdList = ?";
+    //     $statement = self::$instance->prepare($query);
+    //     $statement->bind_param('si', $code, $idList);
+    //     $statement->execute();
+    //     $result = $statement->get_result();
+    //     return $result->fetch_all(MYSQLI_ASSOC);
+    // }
+
+    public function remove_item_from_cart($serialCode, $idList) {
+        $query = "DELETE FROM DetailsItems WHERE serialCode=? AND IdList=?";
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('si', $code, $idList);
+        $statement->bind_param('si', $serialCode, $idList);
         $statement->execute();
-        $result = $statement->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function remove_item_from_cart($item) {
-        $query = "DELETE FROM DetailsItems WHERE item";
+    public function set_cart_item_quantity($quantity, $serialCode, $idList) {
+        $query = "UPDATE DetailsItems SET quantity=? WHERE serialCode=? AND IdList=?";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('isi',$quantity, $serialCode, $idList);
+        $statement->execute();
     }
 }
