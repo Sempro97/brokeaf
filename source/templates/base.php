@@ -16,7 +16,7 @@ $template['scripts'] = $template['scripts'] ?? [];
     <title><?php echo 'BrokeAF - '.$template['title']; ?></title>
   </head>
   <body>
-<?php $notifications = $database->get_notifications('email@hello.com'); ?>
+<?php $notifications = $database->get_notifications('adrain.johnson@example.com'); ?>
 <?php require_once 'templates/header.php'; ?>
 <?php if ($template['header']) { ?>
     <h1 class="text-center"><?php echo $template['header']; ?></h1>

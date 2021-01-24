@@ -1,16 +1,14 @@
     <div class="container">
-<?php // foreach ($template['notifications'] as $notification) {?>
-      <div class="row">
-        <div class="col-12 pb-2">
-          <article class="bg-light border p-1">
-            <div class="media">
-              <img src="https://via.placeholder.com/150" class="mr-3" alt="<?php echo $item['name']; ?>" />
-              <div class="align-self-center media-body">
-                <h2><?php echo $item['name']; ?></h2>
-              </div>
-            </div>
-          </article>
+<?php foreach ($notifications as $notification) {?>
+      <div id="notification-<?php echo $notification['idNotification']; ?>" class="row">
+        <div class="col pb-2">
+          <div class="align-items-center bg-light border d-flex p-3">
+            <span class="flex-grow-1"><?php echo $notification['date']; ?> - <?php echo $notification['description']; ?></span>
+            <button class="btn" type="button" onClick="removeNotification(<?php echo $notification['idNotification']; ?>);" aria-label="close">
+              <span class="fas fa-times"></span>
+            </button>
+          </div>
         </div>
       </div>
-<?php // }?>
+<?php } ?>
     </div>
