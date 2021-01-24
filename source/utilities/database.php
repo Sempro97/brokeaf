@@ -153,6 +153,29 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function get_notifications($email)
+    {
+        $user = true;
+        $table = $user ? 'UserWeb' : 'Seller';
+        $column = $user ? 'emailUser' : 'emailSeller';
+        $query = "SELECT *
+                  FROM NotificationUser
+                  INNER JOIN {$table} ON {$table}.email=NotificationUser.{$column}
+                  INNER JOIN Description ON NotificationUser.idDesc=Description.IdDesc
+                  WHERE email=?";
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve notifications from MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function is_user($email)
     {
         $query = 'SELECT * FROM UserWeb WHERE email=?';
@@ -212,5 +235,15 @@ class Database
     public function register_seller()
     {
         return true;
+    }
+
+    public function remove_notification($id)
+    {
+        $query = 'DELETE FROM NotificationUser WHERE idNotification=?;';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $id);
+        $statement->execute();
+
+        return 1 === $statement->affected_rows;
     }
 }
