@@ -1,4 +1,3 @@
-// TODO: Remove red dot from dropdown menu.
 function removeNotification(id) {
   $.post({
     url: "api/remove-notification.php",
