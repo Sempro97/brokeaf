@@ -180,6 +180,20 @@ class Database
         return array_column($distances, 'item');
     }
 
+    public function get_items_by_category($category){
+        $query = 'SELECT * FROM Item 
+                  WHERE Item.category = (
+                                        SELECT name FROM Category
+                                        WHERE Category.name = ?
+                                        )
+                 ';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $category);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_random_items($count)
     {
         $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';

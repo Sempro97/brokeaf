@@ -1,7 +1,6 @@
 <?php
 
 require_once 'bootstrap.php';
-var_dump(cookieUserGet());
 $template['title'] = 'Add item';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
