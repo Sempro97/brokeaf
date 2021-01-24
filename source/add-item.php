@@ -10,5 +10,5 @@ $template['scripts'] = [
 ];
 $template['header'] = 'Add item';
 $template['content'] = 'templates/add-item.php';
-$template['categories'] = $db->get_categories();
+$template['categories'] = $database->get_categories();
 require_once 'templates/base.php';
