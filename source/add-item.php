@@ -1,6 +1,11 @@
 <?php
 
+<<<<<<< HEAD
 require_once 'bootstrap.php';
+=======
+require_once 'utilities/bootstrap.php';
+require_once 'utilities/seller-only.php';
+>>>>>>> master
 $template['title'] = 'Add item';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
