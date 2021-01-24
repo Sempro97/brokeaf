@@ -39,6 +39,16 @@ class Database
         return 1 === $result->num_rows;
     }
 
+    public function getFakeUserForTest()
+    {
+        $query = 'SELECT * FROM UserWeb ORDER BY RAND() LIMIT 1';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function account_login($email, $password)
     {
     }

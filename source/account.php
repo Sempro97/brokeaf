@@ -1,15 +1,12 @@
 <?php
-
-const ITEM_COUNT = 5;
 require_once 'utilities/database.php';
 $database = new Database();
-$template['title'] = 'Index';
+$template['title'] = 'Account';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
     'bootstrap/js/bootstrap.bundle.min.js',
+    'js/account-form.js'
 ];
+$template['user'] = $database->getFakeUserForTest()[0];
 $template['content'] = 'templates/account.php';
-$search = $_GET['search'];
-$template['search'] = $search;
-$template['items'] = $search ? $database->get_items_by_name($search, ITEM_COUNT) : $database->get_random_items(ITEM_COUNT);
 require_once 'templates/base.php';
