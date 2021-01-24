@@ -1,9 +1,14 @@
 <?php
+$email = $_SESSION['email'];
+$seller = $database->is_seller($email);
+$user = $database->is_user($email);
 $notifications_count = count($notifications);
 $notifications_dropdown_item_text = 'Notifications';
 if ($notifications_count > 0) {
     $notifications_dropdown_item_text .= ' 🔴';
 }
+$icon = $user ? 'fa-user' : ($seller ? 'fa-user-tie' : '');
+$cart_button_status = $seller ? 'disabled' : '';
 ?>
     <header>
       <div class="container">
@@ -17,8 +22,13 @@ if ($notifications_count > 0) {
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdown-button">
                     <li>
+<?php if ($seller) { ?>
                       <a class="dropdown-item" href="add-item.php">Add item</a>
+<?php } if ($seller || $user) { ?>
                       <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item disabled" href="#"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
+<?php } ?>
                     </li>
                   </ul>
                 </div>
@@ -41,7 +51,7 @@ if ($notifications_count > 0) {
                 </form>
               </div>
               <div class="pl-2">
-                <button type="button" class="btn btn-dark">
+                <button type="button" class="btn btn-dark <?php echo $cart_button_status; ?>">
                   <span class="fas fa-shopping-cart"></span>
                 </button>
               </div>
