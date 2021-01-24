@@ -47,7 +47,7 @@ class Database
                      $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // ci proteggiamo da un attacco XSS
                      $_SESSION['username'] = $username;
                      $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
-                     error_log($_SESSION['login_string'])
+                     error_log($_SESSION['login_string']);
                      // Login eseguito con successo.
                      return true;    
                } else {

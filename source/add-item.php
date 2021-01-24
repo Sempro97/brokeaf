@@ -1,7 +1,7 @@
 <?php
 
-require_once 'utilities/database.php';
-$database = new Database();
+require_once 'bootstrap.php';
+var_dump(cookieUserGet());
 $template['title'] = 'Add item';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
@@ -10,5 +10,5 @@ $template['scripts'] = [
 ];
 $template['header'] = 'Add item';
 $template['content'] = 'templates/add-item.php';
-$template['categories'] = $database->get_categories();
+$template['categories'] = $db->get_categories();
 require_once 'templates/base.php';
