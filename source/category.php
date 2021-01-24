@@ -1,7 +1,7 @@
 <!-- Ha il compito di ottenere tutte le categorie e darle in pasto al template -->
 <?php
 
-require_once 'bootstrap.php';
+require_once 'utilities/bootstrap.php';
 $template['title'] = 'List of categories';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
@@ -9,5 +9,5 @@ $template['scripts'] = [
 ];
 $template['header'] = 'List of categories';
 $template['content'] = 'templates/category.php';
-$template['categories'] = $db->get_categories();
+$template['categories'] = $database->get_categories();
 require_once 'templates/base.php';

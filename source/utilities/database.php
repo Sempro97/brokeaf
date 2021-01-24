@@ -28,40 +28,6 @@ class Database
         return self::$instance;
     }
 
-    public function login($email, $password){
-            // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
-        if ($stmt = self::$instance->prepare("SELECT email, password FROM Users WHERE email = ? LIMIT 1")) { 
-            $stmt->bind_param('s', $email); // esegue il bind del parametro '$email'.
-            $stmt->execute(); // esegue la query appena creata.
-            $stmt->store_result();
-            $stmt->bind_result($email, $db_password); // recupera il risultato della query e lo memorizza nelle relative variabili.
-            $stmt->fetch();
-            // codifica la password usando una chiave univoca.
-            if($stmt->num_rows == 1) { // se l'utente esiste
-               // verifichiamo che non sia disabilitato in seguito all'esecuzione di troppi tentativi di accesso errati.
-               if($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
-                     // Password corretta!            
-                     $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
-                     $user_id = preg_replace("/[^0-9]+/", "", $user_id); // ci proteggiamo da un attacco XSS
-                     $_SESSION['user_id'] = $user_id; 
-                     $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // ci proteggiamo da un attacco XSS
-                     $_SESSION['username'] = $username;
-                     $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
-                     error_log($_SESSION['login_string']);
-                     // Login eseguito con successo.
-                     return true;    
-               } else {
-                  // Password incorretta.
-                  // Registriamo il tentativo fallito nel database.
-                  $now = time();
-                  self::$instance->query("INSERT INTO login_attempts (user_id, time) VALUES ('$user_id', '$now')");
-                  return false;
-               }
-            }
-        }
-        return false;
-    }
-
     public function account_exists($email)
     {
         $query = 'SELECT email FROM Users WHERE email=? LIMIT 1';

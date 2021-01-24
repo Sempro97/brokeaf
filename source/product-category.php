@@ -1,7 +1,7 @@
 <!-- Il contenuto e' lo stesso di index ma mostra una lista con gli item di una sola categoria
 si detrmite dal parametro id in get la categoria -->
 <?php
-require_once 'bootstrap.php';
+require_once 'utilities/bootstrap.php';
 
 $template['title'] = $category;
 $template['scripts'] = [
@@ -11,7 +11,7 @@ $template['scripts'] = [
 $category = $_GET['id'];
 $search = $_GET['search'];
 $template['search'] = $search;
-$template['items'] = $search ? $db->get_items_by_name($search, ITEM_COUNT) : $db->get_items_by_category($category);
+$template['items'] = $search ? $database->get_items_by_name($search, ITEM_COUNT) : $database->get_items_by_category($category);
 
 $template['content'] = 'templates/index.php';
 require_once 'templates/base.php';
