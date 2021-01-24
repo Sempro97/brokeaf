@@ -39,10 +39,6 @@ class Database
         return 1 === $result->num_rows;
     }
 
-    public function account_login($email, $password)
-    {
-    }
-
     public function add_image($path, $serial_code)
     {
         $query = 'INSERT INTO Image (path, serialCode) VALUES (?, ?)';
@@ -155,6 +151,28 @@ class Database
         $result = $statement->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function is_user($email)
+    {
+        $query = 'SELECT * FROM UserWeb WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function is_seller($email)
+    {
+        $query = 'SELECT * FROM Seller WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
     }
 
     public function register_user()
