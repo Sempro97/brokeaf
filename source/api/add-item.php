@@ -1,10 +1,9 @@
 <?php
 
-require_once '../utilities/database.php';
+require_once '../utilities/bootstrap.php';
 require_once '../utilities/exit-json.php';
 require_once '../utilities/parse-item.php';
-
-$database = new Database();
+require_once '../utilities/seller-only.php';
 
 //////////
 // Item //
@@ -70,7 +69,7 @@ if (false === $result) {
 //////////////
 
 // TODO: Use email from seller session.
-$result = $database->add_item($item, 'irenner@example.org');
+$result = $database->add_item($item, $email);
 if (false === $result) {
     exit_json('failed to add the item to the database.');
 }
