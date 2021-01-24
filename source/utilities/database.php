@@ -39,6 +39,7 @@ class Database
         return 1 === $result->num_rows;
     }
 
+<<<<<<< HEAD
     public function getFakeUserForTest()
     {
         $query = 'SELECT * FROM UserWeb ORDER BY RAND() LIMIT 1';
@@ -53,6 +54,8 @@ class Database
     {
     }
 
+=======
+>>>>>>> master
     public function add_image($path, $serial_code)
     {
         $query = 'INSERT INTO Image (path, serialCode) VALUES (?, ?)';
@@ -165,6 +168,57 @@ class Database
         $result = $statement->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function is_user($email)
+    {
+        $query = 'SELECT * FROM UserWeb WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function is_seller($email)
+    {
+        $query = 'SELECT * FROM Seller WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function login($email, $password)
+    {
+        $user = self::is_user($email);
+        $table = $user ? 'UserWeb' : 'Seller';
+        $query = "SELECT email, password FROM {$table} WHERE email=? LIMIT 1";
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to login user: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $statement->store_result();
+        $statement->bind_result($email, $saved_password);
+        $statement->fetch();
+        if ($statement->num_rows < 1) {
+            error_log('Tried to login a non-existing user.');
+
+            return false;
+        }
+        if ($password == $saved_password) {
+            $user_browser = $_SERVER['HTTP_USER_AGENT'];
+            $_SESSION['email'] = $email;
+
+            return true;
+        }
     }
 
     public function register_user()
