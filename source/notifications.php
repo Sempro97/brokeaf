@@ -1,7 +1,6 @@
 <?php
 
-require_once 'utilities/database.php';
-$database = new Database();
+require_once 'utilities/bootstrap.php';
 $template['title'] = 'Notifications';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',

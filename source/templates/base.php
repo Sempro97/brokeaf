@@ -16,11 +16,12 @@ $template['scripts'] = $template['scripts'] ?? [];
     <title><?php echo 'BrokeAF - '.$template['title']; ?></title>
   </head>
   <body>
-<?php $notifications = $database->get_notifications('adrain.johnson@example.com'); ?>
 <?php require_once 'templates/header.php'; ?>
+<!-- If an header was specified, generate one. -->
 <?php if ($template['header']) { ?>
     <h1 class="text-center"><?php echo $template['header']; ?></h1>
 <?php } ?>
+<!-- Add the page content. -->
 <?php require_once $template['content']; ?>
   </body>
 </html>

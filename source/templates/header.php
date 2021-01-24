@@ -1,12 +1,13 @@
 <?php
 $email = $_SESSION['email'];
-$seller = $database->is_seller($email);
-$user = $database->is_user($email);
+$notifications = $database->get_notifications($email);
 $notifications_count = count($notifications);
 $notifications_dropdown_item_text = 'Notifications';
 if ($notifications_count > 0) {
-    $notifications_dropdown_item_text .= ' 🔴';
+    $notifications_dropdown_item_text .= ' - <span class="fas fa-envelope"></span>';
 }
+$seller = $database->is_seller($email);
+$user = $database->is_user($email);
 $icon = $user ? 'fa-user' : ($seller ? 'fa-user-tie' : '');
 $cart_button_status = $seller ? 'disabled' : '';
 ?>
