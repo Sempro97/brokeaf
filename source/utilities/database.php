@@ -39,13 +39,81 @@ class Database
         return 1 === $result->num_rows;
     }
 
-    public function account_login($email, $password)
+    public function add_image($path, $serial_code)
     {
+        $query = 'INSERT INTO Image (path, serialCode) VALUES (?, ?)';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert image into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('ss', $path, $serial_code);
+        $result = $statement->execute();
+        if (false === $result || $statement->affected_rows < 0) {
+            error_log('Failed to insert image into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+
+        return 1 === $statement->affected_rows;
+    }
+
+    public function add_item($item, $email)
+    {
+        $query = 'INSERT INTO Item (name, description, price, quantity, Category, serialCode, emailSeller)
+                  VALUES (?, ?, ?, ?, ?, ?, ?)';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param(
+            'sssssss',
+            $item['name'],
+            $item['description'],
+            $item['price'],
+            $item['quantity'],
+            $item['category'],
+            $item['serial_code'],
+            $email
+        );
+        $result = $statement->execute();
+        if (false === $result || $statement->affected_rows < 0) {
+            error_log('Failed to insert item into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+
+        return 1 === $statement->affected_rows;
+    }
+
+    public function get_item($serial_code)
+    {
+        $query = 'SELECT * FROM Item WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows ? $result->fetch_all(MYSQLI_ASSOC)[0] : false;
+    }
+
+    public function get_categories()
+    {
+        $query = 'SELECT name FROM Category';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+        return array_column($rows, 'name');
     }
 
     public function get_items_by_name($name, $count)
     {
-        $query = 'SELECT * FROM Items';
+        $query = 'SELECT * FROM Item';
         $statement = self::$instance->prepare($query);
         $statement->execute();
         $result = $statement->get_result();
@@ -74,6 +142,22 @@ class Database
         return array_column($distances, 'item');
     }
 
+    public function get_items_by_category($category, $count)
+    {
+        $query = 'SELECT * FROM Item 
+                  WHERE Item.category=(
+                                        SELECT name FROM Category
+                                        WHERE Category.name=?
+                  )
+                  LIMIT ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('si', $category, $count);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_random_items($count)
     {
         $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
@@ -85,7 +169,118 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function get_img_item($serialCode)
+    public function get_orders($email)
+    {
+        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
+                  FROM Order_UserWeb
+                  INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
+                  INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve user orders: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $orders = [];
+        foreach ($rows as $row) {
+            $id = $row['IdList'];
+            // Calculate the total price of the order.
+            $total = $orders[$id]['totalPrice'];
+            if (null === $total) {
+                $total = 0;
+            }
+            $total += $row['price'];
+            $orders[$id]['totalPrice'] = $total;
+            // Save the id and payment date of the order.
+            $orders[$id]['number'] = $row['IdList'];
+            $orders[$id]['datePayment'] = $row['datePayment'];
+            // Move the items to a sub-array.
+            $orders[$id]['items'][] = $row;
+        }
+
+        return $orders;
+    }
+
+    public function is_user($email)
+    {
+        $query = 'SELECT * FROM UserWeb WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function is_seller($email)
+    {
+        $query = 'SELECT * FROM Seller WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function get_notifications($email)
+    {
+        $user = self::is_user($email);
+        $table = $user ? 'UserWeb' : 'Seller';
+        $column = $user ? 'emailUser' : 'emailSeller';
+        $query = "SELECT *
+                  FROM NotificationUser
+                  INNER JOIN {$table} ON {$table}.email=NotificationUser.{$column}
+                  INNER JOIN Description ON NotificationUser.idDesc=Description.IdDesc
+                  WHERE email=?";
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve notifications from MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // public function login($email, $password)
+    // {
+    //     $user = self::is_user($email);
+    //     $table = $user ? 'UserWeb' : 'Seller';
+    //     $query = "SELECT email, password FROM {$table} WHERE email=? LIMIT 1";
+    //     $statement = self::$instance->prepare($query);
+    //     if (false === $statement) {
+    //         error_log('Failed to login user: ('.self::$instance->errno.') '.self::$instance->error);
+
+    //         return false;
+    //     }
+    //     $statement->bind_param('s', $email);
+    //     $statement->execute();
+    //     $statement->store_result();
+    //     $statement->bind_result($email, $saved_password);
+    //     $statement->fetch();
+    //     if ($statement->num_rows < 1) {
+    //         error_log('Tried to login a non-existing user.');
+
+    //         return false;
+    //     }
+    //     if ($password == $saved_password) {
+    //         $user_browser = $_SERVER['HTTP_USER_AGENT'];
+    //         $_SESSION['email'] = $email;
+
+    //         return true;
+    //     }
+    // }
+
+    public function register_userr()
     {
         $query = 'SELECT Img.path FROM Img,Item 
                   WHERE Item.serialCode = Img.serialCode AND
@@ -148,8 +343,7 @@ class Database
     }
 
     public function login($email, $password)
-    {
-        
+    {      
         // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
         if ($statement = self::$instance->prepare('SELECT email, password FROM UserWeb WHERE email = ? LIMIT 1')) {
             $statement->bind_param('s', $email); // esegue il bind del parametro '$email'.
@@ -164,7 +358,7 @@ class Database
                     // Password corretta!
                     $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
                     //$email = preg_replace('/[^0-9]+/', '', $email); // ci proteggiamo da un attacco XSS
-                    //$_SESSION['email'] = $email;
+                    $_SESSION['email'] = $email;
                     $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
                     // Login eseguito con successo.
                   return true;
@@ -181,23 +375,17 @@ class Database
         }
     }
 
-    public function register_user_session($user) {
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['name'] = $user['name'];
-    }
-
-    public function get_user_from_email($email) {
-        $query = 'SELECT * FROM UserWeb WHERE email = ?';
-        $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $email);
-        $statement->execute();
-        $result = $statement->get_result();
-        $user = $result->fetch_all(MYSQLI_ASSOC)[0];
-        return $user;
-    }
-
     public function already_logged() {
         return !empty($_SESSION['email']);
     }
 
+    public function remove_notification($id)
+    {
+        $query = 'DELETE FROM NotificationUser WHERE idNotification=?;';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $id);
+        $statement->execute();
+
+        return 1 === $statement->affected_rows;
+    }
 }
