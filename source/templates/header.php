@@ -30,6 +30,8 @@ $cart_button_status = $seller ? 'disabled' : '';
                       <a class="dropdown-item" href="categories.php">Categories</a>
 <?php if ($show_login) { ?>
                       <a class="dropdown-item" href="login.php">Login</a>
+<?php } else { ?>
+                      <a class="dropdown-item" href="logout.php">Logout</a>
 <?php } if ($seller || $user) { ?>
                       <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
 <?php } if ($user) { ?>
