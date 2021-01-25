@@ -171,7 +171,7 @@ class Database
 
     public function get_notifications($email)
     {
-        $user = true;
+        $user = self::is_user($email);
         $table = $user ? 'UserWeb' : 'Seller';
         $column = $user ? 'emailUser' : 'emailSeller';
         $query = "SELECT *
