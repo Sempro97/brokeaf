@@ -7,11 +7,9 @@
   $password = $_POST['password'];
 
   if ($database->login($email, $password)) {
-     //Login eseguito
-     echo json_encode("logged");
+    //Login eseguito
+    echo json_encode('logged');
+  } else {
+    //Login fallito
+    echo json_encode('not logged');
    }
-   else {
-     //Login fallito
-     echo json_encode("not logged");
-  }
-?>
