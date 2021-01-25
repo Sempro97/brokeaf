@@ -29,8 +29,11 @@ $cart_button_status = $seller ? 'disabled' : '';
                       <a class="dropdown-item" href="categories.php">Categories</a>
 <?php if ($seller || $user) { ?>
                       <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
+<?php } if ($user) { ?>
+                      <a class="dropdown-item" href="user-orders.php">Orders</a>
+<?php } if ($seller || $user) { ?>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item disabled" href="#"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
+                      <a class="dropdown-item disabled"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
 <?php } ?>
                     </li>
                   </ul>
