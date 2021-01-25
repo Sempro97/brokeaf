@@ -142,17 +142,19 @@ class Database
         return array_column($distances, 'item');
     }
 
-    public function get_items_by_category($category){
+    public function get_items_by_category($category, $count)
+    {
         $query = 'SELECT * FROM Item 
-                  WHERE Item.category = (
+                  WHERE Item.category=(
                                         SELECT name FROM Category
-                                        WHERE Category.name = ?
-                                        )
-                 ';
+                                        WHERE Category.name=?
+                  )
+                  LIMIT ?';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $category);
+        $statement->bind_param('si', $category, $count);
         $statement->execute();
         $result = $statement->get_result();
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 

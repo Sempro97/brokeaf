@@ -6,7 +6,7 @@
             <div class="media">
               <div class="align-self-center media-body">
                 <h2>
-                  <a href="index.php?category=<?php echo $category; ?>"><?php echo $category; ?></a>
+                  <a class="align-middle" href="index.php?category=<?php echo $category; ?>"><?php echo $category; ?></a>
                 </h2>
               </div>
             </div>

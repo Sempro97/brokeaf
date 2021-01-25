@@ -9,6 +9,13 @@ $template['scripts'] = [
 ];
 $template['content'] = 'templates/index.php';
 $search = $_GET['search'];
+$category = $_GET['category'];
 $template['search'] = $search;
-$template['items'] = $search ? $database->get_items_by_name($search, ITEM_COUNT) : $database->get_random_items(ITEM_COUNT);
+if ($search) {
+    $template['items'] = $database->get_items_by_name($search, ITEM_COUNT);
+} elseif ($category) {
+    $template['items'] = $database->get_items_by_category($category, ITEM_COUNT);
+} else {
+    $template['items'] = $database->get_random_items(ITEM_COUNT);
+}
 require_once 'templates/base.php';
