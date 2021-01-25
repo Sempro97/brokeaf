@@ -176,6 +176,43 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function get_orders($email)
+    {
+        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
+                  FROM Order_UserWeb
+                  INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
+                  INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve user orders: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $orders = [];
+        foreach ($rows as $row) {
+            $id = $row['IdList'];
+            // Calculate the total price of the order.
+            $total = $orders[$id]['totalPrice'];
+            if (null === $total) {
+                $total = 0;
+            }
+            $total += $row['price'];
+            $orders[$id]['totalPrice'] = $total;
+            // Save the id and payment date of the order.
+            $orders[$id]['number'] = $row['IdList'];
+            $orders[$id]['datePayment'] = $row['datePayment'];
+            // Move the items to a sub-array.
+            $orders[$id]['items'][] = $row;
+        }
+
+        return $orders;
+    }
+
     public function is_user($email)
     {
         $query = 'SELECT * FROM UserWeb WHERE email=?';

@@ -6,10 +6,10 @@
             <div class="container p-3">
               <div class="row">
                 <div class="col text-left">
-                  <span>Date: <?php echo $order['date']; ?></span>
+                  <span>Date: <?php echo $order['datePayment']; ?></span>
                 </div>
                 <div class="col text-center">
-                  <span>Total: <?php echo $order['total']; ?>&euro;</span>
+                  <span>Total: <?php echo $order['totalPrice']; ?>&euro;</span>
                 </div>
                 <div class="col text-right">
                   <span>Order # <?php echo $order['number']; ?></span>
