@@ -169,6 +169,29 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function get_notifications($email)
+    {
+        $user = self::is_user($email);
+        $table = $user ? 'UserWeb' : 'Seller';
+        $column = $user ? 'emailUser' : 'emailSeller';
+        $query = "SELECT *
+                  FROM NotificationUser
+                  INNER JOIN {$table} ON {$table}.email=NotificationUser.{$column}
+                  INNER JOIN Description ON NotificationUser.idDesc=Description.IdDesc
+                  WHERE email=?";
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve notifications from MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_orders($email)
     {
         $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
@@ -204,29 +227,6 @@ class Database
         }
 
         return $orders;
-    }
-
-    public function get_notifications($email)
-    {
-        $user = self::is_user($email);
-        $table = $user ? 'UserWeb' : 'Seller';
-        $column = $user ? 'emailUser' : 'emailSeller';
-        $query = "SELECT *
-                  FROM NotificationUser
-                  INNER JOIN {$table} ON {$table}.email=NotificationUser.{$column}
-                  INNER JOIN Description ON NotificationUser.idDesc=Description.IdDesc
-                  WHERE email=?";
-        $statement = self::$instance->prepare($query);
-        if (false === $statement) {
-            error_log('Failed to retrieve notifications from MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-
-            return false;
-        }
-        $statement->bind_param('s', $email);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function login($email, $password)
