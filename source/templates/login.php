@@ -1,11 +1,11 @@
     <div class="container">
       <form method="post" action="login.php" name="signin-form">
         <div class="form-group">
-          <label>Email</label>
+          <label for="email">Email</label>
           <input type="text" name="email" class="form-control" required="required" id="email" />
         </div>
         <div class="form-group">
-          <label>Password</label>
+          <label for="password">Password</label>
           <input type="password" name="password" class="form-control" required="required" id="password" />
         </div>
         <div class="d-none invisible" id="alert">
