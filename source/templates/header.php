@@ -25,7 +25,9 @@ $cart_button_status = $seller ? 'disabled' : '';
                     <li>
 <?php if ($seller) { ?>
                       <a class="dropdown-item" href="add-item.php">Add item</a>
-<?php } if ($seller || $user) { ?>
+<?php } ?>
+                      <a class="dropdown-item" href="categories.php">Categories</a>
+<?php if ($seller || $user) { ?>
                       <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item disabled" href="#"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
