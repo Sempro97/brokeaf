@@ -1,8 +1,7 @@
 <?php
 
 require_once 'utilities/bootstrap.php';
-$logged_in = $database->already_logged();
-if ($logged_in) {
+if ($_SESSION['email'] ? true : false) {
     header('Location: index.php');
 }
 $template['title'] = 'Login';

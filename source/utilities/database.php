@@ -281,19 +281,6 @@ class Database
         return 1 == $result->num_rows;
     }
 
-    public function register_userr()
-    {
-        $query = 'SELECT Img.path FROM Img,Item 
-                  WHERE Item.serialCode = Img.serialCode AND
-                  Item.serialCode = ? ';
-        $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $serialCode);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
     public function register_user()
     {
         return true;
@@ -302,12 +289,6 @@ class Database
     public function register_seller()
     {
         return true;
-    }
-
-    // TODO: Doesn't have to be here.
-    public function already_logged()
-    {
-        return !empty($_SESSION['email']);
     }
 
     public function remove_notification($id)
