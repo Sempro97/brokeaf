@@ -1,5 +1,11 @@
 <?php
 $email = $_SESSION['email'];
+$notifications = $database->get_notifications($email);
+$notifications_count = count($notifications);
+$notifications_dropdown_item_text = 'Notifications';
+if ($notifications_count > 0) {
+    $notifications_dropdown_item_text .= ' - <span class="fas fa-envelope"></span>';
+}
 $seller = $database->is_seller($email);
 $user = $database->is_user($email);
 $icon = $user ? 'fa-user' : ($seller ? 'fa-user-tie' : '');
@@ -20,7 +26,7 @@ $cart_button_status = $seller ? 'disabled' : '';
 <?php if ($seller) { ?>
                       <a class="dropdown-item" href="add-item.php">Add item</a>
 <?php } if ($seller || $user) { ?>
-                      <a class="dropdown-item" href="#">Notifications</a>
+                      <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item disabled" href="#"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
 <?php } ?>
