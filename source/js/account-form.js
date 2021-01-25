@@ -2,17 +2,17 @@ $(function () {
   /* Only if is a user */
   $("#IdList").parent().html("");
   $("#phoneNumber").prev().text("Phone number:");
-  /* Only if is a Seller */
-  /* TODO */
+
+  $("#password").val("");
 
   $("form").submit(function (event) {
     event.preventDefault();
     let formData = new FormData(this);
-    addItem(formData);
+    updateUser(formData);
   });
 });
 
-function addItem(formData) {
+function updateUser(formData) {
   /*   $.post({
     url: "api/add-item.php",
     data: formData,
