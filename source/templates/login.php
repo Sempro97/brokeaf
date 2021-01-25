@@ -12,9 +12,10 @@
           <div class="alert alert-danger" role="alert">Error: invalid email or password!</div>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-primary btn-block" value="Log In" name="but_submit" />
+          <button type="submit" class="btn btn-primary btn-block">Log In</button>
         </div>
       </form>
+      <!-- TODO: This should be changed. -->
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block" onclick="window.location.href='registration.php'">Create account</button>
       </div>
