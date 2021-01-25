@@ -251,12 +251,32 @@ class Database
         }
     }
 
-    public function register_user()
+    public function get_user_from_email($email) {
+        $query = 'SELECT * FROM UserWeb WHERE email = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        $user = $result->fetch_all(MYSQLI_ASSOC)[0];
+        return $user;
+    }
+
+    public function get_seller_from_email($email) {
+        $query = 'SELECT * FROM Seller WHERE email = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        $user = $result->fetch_all(MYSQLI_ASSOC)[0];
+        return $user;
+    }
+
+    public function register_user($userWeb)
     {
         return true;
     }
 
-    public function register_seller()
+    public function register_seller($Seller)
     {
         return true;
     }

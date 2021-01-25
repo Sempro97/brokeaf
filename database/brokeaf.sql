@@ -68,7 +68,6 @@ create table Seller (
      province char(64) not null,
      companyAddress char(64) not null,
      companyName char(64) not null,
-     
      constraint IDSeller primary key (email));
      
 create table UserWeb (

@@ -1,8 +1,9 @@
 $(function () {
   /* Only if is a user */
   $("#IdList").parent().html("");
-  $("#phoneNumber").prev().text("Phone number:");
 
+  $("#phoneNumber").prev().text("Phone number:");
+  /* Hide hashed password */
   $("#password").val("");
 
   $("form").submit(function (event) {
@@ -13,23 +14,23 @@ $(function () {
 });
 
 function updateUser(formData) {
-  /*   $.post({
-    url: "api/add-item.php",
+  $.post({
+    url: "api/update-account.php",
     data: formData,
     dataType: "json",
     contentType: false,
     processData: false,
     success: function (response) {
       if (response === true) {
-        showAlert("success", "Item added successfully.");
+        showAlert("success", "Account update successfully.");
       } else {
-        showAlert("danger", "An error occurred while trying to add the item: " + response);
+        showAlert("danger", "An error occurred while trying to update the account: " + response);
       }
     },
     error: function (response) {
       showAlert("danger", "An error occurred while trying to add the item.");
     },
-  }); */
+  });
 }
 
 function showAlert(type, message) {

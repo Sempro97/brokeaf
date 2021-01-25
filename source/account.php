@@ -7,18 +7,14 @@ $template['scripts'] = [
     'bootstrap/js/bootstrap.bundle.min.js',
     'js/account-form.js'
 ];
+/* Test Seller */
 $email = "adriana90@example.net";
-/* $email = $_SESSION['email']; */
-if($email === NULL){
-    header('Location: index.php');
-} else {
-    if (false === $database->is_seller($email)) {
-        if (false === $database->is_user($email)) {
-            header('Location: index.php');
-        }
-    }
-}
+/* Test User */
+/* $email = "adrain.johnson@example.com"; */
 
-$template['user'] = $database->getFakeSellerForTest()[0];
+/* $email = $_SESSION['email']; */
+require_once 'utilities/user-seller-only.php';
+
+
 $template['content'] = 'templates/account.php';
 require_once 'templates/base.php';
