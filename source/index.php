@@ -19,4 +19,3 @@ if ($search) {
     $template['items'] = $database->get_random_items(ITEM_COUNT);
 }
 require_once 'templates/base.php';
-//var_dump($database->account_exists("mckenzie.christine@example.net"));

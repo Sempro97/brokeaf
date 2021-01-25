@@ -14,7 +14,10 @@ $template['scripts'] = $template['scripts'] ?? [];
     <script src="<?php echo $script; ?>"></script>
 <?php } ?>
     <title><?php echo 'BrokeAF - '.$template['title']; ?></title>
+<<<<<<< HEAD
     <link rel="icon" href="../images/favicon.ico" />
+=======
+>>>>>>> master
   </head>
   <body>
 <?php require_once 'templates/header.php'; ?>
