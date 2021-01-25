@@ -184,8 +184,8 @@ class Database
         $statement->bind_param('s', $serialCode);
         $statement->execute();
         $result = $statement->get_result();
-        error_log(var_dump($result->fetch_all(MYSQLI_ASSOC)));
-        return $result;
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
 
