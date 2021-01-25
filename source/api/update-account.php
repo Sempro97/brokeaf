@@ -1,5 +1,7 @@
 <?php
 
+//It need registration code to work well
+
 require_once '../utilities/bootstrap.php';
 require_once '../utilities/exit-json.php';
 
