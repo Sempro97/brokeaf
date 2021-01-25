@@ -142,6 +142,22 @@ class Database
         return array_column($distances, 'item');
     }
 
+    public function get_items_by_category($category, $count)
+    {
+        $query = 'SELECT * FROM Item 
+                  WHERE Item.category=(
+                                        SELECT name FROM Category
+                                        WHERE Category.name=?
+                  )
+                  LIMIT ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('si', $category, $count);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_random_items($count)
     {
         $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
@@ -155,7 +171,7 @@ class Database
 
     public function get_notifications($email)
     {
-        $user = true;
+        $user = self::is_user($email);
         $table = $user ? 'UserWeb' : 'Seller';
         $column = $user ? 'emailUser' : 'emailSeller';
         $query = "SELECT *
@@ -176,6 +192,7 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+<<<<<<< HEAD
     public function get_img_item($serialCode)
     {
         $query = "SELECT Image.path FROM Image
@@ -188,6 +205,44 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+=======
+    public function get_orders($email)
+    {
+        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
+                  FROM Order_UserWeb
+                  INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
+                  INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve user orders: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        $orders = [];
+        foreach ($rows as $row) {
+            $id = $row['IdList'];
+            // Calculate the total price of the order.
+            $total = $orders[$id]['totalPrice'];
+            if (null === $total) {
+                $total = 0;
+            }
+            $total += $row['price'];
+            $orders[$id]['totalPrice'] = $total;
+            // Save the id and payment date of the order.
+            $orders[$id]['number'] = $row['IdList'];
+            $orders[$id]['datePayment'] = $row['datePayment'];
+            // Move the items to a sub-array.
+            $orders[$id]['items'][] = $row;
+        }
+
+        return $orders;
+    }
+>>>>>>> 83bdb6bb74501fdfd22eddadc8950a17ba6544a9
 
     public function is_user($email)
     {

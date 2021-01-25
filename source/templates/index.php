@@ -9,7 +9,7 @@
             src="../images/<?php echo $image[0]['path']; ?>" 
              alt="<?php echo $item['name']; ?>"
              style="width:60px" />
-              <div class="align-self-center media-body ">
+              <div class="align-self-center media-body">
                 <h2 class="h4"><?php echo $item['name']; ?></h2>
                 <span><?php echo $item['price']; ?>&euro;</span>
               </div>
