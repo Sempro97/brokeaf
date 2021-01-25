@@ -6,7 +6,7 @@
         <button type="button" id="buttonUser" class="btn btn-secondary disabled" onCLick="changeActive();" disabled>User</button>
         <button type="button" id="buttonSeller" class="btn btn-primary active" onCLick="changeActive();">Seller</button>
         <div class="form-group pt-4">
-          <label class="font-weight-bold"
+          <label for="email" class="font-weight-bold"
             >Email
             <small class="text-danger"><em>This will be your login email!</em></small>
           </label>
@@ -16,15 +16,15 @@
         </div>
         <div id="next-form">
           <div class="form-group">
-            <label class="font-weight-bold">Name</label>
+            <label for="name" class="font-weight-bold">Name</label>
             <input type="text" name="name" id="name" class="form-control" placeholder="Insert your name" />
           </div>
           <div class="form-group">
-            <label class="font-weight-bold">Surname</label>
+            <label for="surname" class="font-weight-bold">Surname</label>
             <input type="text" name="surname" id="surname" class="form-control" placeholder="Insert your surname" />
           </div>
           <div class="form-group">
-            <label class="font-weight-bold">Phone #</label>
+            <label for="phone" class="font-weight-bold">Phone #</label>
             <input
               type="tel"
               name="phone"
@@ -35,37 +35,37 @@
             />
           </div>
           <div class="form-group">
-            <label class="font-weight-bold">Password</label>
+            <label for="password" class="font-weight-bold">Password</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="***********" />
           </div>
           <div class="form-group">
-            <label class="font-weight-bold">Confirm Password</label>
+            <label for="cpassword" class="font-weight-bold">Confirm Password</label>
             <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder="***********" />
             <em id="cp"></em>
           </div>
 
           <div class="form-group">
-            <label class="font-weight-bold">CAP</label>
+            <label for="cap" class="font-weight-bold">CAP</label>
             <input type="text" name="cap" id="cap" class="tel form-control" autocomplete="postal-code" />
           </div>
 
           <div class="form-group">
-            <label class="font-weight-bold">Address</label>
+            <label for="address" class="font-weight-bold">Address</label>
             <input type="text" name="address" id="address" class="tel form-control" autocomplete="address-line1" />
           </div>
 
           <div class="form-group">
-            <label class="font-weight-bold">City</label>
+            <label for="city" class="font-weight-bold">City</label>
             <input type="text" name="city" id="city" class="tel form-control" autocomplete="address-level2" />
           </div>
 
           <div class="form-group">
-            <label class="font-weight-bold">Province</label>
+            <label for="province" class="font-weight-bold">Province</label>
             <input type="text" name="province" id="province" class="tel form-control" autocomplete="address-level1" />
           </div>
 
           <div class="form-group">
-            <label>
+            <label for="condition">
               <input type="checkbox" name="condition" id="condition"/> I agree with the
               <a href="javascript:;">Terms & Conditions</a> for Registration.
             </label>

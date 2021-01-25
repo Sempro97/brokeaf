@@ -45,7 +45,7 @@ function parse_seller($post)
     $user["name"] =$post["name"];
     $user["surname"] =$post["surname"];
     $user["password"] =$post["password"];
-    $user["phoneNumber"] =$post["phone"];
+    $user["phone"] =$post["phone"];
     $user["province"] =$post["province"];
 
     return $user;
