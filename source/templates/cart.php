@@ -45,7 +45,7 @@
                       <button class="btn btn-outline-secondary" type="submit" id="minus" onClick="">-</button>
                       <script> document.getElementById("minus").id = "minus" + counter; </script>
                     </div>
-                    <input type="text" id="txtquantity" class="form-control" value="<?php echo $item["quantity"]; ?>"/>
+                    <input type="text" id="txtquantity" class="form-control " value="<?php echo $item["quantity"]; ?>" readonly/>
                     <script> document.getElementById("txtquantity").id = "txtquantity" + counter; </script>
                     <div class="input-group-append">
                       <button class="btn btn-outline-secondary" type="submit" id="plus">+</button>
@@ -96,7 +96,7 @@
                     <br />
                     <strong> (including IVA) </strong>
                   </div>
-                  <span><strong id="spanIva"><?php echo $item["total"]; ?>&euro; + 20%</strong></span>
+                  <span><strong id="spanIva"><?php echo $item["total"]; ?>&euro;</strong></span>
                 </li>
               </ul>
 
@@ -114,22 +114,37 @@
 <script> 
   $( document ).ready(function() {
     var idList = <?php echo json_encode($item['IdList']); ?>;
-      calculateTotal(idList);
+    var total = calculateTotal();
+    setTotal(total, idList);
   });
 
-    function calculateTotal($idList) {
+    function calculateTotal() {
       var total = 0;
-      var price = document.getElementById('txtprice' + 1).innerHTML;
 
       for (i=1; i<=counter; i++) {
-        var price = document.getElementById('txtprice' + i).innerHTML;
-        var quantity = document.getElementById('txtquantity' + i).value;
+        var price = parseFloat($('#txtprice' + i).text());
+        var quantity = parseInt($('#txtquantity' + i).val());
+        console.log(price);
+        console.log(quantity);
         total += parseFloat(price) * parseInt(quantity);
+      }  
+      console.log(total); 
+      return total;
+    }
+
+    function setTotal(total, idList) {
+      var values = {
+        "idList" : idList,
+        "total" : total.toFixed(2)
       }
 
-      document.getElementById("spanTotal").textContent = total + ' \u20AC';
-      var iva = total + (total/100)*20;
-      document.getElementById("spanIva").textContent = iva.toFixed(2) + ' \u20AC';
+      $.post("api/update-cart.php", values, function(response) {
+        console.log(response);
+      }, "json")
+
+      document.getElementById("spanTotal").textContent = total.toFixed(2) + ' \u20AC';
+      //var iva = total + (total/100)*20;
+      document.getElementById("spanIva").textContent = total.toFixed(2) + ' \u20AC';
     }
 
     document.getElementById("cart-number").innerHTML = counter;
@@ -152,10 +167,11 @@
         "btnpressed" : btnpressed,
         "itemCode": itemCode, 
         "idList": idList,
-        "quantity": quantity
+        "quantity": quantity,
       }
 
       $.post("api/update-cart.php", values, function(response) {
+        console.log(response);
           if (response === "increased") {
             quantity++;
             document.getElementById("txtquantity" + itemNumber).value = quantity;
@@ -163,7 +179,6 @@
           if (response === "decreased") {
             quantity--;
             document.getElementById("txtquantity" + itemNumber).value = quantity;
-
           }
           if (response === "removed") {
             counter--;
@@ -171,7 +186,9 @@
             document.getElementById("item" + itemNumber).remove();
             document.getElementById("btnremove" + itemNumber).remove();
             document.getElementById("quantity" + itemNumber).remove();
-          } 
+          }
+
+          setTotal(calculateTotal(), idList);
       }, "json")
     });
 </script>

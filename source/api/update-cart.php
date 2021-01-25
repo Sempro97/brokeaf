@@ -19,4 +19,9 @@
         $database->set_cart_item_quantity($quantity+1, $itemCode, $idList);
         echo json_encode("increased");
     }
+
+    if ($_POST['total'] != $total) {
+        $total = $_POST['total'];
+        $database->set_cart_total($idList, $total);
+    }
 ?>

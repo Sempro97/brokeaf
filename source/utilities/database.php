@@ -136,4 +136,11 @@ class Database
         $statement->bind_param('isi',$quantity, $serialCode, $idList);
         $statement->execute();
     }
+
+    public function set_cart_total($idList, $total) {
+        $query = "UPDATE ListsItems SET total = ? WHERE IdList = ?";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('si',$total, $idList);
+        $statement->execute();
+    }
 }
