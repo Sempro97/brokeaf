@@ -1,9 +1,10 @@
 <?php
-  //il mio carrrello è ListItems e i suoi elementi che si riferiscono al carrello sono DetailsItems
-
   require 'utilities/database.php';
+  session_start();
   $database = new Database();
-  $cart = $database->get_cart('abernathy.helene@example.net');
+
+  require 'utilities/bootstrap.php';
+  $cart = $database->get_cart($_SESSION['email']);
   $template["cart"] = $cart;
   $template["title"] = "Cart";
   $template['scripts'] = [

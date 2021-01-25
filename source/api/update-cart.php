@@ -9,19 +9,17 @@
 
     if ($btnpressed == 'btnremove') {
         //$database->remove_item_from_cart($itemCode, $idList);
-        echo json_encode("removed");
+        $result['btn'] = "removed";
     }
     if ($btnpressed == 'minus') {
         $database->set_cart_item_quantity($quantity-1, $itemCode, $idList);
-        echo json_encode("decreased");
+        $result['btn'] = "decreased";
     }
     if ($btnpressed == 'plus') {
         $database->set_cart_item_quantity($quantity+1, $itemCode, $idList);
-        echo json_encode("increased");
+        $result['btn'] = "increased";
     }
 
-    if ($_POST['total'] != $total) {
-        $total = $_POST['total'];
-        $database->set_cart_total($idList, $total);
-    }
+    $result['total'] = $database->calculate_cart_total($idList);;
+    echo json_encode($result);
 ?>

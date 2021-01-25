@@ -1,6 +1,7 @@
 <div class="container">
   <script>
     var counter = 0;
+    var maxItems = 0;
   </script>
     <!--Section: Block Content-->
     <form class="mt-5 mb-4">
@@ -17,6 +18,7 @@
               <div id="item" class="row mb-2" >
                 <script>
                   counter++;
+                  maxItems++;
                 </script>
                 <script> document.getElementById("item").id = "item" + counter; </script>
                 <!-- TO DO: Sostituire col con una flexa -->
@@ -114,34 +116,29 @@
 <script> 
   $( document ).ready(function() {
     var idList = <?php echo json_encode($item['IdList']); ?>;
-    var total = calculateTotal();
-    setTotal(total, idList);
+    var values = {
+        "idList" : idList,
+      }
+
+      $.post("api/update-cart.php", values, function(response) {
+        setTotal(response['total'], idList);
+      }, "json")
   });
 
     function calculateTotal() {
       var total = 0;
 
-      for (i=1; i<=counter; i++) {
+      for (i=1; i<=maxItems; i++) {
         var price = parseFloat($('#txtprice' + i).text());
         var quantity = parseInt($('#txtquantity' + i).val());
-        console.log(price);
-        console.log(quantity);
-        total += parseFloat(price) * parseInt(quantity);
-      }  
-      console.log(total); 
+        if (price) {
+          total += parseFloat(price) * parseInt(quantity);
+        }
+      }   
       return total;
     }
 
-    function setTotal(total, idList) {
-      var values = {
-        "idList" : idList,
-        "total" : total.toFixed(2)
-      }
-
-      $.post("api/update-cart.php", values, function(response) {
-        console.log(response);
-      }, "json")
-
+    function setTotal(total) {
       document.getElementById("spanTotal").textContent = total.toFixed(2) + ' \u20AC';
       //var iva = total + (total/100)*20;
       document.getElementById("spanIva").textContent = total.toFixed(2) + ' \u20AC';
@@ -156,12 +153,9 @@
       btnpressed = btnpressed.replace(itemNumber, ""); //nome bottone premuto
       var template = <?php echo json_encode($template["cart"]); ?>;
 
-      console.log(template[itemNumber-1]);
-
       var itemCode = template[itemNumber-1]['serialCode'];
       var idList = template[itemNumber-1]['IdList'];
       var quantity = document.getElementById("txtquantity" + itemNumber).value;
-      //quantity = parseInt(quantity);
 
       var values = {
         "btnpressed" : btnpressed,
@@ -171,16 +165,15 @@
       }
 
       $.post("api/update-cart.php", values, function(response) {
-        console.log(response);
-          if (response === "increased") {
+          if (response['btn'] === "increased") {
             quantity++;
             document.getElementById("txtquantity" + itemNumber).value = quantity;
           }
-          if (response === "decreased") {
+          if (response['btn'] === "decreased") {
             quantity--;
             document.getElementById("txtquantity" + itemNumber).value = quantity;
           }
-          if (response === "removed") {
+          if (response['btn'] === "removed") {
             counter--;
             document.getElementById("cart-number").innerHTML = counter;
             document.getElementById("item" + itemNumber).remove();
@@ -188,7 +181,7 @@
             document.getElementById("quantity" + itemNumber).remove();
           }
 
-          setTotal(calculateTotal(), idList);
+          setTotal(calculateTotal());
       }, "json")
     });
 </script>
