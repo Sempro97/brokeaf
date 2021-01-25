@@ -1,4 +1,3 @@
-    <h1 class="text-center">Add item</h1>
     <div class="container">
       <div class="row">
         <div class="col">
@@ -54,7 +53,7 @@
       </div>
       <div class="row mt-3">
         <div class="col">
-          <div class="alert alert-danger d-none invisible" role="alert"></div>
+          <div class="alert d-none invisible" role="alert"></div>
         </div>
       </div>
     </div>

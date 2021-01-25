@@ -66,14 +66,14 @@
 
           <div class="form-group">
             <label>
-              <input type="checkbox" name="condition" id="condition" target="_blank"/> I agree with the
+              <input type="checkbox" name="condition" id="condition"/> I agree with the
               <a href="javascript:;">Terms & Conditions</a> for Registration.
             </label>
             <em id="cTeC"></em>
           </div>
           <div class="alert alert-danger d-none invisible" role="alert"></div>
           <div class="form-group">
-            <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger" target="_blank"/>
+            <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger"/>
           </div>
         </div>
         <!--/.next-form-->

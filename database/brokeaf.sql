@@ -25,31 +25,32 @@ USE `brokeaf`;
 -- _____________ 
 
 create table Category (
-     name char(30) not null,
-     keywords char(30) not null,
+     name char(64) not null,
+     keywords char(64) not null,
      constraint IDCategory primary key (name));
 
-create table DetailsItem (
-     serialCode char(10) not null,
+create table ItemDetails (
+     serialCode char(64) not null,
      IdList numeric(16) not null,
-     positionIndex numeric(3) not null,
-     quantity char(4) not null,
-     price char(10) not null,
-     constraint IDDetailsItem primary key (serialCode, IdList));
+     positionIndex numeric(16) not null,
+     quantity int(16) not null,
+     price char(64) not null,
+     constraint IDItemDetails primary key (serialCode, IdList));
 
-create table Img (
-     serialCode char(10) not null,
-     path char(20) not null,
-     constraint IDImg primary key (serialCode, path));
+create table Image (
+     serialCode char(64) not null,
+     path char(64) not null,
+     constraint IDImage primary key (serialCode, path));
 
 create table Item (
-     isVerificated char not null,
+     quantity int(11) DEFAULT 1 NOT NULL,
+     isVerified char  DEFAULT "1" not null,
      description char(120) not null,
-     price char(10) not null,
-     name char(30) not null,
-     serialCode char(10) not null,
-     email char(30) not null,
-     Kin_name char(30) not null,
+     price char(64) not null,
+     name char(64) not null,
+     serialCode char(64) not null,
+     emailSeller char(64) not null,
+     category char(64) not null,
      constraint IDItem_ID primary key (serialCode));
 
 create table ListItems (
@@ -57,36 +58,36 @@ create table ListItems (
      constraint IDListItem_ID primary key (IdList));
 
 create table Seller (
-     cap numeric(6) not null,
-     address char(30) not null,
-     city char(30) not null,
-     companyAddress char(30) not null,
-     companyName char(30) not null,
-     email char(30) not null,
-     name char(30) not null,
-     surname char(30) not null,
+     cap numeric(16) not null,
+     address char(64) not null,
+     city char(64) not null,
+     companyAddress char(64) not null,
+     companyName char(64) not null,
+     email char(64) not null,
+     name char(64) not null,
+     surname char(64) not null,
      password char(255) not null,
-     phoneNumber char(12) not null,
-     province char(30) not null,
+     phoneNumber char(16) not null,
+     province char(64) not null,
      constraint IDSeller primary key (email));
      
 create table UserWeb (
-     cap numeric(6) not null,
-     address char(30) not null,
-     city char(30) not null,
-     email char(30) not null,
+     cap numeric(16) not null,
+     address char(64) not null,
+     city char(64) not null,
+     email char(64) not null,
      IdList numeric(16),
-     name char(30) not null,
-     surname char(30) not null,
+     name char(64) not null,
+     surname char(64) not null,
      password char(255) not null,
-     phoneNumber char(12) not null,
-     province char(30) not null,
+     phoneNumber char(64) not null,
+     province char(64) not null,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
 
 create table Description(
      description char(255) not null,
-     idDesc char(30) not null,
+     idDesc char(64) not null,
      constraint UniqueDesc unique (description),
      constraint IDNotificationSeller primary key (idDesc));
 
@@ -94,23 +95,23 @@ create table NotificationUser (
      idNotification numeric(16),
      path char(128) not null,
      date datetime not null,
-     idDesc char(30) not null,
-     emailSeller char(30),
-     emailUser char(30),
+     idDesc char(64) not null,
+     emailSeller char(64),
+     emailUser char(64),
      constraint FKnotify_UserWeb_des foreign key (idDesc) references Description(idDesc),
      constraint FKnotify_UserWeb foreign key (emailUser) references UserWeb(email),
      constraint FKnotify_UserSeller foreign key (emailSeller) references Seller(email),
      constraint IDNotificationUser primary key (idNotification));
 
 create table Order_UserWeb (
-     email char(30) not null,
-     cap numeric(6) not null,
-     city char(30) not null,
-     name char(30) not null,
-     surname char(30) not null,
-     phoneNumber char(12) not null,
-     province char(30) not null,
-     address char(30) not null,
+     email char(64) not null,
+     cap numeric(16) not null,
+     city char(64) not null,
+     name char(64) not null,
+     surname char(64) not null,
+     phoneNumber char(64) not null,
+     province char(64) not null,
+     address char(64) not null,
      datePayment datetime not null,
      IdList numeric(16) not null,
      constraint IDOrder_UserWeb primary key (email, datePayment),
@@ -118,7 +119,7 @@ create table Order_UserWeb (
 
 create table Visitor (
      lastSeen datetime not null,
-     idVisitor numeric(8) not null,
+     idVisitor numeric(16) not null,
      IdList numeric(16),
      constraint IDVisitor primary key (idVisitor),
      constraint FKwish_ID unique (IdList));
@@ -127,24 +128,24 @@ create table Visitor (
 -- Constraints Section
 -- ___________________ 
 
-alter table DetailsItem add constraint FKincorporates
+alter table ItemDetails add constraint FKincorporates
      foreign key (IdList)
      references ListItems(IdList);
 
-alter table DetailsItem add constraint FKitemise
+alter table ItemDetails add constraint FKitemise
      foreign key (serialCode)
      references Item(serialCode);
 
-alter table Img add constraint FKshow
+alter table Image add constraint FKshow
      foreign key (serialCode)
      references Item(serialCode); 
 
 alter table Item add constraint FKbelong
-     foreign key (email)
+     foreign key (emailSeller)
      references Seller(email);
 
 alter table Item add constraint FKkind
-     foreign key (Kin_name)
+     foreign key (category)
      references Category(name);
 
 alter table Order_UserWeb add constraint FKcontain_FK
@@ -162,6 +163,8 @@ alter table Visitor add constraint FKwish_FK
 INSERT INTO `ListItems` (IdList) VALUES ('0');
 INSERT INTO `ListItems` (IdList) VALUES ('1');
 INSERT INTO `ListItems` (IdList) VALUES ('2');
+INSERT INTO `ListItems` (IdList) VALUES ('3');
+INSERT INTO `ListItems` (IdList) VALUES ('4');
    
 INSERT INTO `Category` (name,keywords) VALUES ('Utensili','cacciavite,fai da te');
 INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
@@ -177,16 +180,16 @@ INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`,
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('31291', '0354 Stevie Garden Suite 384', 'North Norma', '918 Auer Manor\nSouth Everardo,', 'Brekke, Tremblay and Quitzon', 'irenner@example.org', 'Carolina', 'Halvorson', '60', '3461641147', 'Saint Vincent and the Grenadin');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('71773', '927 Noble Lock Suite 652', 'South Vicky', '80617 Kutch Meadow Apt. 008\nAn', 'Koch, Hickle and Balistreri', 'mckenzie.christine@example.net', 'Simone', 'Gutmann', '2', '3453479794', 'Mauritania');
 
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a taglio', '7.91', 'Cacciavite a taglio', '1313932365', 'mckenzie.christine@example.net', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Avanzatissimo strumento di calcolo, e in grado di rappresentare gran parte dei numeri naturali', '5.32', 'Calcolatrice', '1952322448', 'mckenzie.christine@example.net', 'Informatica');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Rocchetto che fara impazzire qualsiasi casalinga annoiata', '8.9', 'Rocchetto di filo', '3438720877', 'irenner@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano gran parte delle viti esistenti ', '7.62', 'Cacciavite Multifunzione', '3577771822', 'irenner@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Portafoglio in pelle sintetica', '8.21', 'Portafoglio', '3773158679', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Forbici ergonomiche adatte a tagliare la carta', '3.85', 'Forbici', '4943693566', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a croce', '5.22', 'Cacciavite a croce', '7775972008', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Strumento segnatempo in acciaio inossidabile', '4.62', 'Orologio', '8791859210', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Prestante lucchetto di sicurezza, impossibile da scalfire', '7.38', 'Lucchetto', '9150815034', 'hackett.eleanore@example.org', 'Utensili');
-INSERT INTO `Item` (`isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name`) VALUES ('1', 'Memoria di massa dalle alte prestazioni, 5 Mb/s in lettura e scrittura', '4.38', 'Chiavetta USB', '9876711578', 'hackett.eleanore@example.org', 'Informatica');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a taglio', '7.91', 'Cacciavite a taglio', '1313932365', 'mckenzie.christine@example.net', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Avanzatissimo strumento di calcolo, e in grado di rappresentare gran parte dei numeri naturali', '5.32', 'Calcolatrice', '1952322448', 'mckenzie.christine@example.net', 'Informatica');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Rocchetto che fara impazzire qualsiasi casalinga annoiata', '8.9', 'Rocchetto di filo', '3438720877', 'irenner@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Con questo cacciavite si manipolano gran parte delle viti esistenti ', '7.62', 'Cacciavite Multifunzione', '3577771822', 'irenner@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Portafoglio in pelle sintetica', '8.21', 'Portafoglio', '3773158679', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Forbici ergonomiche adatte a tagliare la carta', '3.85', 'Forbici', '4943693566', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Con questo cacciavite si manipolano le viti a croce', '5.22', 'Cacciavite a croce', '7775972008', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Strumento segnatempo in acciaio inossidabile', '4.62', 'Orologio', '8791859210', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Prestante lucchetto di sicurezza, impossibile da scalfire', '7.38', 'Lucchetto', '9150815034', 'hackett.eleanore@example.org', 'Utensili');
+INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) VALUES ('1', 'Memoria di massa dalle alte prestazioni, 5 Mb/s in lettura e scrittura', '4.38', 'Chiavetta USB', '9876711578', 'hackett.eleanore@example.org', 'Informatica');
 
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('1158', '8638 Rupert Village Apt. 105', 'Wilhelmineside', 'adrain.johnson@example.com', 2, 'Jennyfer', 'Willms', '89', '3464459410', 'Bulgaria');
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('42930', '41349 Noemie Ferry', 'Lottieborough', 'ali.simonis@example.com', NULL, 'Elvie', 'Boyer', '86', '3469388846', 'Niue');
@@ -297,25 +300,32 @@ INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSe
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', '0');
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP()-1, '1', '1');
 
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', '0', '3', '2', '12.86');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1952322448', '0', '1', '5', '9.57');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', '0', '2', '1', '17.76');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', '1', '2', '4', '1.32');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', '2', '2', '1', '18.6');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('4943693566', '1', '1', '5', '2.87');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('7775972008', '2', '4', '1', '19.99');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('8791859210', '2', '3', '5', '19.69');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9150815034', '2', '1', '3', '3.36');
-INSERT INTO `DetailsItem` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9876711578', '2', '3', '2', '12.73');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1952322448', '0', '1', '5', '9.57');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', '0', '2', '1', '17.76');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', '0', '3', '2', '12.86');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('4943693566', '1', '1', '5', '2.87');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', '1', '2', '4', '1.32');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', '2', '1', '1', '18.6');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('7775972008', '2', '2', '1', '19.99');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('8791859210', '2', '3', '5', '19.69');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9150815034', '2', '4', '3', '3.36');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9876711578', '2', '5', '2', '12.73');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', '3', '1', '1', '17.76');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', '3', '2', '2', '12.86');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', '4', '1', '4', '1.32');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', '4', '2', '1', '18.6');
 
 
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('1313932365', 'img-2');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('1952322448', 'img-6');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3438720877', 'img-1');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3577771822', 'img-3');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('3773158679', 'img-7');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('4943693566', 'img-4');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('7775972008', 'img-0');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('8791859210', 'img-5');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('9150815034', 'img-9');
-INSERT INTO `Img` (`serialCode`, `path`) VALUES ('9876711578', 'img-8');
+INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) VALUES ('adrain.johnson@example.com', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP(), '3');
+INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) VALUES ('adrain.johnson@example.com', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP()- 1, '4');
+
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1313932365', 'image-2.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1952322448', 'image-6.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3438720877', 'image-1.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3577771822', 'image-3.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('3773158679', 'image-7.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('4943693566', 'image-4.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('7775972008', 'image-0.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('8791859210', 'image-5.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('9150815034', 'image-9.jpg');
+INSERT INTO `Image` (`serialCode`, `path`) VALUES ('9876711578', 'image-8.jpg');

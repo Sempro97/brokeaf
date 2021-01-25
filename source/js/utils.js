@@ -196,7 +196,7 @@ function validation() {
     $("#condition").removeClass("is-invalid");
   }
   //Mark incomplete input
-  $("form input[target!='_blank']").each(function () {
+  $("#singnupFrom input[id!='condition']").each(function () {
     if ($(this).val() == "") {
       $(this).addClass("is-invalid");
       alert("Error, fields '" + $(this).attr("name") + "' vuoto non permesso");
@@ -218,7 +218,7 @@ function validation() {
 }
 
 $(document).ready(function (e) {
-  $("form input[target!='_blank']").each(function () {
+  $("#singnupFrom input[target!='_blank']").each(function () {
     $(this).on("keyup", function () {
       if ($(this).val() == "") {
         $(this).addClass("is-invalid");
@@ -229,7 +229,7 @@ $(document).ready(function (e) {
     });
   });
 
-  $("form").on("submit", function (event) {
+  $("#singnupFrom").on("submit", function (event) {
     // Stop the form from refreshing the page.
     event.preventDefault();
     if (validation()) {
@@ -281,7 +281,7 @@ function showAlert(message) {
 }
 
 function clearForm() {
-  $("form input").each(function () {
+  $("#singnupFrom input").each(function () {
     $(this).val("");
     $(this).removeClass("is-invalid");
   });

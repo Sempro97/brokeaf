@@ -1,55 +1,40 @@
 $(function () {
-  $("form").on("submit", function (event) {
-    // Stop the form from refreshing the page.
+  $("form").submit(function (event) {
     event.preventDefault();
-    // Retrieve the form values.
-    let formValues = $(this).serialize();
-    // Send the request to the server.
-    sendAddItemRequest(formValues);
+    let formData = new FormData(this);
+    addItem(formData);
   });
 });
 
-function sendAddItemRequest(formValues) {
+function addItem(formData) {
   $.post({
     url: "api/add-item.php",
-    data: formValues,
-    dataType: "json",
-    success: function (itemAdded) {
-      if (itemAdded === true) {
-        // The item was successfully added to the database, now upload
-        // the image and redirect the user.
-        let image = $("#image")[0].files[0];
-        uploadImage(image);
-      } else {
-        showAlert("An error occurred while trying to add the item.");
-      }
-    },
-  });
-}
-
-function uploadImage(image) {
-  let formData = new FormData();
-  formData.append("image", image);
-  $.post({
-    url: "api/upload-image.php",
     data: formData,
     dataType: "json",
     contentType: false,
     processData: false,
-    success: function (imageUploaded) {
-      console.log(imageUploaded);
-      if (imageUploaded === true) {
-        window.location.replace("index.php");
+    success: function (response) {
+      if (response === true) {
+        showAlert("success", "Item added successfully.");
       } else {
-        showAlert("An error occurred while trying to upload the image.");
+        showAlert("danger", "An error occurred while trying to add the item: " + response);
       }
     },
-    error: function (error) {
-      showAlert("An error occurred while trying to upload the image.");
+    error: function (response) {
+      showAlert("danger", "An error occurred while trying to add the item.");
     },
   });
 }
 
-function showAlert(message) {
-  $(".d-none.invisible").hide().removeClass("d-none invisible").fadeIn();
+function showAlert(type, message) {
+  // Set alert to the correct type.
+  let alert = $(".alert");
+  let alertType = "alert-" + type;
+  alert.removeClass("alert-danger alert-success");
+  alert.addClass(alertType);
+  // Make the alert visible.
+  let visibilityClasses = "d-none invisible";
+  alert.removeClass(visibilityClasses);
+  // Set the alert message.
+  alert.text(message);
 }
