@@ -229,28 +229,6 @@ class Database
         return $orders;
     }
 
-    public function is_user($email)
-    {
-        $query = 'SELECT * FROM UserWeb WHERE email=?';
-        $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $email);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        return 1 == $result->num_rows;
-    }
-
-    public function is_seller($email)
-    {
-        $query = 'SELECT * FROM Seller WHERE email=?';
-        $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $email);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        return 1 == $result->num_rows;
-    }
-
     public function login($email, $password)
     {
         $user = self::is_user($email);
@@ -273,11 +251,34 @@ class Database
             return false;
         }
         if ($password == $saved_password) {
-            $user_browser = $_SERVER['HTTP_USER_AGENT'];
             $_SESSION['email'] = $email;
+            $user_browser = $_SERVER['HTTP_USER_AGENT'];
+            $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
 
             return true;
         }
+    }
+
+    public function is_user($email)
+    {
+        $query = 'SELECT * FROM UserWeb WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function is_seller($email)
+    {
+        $query = 'SELECT * FROM Seller WHERE email=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
     }
 
     public function register_user()
