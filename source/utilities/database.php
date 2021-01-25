@@ -30,7 +30,7 @@ class Database
 
     public function account_exists($email)
     {
-        $query = 'SELECT email FROM Users,Seller WHERE email=? LIMIT 1';
+        $query = 'SELECT email FROM UsersWeb,Seller WHERE email=? LIMIT 1';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
@@ -175,6 +175,19 @@ class Database
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function get_img_item($serialCode)
+    {
+        $query = "SELECT Image.path FROM Image
+                       WHERE Image.serialCode = ? ";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $serialCode);
+        $statement->execute();
+        $result = $statement->get_result();
+        error_log(var_dump($result->fetch_all(MYSQLI_ASSOC)));
+        return $result;
+    }
+
 
     public function is_user($email)
     {

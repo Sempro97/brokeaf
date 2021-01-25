@@ -3,7 +3,6 @@
 require_once 'utilities/bootstrap.php';
 
 $template['title'] = 'Registration';
-$template['items'] = $database->get_random_items(5);
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
     'bootstrap/js/bootstrap.bundle.min.js',
