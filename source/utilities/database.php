@@ -294,36 +294,14 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function register_user($cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province)
+    public function register_user()
     {
-        $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-        if ($statement = self::$instance->prepare($query)) {
-            $statement->bind_param('isssisssss', $cap, $address, $city, $email, $IdList, $name, $surname, $password, $phoneNumber, $province);
-
-            $statement->execute();
-        } else {
-            $error = self::$instance->errno.' '.self::$instance->error;
-            echo $error;
-        }
-
-        return $statement->affected_rows;
+        return true;
     }
 
-    public function register_seller($cap, $address, $city, $companyAddres, $companyName, $email, $name, $surname, $password, $phoneNumber, $province)
+    public function register_seller()
     {
-        $query = 'INSERT INTO Seller ("cap", "address", "city", "companyAddres","companyName", "email", "name", "surname", "password", "phoneNumber", "province")
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        if ($statement = self::$instance->prepare($query)) {
-            $statement->bind_param('issssssssss', $cap, $address, $city, $companyAddres, $companyName, $email, $name, $surname, $password, $phoneNumber, $province);
-            $statement->execute();
-        } else {
-            $error = self::$instance->errno.' '.self::$instance->error;
-            echo $error;
-        }
-
-        return $statement->affected_rows;
+        return true;
     }
 
     // TODO: Doesn't have to be here.
