@@ -2,7 +2,7 @@
 
 require_once '../utilities/bootstrap.php';
 require_once '../utilities/exit-json.php';
-require_once '../utilities/parse-item.php';
+require_once '../utilities/parse.php';
 require_once '../utilities/seller-only.php';
 
 //////////

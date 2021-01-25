@@ -299,23 +299,31 @@ class Database
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         if($statement = self::$instance->prepare($query)){
-            $statement->bind_param('isssisssss', intval($user["cap"]),
+            try{
+            error_log(print_r($user,true));    
+            $statement->bind_param('isssisssss', 
+            $a = $user["cap"],
             $user["address"],
             $user["city"],
             $user["email"],
-            NULL,
+            $a = NULL,
             $user["name"],
             $user["surname"],
             $user["password"],
-            $user["phone"],
+            $user["phoneNumber"],
             $user["province"]);
+            error_log("--"); 
             $statement->execute();
+                    }
+                    catch (Exception $excp) {
+                        error_log(print_r($excp,true));
+                    }
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
             return 0;
         }
-
         if ($statement->affected_rows == 1) {
+            error_log('userok');
             return 1;
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
@@ -329,7 +337,7 @@ class Database
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         if($statement = self::$instance->prepare($query)) {
-            $statement->bind_param('issssssssss', intval($seller["cap"]),
+            $statement->bind_param('issssssssss', $a = $seller["cap"],
          $seller["address"],
          $seller["city"],
          $seller["companyAddress"],

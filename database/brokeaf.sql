@@ -83,7 +83,7 @@ create table UserWeb (
      province char(64) not null,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
-
+     
 create table Description(
      description char(255) not null,
      idDesc char(64) not null,

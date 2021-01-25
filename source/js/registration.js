@@ -1,3 +1,52 @@
+$(function () {
+  $("#singnupFrom input[id!='condition'][name!='submit']").each(function () {
+    $(this).on("keyup", function () {
+      if ($(this).val() == "") {
+        $(this).addClass("is-invalid");
+        return false;
+      } else {
+        $(this).removeClass("is-invalid");
+      }
+    });
+  });
+
+  $("#singnupFrom").on("submit", function (event) {
+    // Stop the form from refreshing the page.
+    event.preventDefault();
+    if (validation()) {
+      // Retrieve the form values.
+      let formData = new FormData(this);
+      // Send the request to the server.
+      sendAddItemRequest(formData);
+    } else {
+      showAlert("danger", "check the highlighted fields!");
+    }
+  });
+});
+
+function sendAddItemRequest(formData) {
+  $.post({
+    url: "api/check-registration.php",
+    data: formData,
+    dataType: "json",
+    contentType: false,
+    processData: false,
+    success: function (response) {
+      if (response === true) {
+        clearForm();
+        showAlert("success", "Nuovo utente creato correttamente! Ora puoi effettuare il login!");
+      } else {
+        clearForm();
+        showAlert("danger", "An error occurred while trying to add the item: " + response);
+      }
+    },
+    error: function (response) {
+      $("#password, #cpassword").val("");
+      showAlert("danger", "Connection error!");
+    },
+  });
+}
+
 function emailCheck() {
   if ($("#email").val() == "") {
     $("#email").addClass("is-invalid");
@@ -196,7 +245,7 @@ function validation() {
     $("#condition").removeClass("is-invalid");
   }
   //Mark incomplete input
-  $("#singnupFrom input[id!='condition']").each(function () {
+  $("#singnupFrom input[id!='condition'][name!='submit']").each(function () {
     if ($(this).val() == "") {
       $(this).addClass("is-invalid");
       alert("Error, fields '" + $(this).attr("name") + "' vuoto non permesso");
@@ -217,71 +266,21 @@ function validation() {
   return true;
 }
 
-$(document).ready(function (e) {
-  $("#singnupFrom input[target!='_blank']").each(function () {
-    $(this).on("keyup", function () {
-      if ($(this).val() == "") {
-        $(this).addClass("is-invalid");
-        return false;
-      } else {
-        $(this).removeClass("is-invalid");
-      }
-    });
-  });
-
-  $("#singnupFrom").on("submit", function (event) {
-    // Stop the form from refreshing the page.
-    event.preventDefault();
-    if (validation()) {
-      // Retrieve the form values.
-      let formValues = $(this).serialize();
-      // Send the request to the server.
-      sendAddItemRequest(formValues);
-    } else {
-      showAlert("check the highlighted fields!");
-    }
-  });
-});
-
-function sendAddItemRequest(formValues) {
-  $.post({
-    url: "api/check-registration.php",
-    data: formValues,
-    dataType: "json",
-    success: function (itemAdded) {
-      console.log(itemAdded["email"]);
-      if (itemAdded["email"] == $("#email").val()) {
-        clearForm();
-        alert("Nuovo utente creato correttamente! Ora puoi continuare con lo shopping!");
-      } else if (itemAdded == "User already exist") {
-        showAlert("This email is already registred!");
-        clearForm();
-      } else if (itemAdded == "User not created, not present") {
-        showAlert("An error occurred while trying to add the user.");
-      }
-    },
-    error: function (errorMessage) {
-      showAlert("Connection error!.");
-    },
-  });
-}
-
-function showAlert(message) {
-  let duration = 5000;
-  let classes = "d-none invisible";
-  $(".d-none.invisible")
-    .hide()
-    .text(message)
-    .removeClass("d-none invisible")
-    .fadeIn()
-    .delay(duration)
-    .fadeOut(function () {
-      $(this).addClass(classes);
-    });
+function showAlert(type, message) {
+  // Set alert to the correct type.
+  let alert = $(".alert");
+  let alertType = "alert-" + type;
+  alert.removeClass("alert-danger alert-success");
+  alert.addClass(alertType);
+  // Make the alert visible.
+  let visibilityClasses = "d-none invisible";
+  alert.removeClass(visibilityClasses);
+  // Set the alert message.
+  alert.text(message);
 }
 
 function clearForm() {
-  $("#singnupFrom input").each(function () {
+  $("#singnupFrom input[id!='condition'][name!='submit']").each(function () {
     $(this).val("");
     $(this).removeClass("is-invalid");
   });
