@@ -192,7 +192,6 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-<<<<<<< HEAD
     public function get_img_item($serialCode)
     {
         $query = "SELECT Image.path FROM Image
@@ -205,7 +204,6 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-=======
     public function get_orders($email)
     {
         $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
@@ -242,7 +240,6 @@ class Database
 
         return $orders;
     }
->>>>>>> 83bdb6bb74501fdfd22eddadc8950a17ba6544a9
 
     public function is_user($email)
     {
