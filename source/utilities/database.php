@@ -158,6 +158,17 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function get_items_by_seller($email)
+    {
+        $query = 'SELECT * FROM Item WHERE emailSeller=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_random_items($count)
     {
         $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
@@ -257,6 +268,11 @@ class Database
 
             return true;
         }
+    }
+
+    public function is_owner($email, $item)
+    {
+        return $email == $item['emailSeller'];
     }
 
     public function is_user($email)
