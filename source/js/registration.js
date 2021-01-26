@@ -41,7 +41,7 @@ function sendAddItemRequest(formData) {
       }
     },
     error: function (response) {
-      $("#password, #cpassword").val("");
+      clearForm();
       showAlert("danger", "Connection error!");
     },
   });
