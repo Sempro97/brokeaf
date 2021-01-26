@@ -4,13 +4,12 @@ require_once 'utilities/bootstrap.php';
 if ($_SESSION['email'] ? true : false) {
     header('Location: index.php');
 }
-$template['title'] = 'Login';
+$template['title'] = 'Registration';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
     'bootstrap/js/bootstrap.bundle.min.js',
-    'js/login.js',
     'js/sha512.js',
+    'js/registration.js',
 ];
-$template['header'] = 'Login';
-$template['content'] = 'templates/login.php';
+$template['content'] = 'templates/registration.php';
 require_once 'templates/base.php';

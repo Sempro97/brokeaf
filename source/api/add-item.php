@@ -2,7 +2,7 @@
 
 require_once '../utilities/bootstrap.php';
 require_once '../utilities/exit-json.php';
-require_once '../utilities/parse-item.php';
+require_once '../utilities/parse.php';
 require_once '../utilities/seller-only.php';
 
 //////////
@@ -25,7 +25,7 @@ if ($item) {
 
 // Constants
 const ALLOWED_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png'];
-const IMAGES_FOLDER = '/var/www/html/images/';
+const IMAGES_FOLDER = '../images/';
 const MAXIMUM_ALLOWED_IMAGE_SIZE = 2000000;
 // Check for errors.
 $error = $_FILES['image']['error'];
