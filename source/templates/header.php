@@ -10,7 +10,7 @@ if ($notifications_count > 0) {
 $seller = $database->is_seller($email);
 $user = $database->is_user($email);
 $icon = $user ? 'fa-user' : ($seller ? 'fa-user-tie' : '');
-$cart_button_status = $seller ? 'disabled' : '';
+$cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
 ?>
     <header>
       <div class="container">
@@ -64,8 +64,7 @@ $cart_button_status = $seller ? 'disabled' : '';
                 </form>
               </div>
               <div class="pl-2">
-                <button type="button" class="btn btn-dark <?php echo $cart_button_status; ?>">
-                  <span class="fas fa-shopping-cart"></span>
+                <a class="btn btn-dark <?php echo $cart_button_status; ?>" href="cart.php" role="button"><span class="fas fa-shopping-cart"></span></a>
                 </button>
               </div>
             </div>
