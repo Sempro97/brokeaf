@@ -93,7 +93,7 @@ create table Description(
      constraint IDNotificationSeller primary key (idDesc));
 
 create table NotificationUser (
-     idNotification numeric(16),
+     idNotification int UNSIGNED NOT NULL,
      path char(128) not null,
      date datetime not null,
      idDesc char(64) not null,
@@ -161,7 +161,8 @@ alter table Visitor add constraint FKwish_FK
      foreign key (IdList)
      references ListItems(IdList);
 
-ALTER TABLE NotificationUser AUTO_INCREMENT = 100;
+ALTER TABLE NotificationUser
+     MODIFY `idNotification` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 INSERT INTO `ListItems` (IdList) VALUES ('0');
 INSERT INTO `ListItems` (IdList) VALUES ('1');
