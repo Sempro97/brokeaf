@@ -2,27 +2,26 @@ $(function () {
   $("form:not(header form)").on("submit", function (event) {
     event.preventDefault();
     let formData = new FormData(this);
-    addItem(formData);
+    editItem(formData);
   });
 });
 
-function addItem(formData) {
+function editItem(formData) {
   $.post({
-    url: "api/add-item.php",
+    url: "api/edit-item.php",
     data: formData,
     dataType: "json",
     contentType: false,
     processData: false,
     success: function (response) {
       if (response === true) {
-        showAlert("success", "Item added successfully.");
-        $("form:not(header form)").trigger("reset");
+        showAlert("success", "Item edited successfully.");
       } else {
-        showAlert("danger", "An error occurred while trying to add the item: " + response);
+        showAlert("danger", "An error occurred while trying to edit the item: " + response);
       }
     },
     error: function (response) {
-      showAlert("danger", "An error occurred while trying to add the item.");
+      showAlert("danger", "An error occurred while trying to edit the item.");
     },
   });
 }

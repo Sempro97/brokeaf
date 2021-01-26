@@ -1,10 +1,9 @@
 <?php
 
-require_once '../utilities/database.php';
+require_once '../utilities/bootstrap.php';
 require_once '../utilities/exit-json.php';
-require_once '../utilities/parse-item.php';
-
-$database = new Database();
+require_once '../utilities/parse.php';
+require_once '../utilities/seller-only.php';
 
 //////////
 // Item //
@@ -26,7 +25,7 @@ if ($item) {
 
 // Constants
 const ALLOWED_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png'];
-const IMAGES_FOLDER = '/var/www/html/images/';
+const IMAGES_FOLDER = '../images/';
 const MAXIMUM_ALLOWED_IMAGE_SIZE = 2000000;
 // Check for errors.
 $error = $_FILES['image']['error'];
@@ -69,8 +68,7 @@ if (false === $result) {
 // Database //
 //////////////
 
-// TODO: Use email from seller session.
-$result = $database->add_item($item, 'irenner@example.org');
+$result = $database->add_item($item, $email);
 if (false === $result) {
     exit_json('failed to add the item to the database.');
 }

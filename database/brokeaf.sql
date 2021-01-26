@@ -68,6 +68,7 @@ create table Seller (
      password char(255) not null,
      phoneNumber char(16) not null,
      province char(64) not null,
+     salt CHAR(128) DEFAULT 0 NOT NULL,
      constraint IDSeller primary key (email));
      
 create table UserWeb (
@@ -81,6 +82,7 @@ create table UserWeb (
      password char(255) not null,
      phoneNumber char(64) not null,
      province char(64) not null,
+     salt CHAR(128) DEFAULT 0 NOT NULL,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
 
@@ -158,6 +160,8 @@ alter table UserWeb add constraint FKshop_FK
 alter table Visitor add constraint FKwish_FK
      foreign key (IdList)
      references ListItems(IdList);
+
+ALTER TABLE NotificationUser AUTO_INCREMENT = 100;
 
 INSERT INTO `ListItems` (IdList) VALUES ('0');
 INSERT INTO `ListItems` (IdList) VALUES ('1');
@@ -294,7 +298,7 @@ INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `sur
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
 
 INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
-
+INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('1','0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','mckenzie.christine@example.net',NULL);
 
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', '0');
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP()-1, '1', '1');
