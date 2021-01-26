@@ -1,7 +1,7 @@
 <?php
 
 require_once 'utilities/bootstrap.php';
-
+//TODO: check if login is already fired
 $template['title'] = 'Registration';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
