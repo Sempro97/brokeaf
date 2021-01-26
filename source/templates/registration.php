@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row">
     <div class="col-sm-12 rounded pt-2">
       <form id="singnupFrom">
