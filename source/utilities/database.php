@@ -394,44 +394,49 @@ class Database
         return 1 === $statement->affected_rows;
     }
 
-    public function get_cart($email) {
-        $query = "SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.quantity AS stock
+    public function get_cart($email)
+    {
+        $query = 'SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.quantity AS stock
         FROM (((ItemDetails
         INNER JOIN ListItems
         ON ListItems.IdList = ItemDetails.IdList)
         INNER JOIN Item
         ON ItemDetails.serialCode = Item.serialCode)
         INNER JOIN UserWeb
-        ON ListItems.IdList = UserWeb.IdList) WHERE UserWeb.email = ?";
+        ON ListItems.IdList = UserWeb.IdList) WHERE UserWeb.email = ?';
 
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
         $result = $statement->get_result();
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function remove_item_from_cart($serialCode, $idList) {
-        $query = "DELETE FROM ItemDetails WHERE serialCode=? AND IdList=?";
+    public function remove_item_from_cart($serialCode, $idList)
+    {
+        $query = 'DELETE FROM ItemDetails WHERE serialCode=? AND IdList=?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('si', $serialCode, $idList);
         $statement->execute();
     }
 
-    public function set_cart_item_quantity($quantity, $serialCode, $idList) {
-        $query = "UPDATE ItemDetails SET quantity=? WHERE serialCode=? AND IdList=?";
+    public function set_cart_item_quantity($quantity, $serialCode, $idList)
+    {
+        $query = 'UPDATE ItemDetails SET quantity=? WHERE serialCode=? AND IdList=?';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('isi',$quantity, $serialCode, $idList);
+        $statement->bind_param('isi', $quantity, $serialCode, $idList);
         $statement->execute();
     }
 
-    public function calculate_cart_total($idList) {
-        $query = "SELECT ItemDetails.price, ItemDetails.quantity
+    public function calculate_cart_total($idList)
+    {
+        $query = 'SELECT ItemDetails.price, ItemDetails.quantity
         FROM ((ItemDetails
         INNER JOIN Item
         ON ItemDetails.serialCode = Item.serialCode)
         INNER JOIN ListItems
-        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?";
+        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
 
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $idList);

@@ -13,7 +13,7 @@
           <div class="card wish-list mb-4">
             <div class="card-body">
               <h5 class="mb-4">Cart (<span id="cart-number"></span> items)</h5>
-              <?php foreach ($template["cart"] as $item): ?>
+              <?php foreach ($template['cart'] as $item) { ?>
               <!-- Item -->
               <div id="item">
                 <div class="row mb-2" >
@@ -29,10 +29,10 @@
                     <div>
                       <div class="d-flex justify-content-between">
                         <div>
-                          <p class="h5" id="txtname"><?php echo $item["name"]; ?></p>
-                          <p class="mb-2"><strong id="txtprice"><?php echo $item["price"]; ?>&euro;</strong></p>
+                          <p class="h5" id="txtname"><?php echo $item['name']; ?></p>
+                          <p class="mb-2"><strong id="txtprice"><?php echo $item['price']; ?>&euro;</strong></p>
                           <script> document.getElementById("txtprice").id = "txtprice" + counter; </script>
-                          <p class="mb-3">Availability: <?php echo $item["stock"]; ?></p>
+                          <p class="mb-3">Availability: <?php echo $item['stock']; ?></p>
                         </div>
                       </div>
                     </div>
@@ -47,7 +47,7 @@
                         <button class="btn btn-outline-secondary" type="submit" id="minus" onClick="">-</button>
                         <script> document.getElementById("minus").id = "minus" + counter; </script>
                       </div>
-                      <input type="text" id="txtquantity" class="form-control " value="<?php echo $item["quantity"]; ?>" readonly/>
+                      <input type="text" id="txtquantity" class="form-control " value="<?php echo $item['quantity']; ?>" readonly/>
                       <script> document.getElementById("txtquantity").id = "txtquantity" + counter; </script>
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit" id="plus">+</button>
@@ -66,7 +66,7 @@
                 </div>
               <hr class="mb-4" />
               </div>
-              <?php endforeach; ?>             
+              <?php } ?>             
             </div>
           </div>
 
@@ -87,7 +87,7 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                   Amount
-                  <span id="spanTotal"><?php echo $item["total"]; ?>&euro;</span>
+                  <span id="spanTotal"><?php echo $item['total']; ?>&euro;</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                   Shipping
@@ -99,7 +99,7 @@
                     <br />
                     <strong> (including IVA) </strong>
                   </div>
-                  <span><strong id="spanIva"><?php echo $item["total"]; ?>&euro;</strong></span>
+                  <span><strong id="spanIva"><?php echo $item['total']; ?>&euro;</strong></span>
                 </li>
               </ul>
 
@@ -152,7 +152,7 @@
       var btnpressed = $(document.activeElement).attr('id'); //bottone premuto con numero
       var itemNumber = btnpressed.match(/\d+/g); //numero item selezionato
       btnpressed = btnpressed.replace(itemNumber, ""); //nome bottone premuto
-      var template = <?php echo json_encode($template["cart"]); ?>;
+      var template = <?php echo json_encode($template['cart']); ?>;
 
       var itemCode = template[itemNumber-1]['serialCode'];
       var idList = template[itemNumber-1]['IdList'];
