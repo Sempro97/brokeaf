@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Order Confirmation</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="font-awesome/css/all.min.css" />
-  </head>
-  <body>
-    <div class="header"></div>
-
-    <div class="container">
+<div class="container">
       <div class="h1">
         <p class="text-left">Thank you for your order!</p>
       </div>
@@ -31,5 +18,3 @@
         </button>
       </div>
     </div>
-  </body>
-</html>
