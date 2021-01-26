@@ -8,32 +8,30 @@ require_once '../utilities/exit-json.php';
 //////////
 
 $user = $_POST;
-$userType = "UserWeb";
+$userType = 'UserWeb';
 
-if($_SESSION['email'] != $user["email"]){
+if ($_SESSION['email'] != $user['email']) {
     exit_json('You can\'t modify the email!');
-} 
+}
 
-//Check type of user
-if($user["companyName"] !== NULL){
-    $userType = "Seller";
+// Check type of user.
+if (null !== $user['companyName']) {
+    $userType = 'Seller';
 }
 
 //////////////
 // Database //
 //////////////
 
-//The passworld must be resaled
-if($userType === "UserWeb"){
-    if($user["password"] != $database->get_user_from_email($_SESSION['email'])["password"])
-    {
-        hashUsersPW();
+// The password must be re-salted.
+if ('UserWeb' === $userType) {
+    if ($user['password'] != $database->get_user_from_email($_SESSION['email'])['password']) {
+        hashUsersPassword();
     }
     $result = $database->update_user($user);
-}else{
-    if($user["password"] != $database->get_seller_from_email($_SESSION['email'])["password"])
-    {
-        hashUsersPW();
+} else {
+    if ($user['password'] != $database->get_seller_from_email($_SESSION['email'])['password']) {
+        hashUsersPassword();
     }
     $result = $database->update_seller($user);
 }
@@ -43,11 +41,12 @@ if (0 === $result) {
 }
 exit_json(true);
 
-function hashUsersPW(){
-        global $user;
-        $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-        $password = $user["password"];
-        //Hash password
-        $user["password"] = hash('sha512',$password.$random_salt);
-        $user["salt"] = $random_salt;
+function hashUsersPassword()
+{
+    global $user;
+    $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+    $password = $user['password'];
+    // Hash password.
+    $user['password'] = hash('sha512', $password.$random_salt);
+    $user['salt'] = $random_salt;
 }

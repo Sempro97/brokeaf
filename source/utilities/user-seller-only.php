@@ -1,11 +1,10 @@
 <?php
 
-/* Set the $template["user"] to an UserWeb or Seller account if is already log-in */
-if($email === NULL){
+// Set the $template["user"] to an UserWeb or Seller account if is already log-in.
+if (null === $email) {
     header('Location: index.php');
 } else {
     if (false === $database->is_seller($email)) {
-
         if (false === $database->is_user($email)) {
             header('Location: index.php');
         } else {

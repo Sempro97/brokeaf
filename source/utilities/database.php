@@ -273,39 +273,41 @@ class Database
 
     public function update_user($user)
     {
-        
         $query = 'UPDATE UserWeb
                   SET cap = ?, address = ?, city = ?, IdList = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
                   WHERE email = ? ';
 
-        if($statement = self::$instance->prepare($query)){
-            error_log(print_r($user,true));    
-            $statement->bind_param('ississsssss', 
-            $a = $user["cap"],
-            $user["address"],
-            $user["city"],
-            $a = NULL,
-            $user["name"],
-            $user["surname"],
-            $user["password"],
-            $user["phoneNumber"],
-            $user["province"],
-            $user["salt"],
-            $user["email"],
-        );
-            
+        if ($statement = self::$instance->prepare($query)) {
+            error_log(print_r($user, true));
+            $statement->bind_param(
+                'ississsssss',
+                $a = $user['cap'],
+                $user['address'],
+                $user['city'],
+                $a = null,
+                $user['name'],
+                $user['surname'],
+                $user['password'],
+                $user['phoneNumber'],
+                $user['province'],
+                $user['salt'],
+                $user['email'],
+            );
+
             $statement->execute();
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
             return false;
         }
-        if ($statement->affected_rows == 1) {
+        if (1 == $statement->affected_rows) {
             error_log('Updated an user!');
+
             return true;
-        } else {
-            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return false;
         }
+        error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return false;
     }
 
     public function update_seller($seller)
@@ -314,34 +316,38 @@ class Database
                   SET cap = ?, address = ?, city = ?,companyAddress = ?,companyName = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
                   WHERE email = ? ';
 
-        if($statement = self::$instance->prepare($query)) {
-            $statement->bind_param('isssssssssss', $a = $seller["cap"],
-         $seller["address"],
-         $seller["city"],
-         $seller["companyAddress"],
-         $seller["companyName"],
-         $seller["name"],
-         $seller["surname"],
-         $seller["password"],
-         $seller["phone"],
-         $seller["province"],
-         $seller["salt"],
-         $seller["email"]);
+        if ($statement = self::$instance->prepare($query)) {
+            $statement->bind_param(
+                'isssssssssss',
+                $a = $seller['cap'],
+                $seller['address'],
+                $seller['city'],
+                $seller['companyAddress'],
+                $seller['companyName'],
+                $seller['name'],
+                $seller['surname'],
+                $seller['password'],
+                $seller['phone'],
+                $seller['province'],
+                $seller['salt'],
+                $seller['email']
+            );
             $statement->execute();
         } else {
             error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
             return false;
         }
-        if($statement->affected_rows == 1){
+        if (1 == $statement->affected_rows) {
             error_log('Updated an seller!');
-            return true;
-        } else {
-            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return false;
-    }
-}
 
-    
+            return true;
+        }
+        error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return false;
+    }
+
     public function register_user($user)
     {
         $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province, salt) 

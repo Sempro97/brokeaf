@@ -10,7 +10,7 @@
             :
           </label>
           <input type="text" class="form-control" id="<?php echo $userLabel; ?>" name="<?php echo $userLabel; ?>"
-          value="<?php echo $template["user"][$userLabel]; ?>"/>
+          value="<?php echo $template['user'][$userLabel]; ?>"/>
         </div>
         <?php } ?>
         <button type="submit" class="btn btn-primary">Save</button>
