@@ -318,33 +318,32 @@ class Database
     {
         $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province, salt)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-        if ($statement = self::$instance->prepare($query)) {
-            $statement->bind_param(
-                'issssssssss',
-                $a = $seller['cap'],
-                $seller['address'],
-                $seller['city'],
-                $seller['companyAddress'],
-                $seller['companyName'],
-                $seller['email'],
-                $seller['name'],
-                $seller['surname'],
-                $seller['password'],
-                $seller['phone'],
-                $seller['province'],
-                $seller['salt']
-            );
-            $statement->execute();
-        } else {
-            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
             return 0;
         }
+        $statement->bind_param(
+            'isssssssssss',
+            $seller['cap'],
+            $seller['address'],
+            $seller['city'],
+            $seller['companyAddress'],
+            $seller['companyName'],
+            $seller['email'],
+            $seller['name'],
+            $seller['surname'],
+            $seller['password'],
+            $seller['phone'],
+            $seller['province'],
+            $seller['salt']
+        );
+        $statement->execute();
         if (1 == $statement->affected_rows) {
             return 1;
         }
-        error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+        error_log('Failed to insert seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
         return 0;
     }

@@ -76,7 +76,6 @@
             <input type="submit" name="submit" value="Sign Up" class="btn btn-block btn-danger"/>
           </div>
         </div>
-        <!--/.next-form-->
       </form>
     </div>
   </div>

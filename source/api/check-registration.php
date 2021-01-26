@@ -7,15 +7,17 @@ require_once '../utilities/parse.php';
 
 // User already registered check.
 if (null != $database->get_user_from_email($_POST['email']) || null != $database->get_seller_from_email($_POST['email'])) {
-    //Save the try on db to avoid brute force
+    // Save the try to avoid brute force.
     error_log('User already exist');
     exit_json('User already exist');
 } else {
     // Registration.
     if (null !== $_POST['companyName']) {
-        $results = $database->register_seller(parse_seller($_POST));
+        $seller = parse_seller($_POST);
+        $results = $database->register_seller($seller);
     } else {
-        $results = $database->register_user(parse_user($_POST));
+        $user = parse_user($_POST);
+        $results = $database->register_user($user);
     }
     if (1 === $results) {
         exit_json(true);
