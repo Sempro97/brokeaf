@@ -161,6 +161,8 @@ alter table Visitor add constraint FKwish_FK
      foreign key (IdList)
      references ListItems(IdList);
 
+ALTER TABLE NotificationUser AUTO_INCREMENT = 100;
+
 INSERT INTO `ListItems` (IdList) VALUES ('0');
 INSERT INTO `ListItems` (IdList) VALUES ('1');
 INSERT INTO `ListItems` (IdList) VALUES ('2');
