@@ -26,6 +26,8 @@ $cart_button_status = $seller ? 'disabled' : '';
                     <li>
 <?php if ($seller) { ?>
                       <a class="dropdown-item" href="add-item.php">Add item</a>
+<?php } if ($seller || $user) { ?>
+                      <a class="dropdown-item" href="account.php">Account</a>
 <?php } ?>
                       <a class="dropdown-item" href="categories.php">Categories</a>
 <?php if ($show_login) { ?>
