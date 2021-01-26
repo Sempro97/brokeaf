@@ -1,28 +1,21 @@
 <?php
 
-$serverName = "mysql";
-$username = "root";
-$password = "root";
-$dbname = "brokeaf";
-
-$connection = new mysqli($serverName, $username, $password, $dbname);
-
-// Check connection
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
-$sql = "SELECT name,keywords FROM Categories";
-$result = $connection->query($sql);
-
-if ($result->num_rows > 0) {
-  // output data of each row
-  while($row = $result->fetch_assoc()) {
-    echo "name: " . $row["name"]. " - keywords: " . $row["keywords"]. " " . $row["lastname"]. "<br>";
-  }
+require_once 'utilities/bootstrap.php';
+const ITEM_COUNT = 5;
+$template['title'] = 'Index';
+$template['scripts'] = [
+    'js/jquery-3.4.1.min.js',
+    'bootstrap/js/bootstrap.bundle.min.js',
+];
+$template['content'] = 'templates/index.php';
+$search = $_GET['search'];
+$category = $_GET['category'];
+$template['search'] = $search;
+if ($search) {
+    $template['items'] = $database->get_items_by_name($search, ITEM_COUNT);
+} elseif ($category) {
+    $template['items'] = $database->get_items_by_category($category, ITEM_COUNT);
 } else {
-  echo "0 results";
+    $template['items'] = $database->get_random_items(ITEM_COUNT);
 }
-$connection->close();
-echo "Connected successfully";
-
-?>
+require_once 'templates/base.php';
