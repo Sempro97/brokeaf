@@ -1,5 +1,5 @@
 $(function () {
-  $("form").on("submit", function (event) {
+  $("form:not(header form)").on("submit", function (event) {
     event.preventDefault();
     values = $(this).serializeArray();
     // TODO: Hash password before sending it to the server.
