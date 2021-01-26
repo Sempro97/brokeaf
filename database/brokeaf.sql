@@ -162,7 +162,7 @@ alter table Visitor add constraint FKwish_FK
      references ListItems(IdList);
 
 ALTER TABLE NotificationUser
-     MODIFY `idNotification` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+     MODIFY `idNotification` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 INSERT INTO `ListItems` (IdList) VALUES ('0');
 INSERT INTO `ListItems` (IdList) VALUES ('1');

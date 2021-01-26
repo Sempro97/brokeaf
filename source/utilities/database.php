@@ -473,7 +473,7 @@ class Database
 
     public function get_cart($email)
     {
-        $query = 'SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.quantity AS stock
+        $query = 'SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.emailSeller, Item.quantity AS stock
         FROM (((ItemDetails
         INNER JOIN ListItems
         ON ListItems.IdList = ItemDetails.IdList)
@@ -538,8 +538,8 @@ class Database
     }
 
     public function insert_user_order_notification($email) {
-        $query = "INSERT INTO NotificationUser (idNotification, path, date, idDesc, emailSeller, emailUser)
-                    VALUE (2, 'www.brokeaf.com/source/ordine1', ?, 0, NULL, ?)";
+        $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
+                    VALUE ('www.brokeaf.com/source/ordine1', ?, 0, NULL, ?)";
         $statement = self::$instance->prepare($query);
         $statement->bind_param('ss', date("Y-m-d h:i:s"), $email);
         $statement->execute();
@@ -549,7 +549,6 @@ class Database
         $cart = self::get_cart($email);
 
         foreach ($cart as $item) {
-            error_log(print_r($item, true));;
             $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
                     VALUE ('www.brokeaf.com/source/ordine1', ?, 1, ?, NULL)";
             $statement = self::$instance->prepare($query);
