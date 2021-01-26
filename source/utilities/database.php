@@ -300,4 +300,42 @@ class Database
 
         return 1 === $statement->affected_rows;
     }
+
+    public function get_cart($email) {
+        $query = "SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.quantity AS stock
+        FROM (((ItemDetails
+        INNER JOIN ListItems
+        ON ListItems.IdList = ItemDetails.IdList)
+        INNER JOIN Item
+        ON ItemDetails.serialCode = Item.serialCode)
+        INNER JOIN UserWeb
+        ON ListItems.IdList = UserWeb.IdList) WHERE UserWeb.email = ?";
+
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function calculate_cart_total($idList) {
+        $query = "SELECT ItemDetails.price, ItemDetails.quantity
+        FROM ((ItemDetails
+        INNER JOIN Item
+        ON ItemDetails.serialCode = Item.serialCode)
+        INNER JOIN ListItems
+        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?";
+
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $idList);
+        $statement->execute();
+        $rows = $statement->get_result();
+
+        foreach ($rows as $row) {
+            // Calculate the total price of the order.
+            $total += $row['price'] * $row['quantity'];
+        }
+
+        return $total;
+    }
 }
