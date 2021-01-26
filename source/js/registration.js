@@ -34,10 +34,10 @@ function sendAddItemRequest(formData) {
     success: function (response) {
       if (response === true) {
         clearForm();
-        showAlert("success", "Nuovo utente creato correttamente! Ora puoi effettuare il login!");
+        showAlert("success", "New user created successfully! You can now login!");
       } else {
         clearForm();
-        showAlert("danger", "An error occurred while trying to add the item: " + response);
+        showAlert("danger", "An error occurred while trying to register a new user: " + response);
       }
     },
     error: function (response) {
