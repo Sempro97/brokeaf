@@ -30,7 +30,7 @@ class Database
 
     public function account_exists($email)
     {
-        $query = 'SELECT email FROM Users WHERE email=? LIMIT 1';
+        $query = 'SELECT email FROM UsersWeb, Seller WHERE email=? LIMIT 1';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
@@ -131,7 +131,7 @@ class Database
         // Sort based on distance, from low to high.
         usort($distances, function ($a, $b) {
             if ($a['distance'] == $b['distance']) {
-                return 0;
+                return false;
             }
 
             return ($a['distance'] < $b['distance']) ? -1 : 1;
@@ -192,6 +192,17 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function get_item_image($serial_code)
+    {
+        $query = 'SELECT path FROM Image WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_orders($email)
     {
         $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
@@ -233,7 +244,7 @@ class Database
     {
         $user = self::is_user($email);
         $table = $user ? 'UserWeb' : 'Seller';
-        $query = "SELECT email, password FROM {$table} WHERE email=? LIMIT 1";
+        $query = "SELECT email, password, salt FROM {$table} WHERE email=? LIMIT 1";
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
             error_log('Failed to login user: ('.self::$instance->errno.') '.self::$instance->error);
@@ -243,8 +254,9 @@ class Database
         $statement->bind_param('s', $email);
         $statement->execute();
         $statement->store_result();
-        $statement->bind_result($email, $saved_password);
+        $statement->bind_result($email, $saved_password, $salt);
         $statement->fetch();
+        $password = hash('sha512', $password.$salt);
         if ($statement->num_rows < 1) {
             error_log('Tried to login a non-existing user.');
 
@@ -257,6 +269,97 @@ class Database
 
             return true;
         }
+    }
+
+    public function register_user($user)
+    {
+        $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province, salt) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+
+        try {
+            error_log(print_r($user, true));
+            $statement->bind_param(
+                'isssissssss',
+                $a = $user['cap'],
+                $user['address'],
+                $user['city'],
+                $user['email'],
+                $a = null,
+                $user['name'],
+                $user['surname'],
+                $user['password'],
+                $user['phoneNumber'],
+                $user['province'],
+                $user['salt'],
+            );
+            $statement->execute();
+        } catch (Exception $exception) {
+            error_log(print_r($exception, true));
+        }
+
+        return 1 == $statement->affected_rows;
+    }
+
+    public function register_seller($seller)
+    {
+        $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province, salt)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to insert seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param(
+            'isssssssssss',
+            $seller['cap'],
+            $seller['address'],
+            $seller['city'],
+            $seller['companyAddress'],
+            $seller['companyName'],
+            $seller['email'],
+            $seller['name'],
+            $seller['surname'],
+            $seller['password'],
+            $seller['phone'],
+            $seller['province'],
+            $seller['salt']
+        );
+        $statement->execute();
+        if (1 == $statement->affected_rows) {
+            return true;
+        }
+        error_log('Failed to insert seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return false;
+    }
+
+    public function get_user_from_email($email)
+    {
+        $query = 'SELECT * FROM UserWeb WHERE email = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
+    }
+
+    public function get_seller_from_email($email)
+    {
+        $query = 'SELECT * FROM Seller WHERE email = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
     }
 
     public function is_user($email)
@@ -279,16 +382,6 @@ class Database
         $result = $statement->get_result();
 
         return 1 == $result->num_rows;
-    }
-
-    public function register_user()
-    {
-        return true;
-    }
-
-    public function register_seller()
-    {
-        return true;
     }
 
     public function remove_notification($id)

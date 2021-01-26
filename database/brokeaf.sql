@@ -68,6 +68,7 @@ create table Seller (
      password char(255) not null,
      phoneNumber char(16) not null,
      province char(64) not null,
+     salt CHAR(128) DEFAULT 0 NOT NULL,
      constraint IDSeller primary key (email));
      
 create table UserWeb (
@@ -81,6 +82,7 @@ create table UserWeb (
      password char(255) not null,
      phoneNumber char(64) not null,
      province char(64) not null,
+     salt CHAR(128) DEFAULT 0 NOT NULL,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
 
