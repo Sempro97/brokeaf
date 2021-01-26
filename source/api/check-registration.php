@@ -6,10 +6,11 @@ require_once '../utilities/exit-json.php';
 require_once '../utilities/parse.php';
 
 // User already registered check.
-if (null != $database->get_user_from_email($_POST['email']) || null != $database->get_seller_from_email($_POST['email'])) {
-    // Save the try to avoid brute force.
-    error_log('User already exist');
-    exit_json('User already exist');
+$email = $_POST['email'];
+$user_exists = $database->get_user_from_email($email) ? true : false;
+$seller_exists = $database->get_seller_from_email($email) ? true : false;
+if ($user_exists || $seller_exists) {
+    exit_json('User already exists.');
 } else {
     // Registration.
     if (null !== $_POST['companyName']) {
@@ -19,9 +20,9 @@ if (null != $database->get_user_from_email($_POST['email']) || null != $database
         $user = parse_user($_POST);
         $results = $database->register_user($user);
     }
-    if (1 === $results) {
+    if ($results) {
         exit_json(true);
     } else {
-        exit_json('User not created');
+        exit_json('User not created.');
     }
 }

@@ -131,7 +131,7 @@ class Database
         // Sort based on distance, from low to high.
         usort($distances, function ($a, $b) {
             if ($a['distance'] == $b['distance']) {
-                return 0;
+                return false;
             }
 
             return ($a['distance'] < $b['distance']) ? -1 : 1;
@@ -302,16 +302,16 @@ class Database
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
-            return 0;
+            return false;
         }
         if (1 == $statement->affected_rows) {
             error_log('userok');
 
-            return 1;
+            return true;
         }
         error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
-        return 0;
+        return false;
     }
 
     public function register_seller($seller)
@@ -322,7 +322,7 @@ class Database
         if (false === $statement) {
             error_log('Failed to insert seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
-            return 0;
+            return false;
         }
         $statement->bind_param(
             'isssssssssss',
@@ -341,11 +341,11 @@ class Database
         );
         $statement->execute();
         if (1 == $statement->affected_rows) {
-            return 1;
+            return true;
         }
         error_log('Failed to insert seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
 
-        return 0;
+        return false;
     }
 
     public function get_user_from_email($email)
