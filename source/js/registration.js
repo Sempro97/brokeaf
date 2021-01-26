@@ -72,7 +72,7 @@ function changeActive() {
   registrationType();
 }
 
-/* Update input fileds fot Seller/User */
+/* Change input fileds fot Seller/User */
 function registrationType() {
   if ($("#buttonUser").hasClass("btn-primary")) {
     alert("WARNING! The registration as Seller is only permitted to autorized Company!");
