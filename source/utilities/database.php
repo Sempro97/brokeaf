@@ -194,13 +194,13 @@ class Database
 
     public function get_img_item($serialCode)
     {
-        $query = "SELECT Image.path FROM Image
-                       WHERE Image.serialCode = ? ";
+        $query = 'SELECT Image.path FROM Image
+                       WHERE Image.serialCode = ? ';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $serialCode);
         $statement->execute();
         $result = $statement->get_result();
-        
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -274,43 +274,44 @@ class Database
 
     public function register_user($user)
     {
-        
         $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province, salt) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        if($statement = self::$instance->prepare($query)){
-            try{
-            error_log(print_r($user,true));    
-            $statement->bind_param('isssissssss', 
-            $a = $user["cap"],
-            $user["address"],
-            $user["city"],
-            $user["email"],
-            $a = NULL,
-            $user["name"],
-            $user["surname"],
-            $user["password"],
-            $user["phoneNumber"],
-            $user["province"],
-            $user["salt"],
-        );
-            
-            $statement->execute();
-                    }
-                    catch (Exception $excp) {
-                        error_log(print_r($excp,true));
-                    }
+        if ($statement = self::$instance->prepare($query)) {
+            try {
+                error_log(print_r($user, true));
+                $statement->bind_param(
+                    'isssissssss',
+                    $a = $user['cap'],
+                    $user['address'],
+                    $user['city'],
+                    $user['email'],
+                    $a = null,
+                    $user['name'],
+                    $user['surname'],
+                    $user['password'],
+                    $user['phoneNumber'],
+                    $user['province'],
+                    $user['salt'],
+                );
+
+                $statement->execute();
+            } catch (Exception $excp) {
+                error_log(print_r($excp, true));
+            }
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
             return 0;
         }
-        if ($statement->affected_rows == 1) {
+        if (1 == $statement->affected_rows) {
             error_log('userok');
+
             return 1;
-        } else {
-            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return 0;
         }
+        error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return 0;
     }
 
     public function register_seller($seller)
@@ -318,50 +319,58 @@ class Database
         $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province, salt)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-        if($statement = self::$instance->prepare($query)) {
-            $statement->bind_param('issssssssss', $a = $seller["cap"],
-         $seller["address"],
-         $seller["city"],
-         $seller["companyAddress"],
-         $seller["companyName"],
-         $seller["email"],
-         $seller["name"],
-         $seller["surname"],
-         $seller["password"],
-         $seller["phone"],
-         $seller["province"],
-         $seller["salt"]);
+        if ($statement = self::$instance->prepare($query)) {
+            $statement->bind_param(
+                'issssssssss',
+                $a = $seller['cap'],
+                $seller['address'],
+                $seller['city'],
+                $seller['companyAddress'],
+                $seller['companyName'],
+                $seller['email'],
+                $seller['name'],
+                $seller['surname'],
+                $seller['password'],
+                $seller['phone'],
+                $seller['province'],
+                $seller['salt']
+            );
             $statement->execute();
         } else {
             error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
             return 0;
         }
-        if($statement->affected_rows == 1){
+        if (1 == $statement->affected_rows) {
             return 1;
-        } else {
-            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return 0;
+        }
+        error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return 0;
     }
-}
-    public function get_user_from_email($email) {
+
+    public function get_user_from_email($email)
+    {
         $query = 'SELECT * FROM UserWeb WHERE email = ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
         $result = $statement->get_result();
-        $user = $result->fetch_all(MYSQLI_ASSOC)[0];
-        return $user;
+
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
     }
 
-    public function get_seller_from_email($email) {
+    public function get_seller_from_email($email)
+    {
         $query = 'SELECT * FROM Seller WHERE email = ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
         $result = $statement->get_result();
-        $user = $result->fetch_all(MYSQLI_ASSOC)[0];
-        return $user;
+
+        return $result->fetch_all(MYSQLI_ASSOC)[0];
     }
+
     public function is_user($email)
     {
         $query = 'SELECT * FROM UserWeb WHERE email=?';
