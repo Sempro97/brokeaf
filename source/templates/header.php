@@ -62,8 +62,7 @@ $cart_button_status = $seller ? 'disabled' : '';
                 </form>
               </div>
               <div class="pl-2">
-                <button type="button" class="btn btn-dark <?php echo $cart_button_status; ?>">
-                  <span class="fas fa-shopping-cart"></span>
+                <a class="btn btn-dark <?php echo $cart_button_status; ?>" href="cart.php" role="button"><span class="fas fa-shopping-cart"></span></a>
                 </button>
               </div>
             </div>
