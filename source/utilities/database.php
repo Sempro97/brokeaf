@@ -395,7 +395,7 @@ class Database
     }
 
     public function get_cart($email) {
-        $query = "SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.quantity AS stock
+        $query = "SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.emailSeller, Item.quantity AS stock
         FROM (((ItemDetails
         INNER JOIN ListItems
         ON ListItems.IdList = ItemDetails.IdList)
@@ -434,19 +434,38 @@ class Database
 
     public function insert_order($email) {
         $user = self::get_user_from_email($email);
-
         $query = "INSERT INTO Order_UserWeb (email, cap, city, name, surname, phoneNumber, province, address, datePayment, IdList)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('sissssssii', $user['email'], $user['name'], $user['surname'], $user['phoneNumber'], $user['province'], $user['address'], date("Y-m-d h:i:s"), $user['IdList']);
+        $statement->bind_param('sisssssssi', $user['email'], $user['cap'], $user['city'], $user['name'], $user['surname'], $user['phoneNumber'], $user['province'], $user['address'], date("Y-m-d h:i:s"), $user['IdList']);
         $statement->execute();
     }
 
     public function insert_user_order_notification($email) {
         $query = "INSERT INTO NotificationUser (idNotification, path, date, idDesc, emailSeller, emailUser)
-                    VALUE (2, ?, ?, 0, NULL, ?)";
+                    VALUE (2, 'www.brokeaf.com/source/ordine1', ?, 0, NULL, ?)";
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('sis', "www.brokeaf.com/source/ordine1", date("Y-m-d h:i:s"), $email)
+        $statement->bind_param('ss', date("Y-m-d h:i:s"), $email);
+        $statement->execute();
+    }
+
+    public function insert_seller_order_notification($email) {
+        $cart = self::get_cart($email);
+
+        foreach ($cart as $item) {
+            error_log(print_r($item, true));;
+            $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
+                    VALUE ('www.brokeaf.com/source/ordine1', ?, 1, ?, NULL)";
+            $statement = self::$instance->prepare($query);
+            $statement->bind_param('ss', date("Y-m-d h:i:s"), $item['emailSeller']);
+            $statement->execute();
+        }
+    }
+
+    public function delete_cart($IdList) {
+        $query = "DELETE FROM ItemDetails WHERE ItemDetails.IdList = ?";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('i', $IdList);
         $statement->execute();
     }
 }
