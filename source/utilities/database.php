@@ -243,23 +243,6 @@ class Database
 
     public function get_notifications($email)
     {
-<<<<<<< HEAD
-        if (self::$instance->connect_error) {
-            die("Connection failed: " . self::$instance->connect_error);
-          }
-        
-        $query = 'SELECT Image.path FROM Image,Item 
-                  WHERE Item.serialCode = Image.serialCode AND
-                  Item.serialCode = ? ';
-        
-        if($statement = self::$instance->prepare($query)){
-            $statement->bind_param('s', $serialCode);
-            $statement->execute();
-            $result = $statement->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-        }
-=======
         $user = self::is_user($email);
         $table = $user ? 'UserWeb' : 'Seller';
         $column = $user ? 'emailUser' : 'emailSeller';
@@ -449,7 +432,6 @@ class Database
         $result = $statement->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC)[0];
->>>>>>> master
     }
 
     public function is_user($email)
