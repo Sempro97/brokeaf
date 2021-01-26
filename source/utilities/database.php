@@ -89,6 +89,31 @@ class Database
         return 1 === $statement->affected_rows;
     }
 
+    public function edit_item($item)
+    {
+        $query = 'UPDATE Item
+                  SET name=?, description=?, price=?, quantity=?, category=?
+                  WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to edit item: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param(
+            'ssssss',
+            $item['name'],
+            $item['description'],
+            $item['price'],
+            $item['quantity'],
+            $item['category'],
+            $item['serial_code']
+        );
+        $statement->execute();
+
+        return 1 === $statement->affected_rows;
+    }
+
     public function get_item($serial_code)
     {
         $query = 'SELECT * FROM Item WHERE serialCode=?';
