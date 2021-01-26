@@ -1,8 +1,5 @@
 <?php
 
-//IMPORTANT!!!!!!!!!!
-//CHECK EMAIL DONT CHANGE , IT IS IDENTIFICATION KEY!!!
-
 require_once '../utilities/bootstrap.php';
 require_once '../utilities/exit-json.php';
 
