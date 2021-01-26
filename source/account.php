@@ -18,5 +18,6 @@ if ($seller) {
 } else {
     $template['user'] = $database->get_user_from_email($email);
 }
+$template['header'] = 'Account';
 $template['content'] = 'templates/account.php';
 require_once 'templates/base.php';
