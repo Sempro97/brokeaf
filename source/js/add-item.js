@@ -1,5 +1,5 @@
 $(function () {
-  $("form").submit(function (event) {
+  $("form:not(header form)").on("submit", function (event) {
     event.preventDefault();
     let formData = new FormData(this);
     addItem(formData);
@@ -16,6 +16,7 @@ function addItem(formData) {
     success: function (response) {
       if (response === true) {
         showAlert("success", "Item added successfully.");
+        $("form:not(header form)").trigger("reset");
       } else {
         showAlert("danger", "An error occurred while trying to add the item: " + response);
       }

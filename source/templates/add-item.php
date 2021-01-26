@@ -5,23 +5,23 @@
             <!-- Image -->
             <div class="form-group">
               <label for="image">Image:</label>
-              <input type="file" class="form-control-file" id="image" name="image" />
+              <input type="file" class="form-control-file" id="image" name="image" required="required" />
             </div>
             <!-- Name -->
             <div class="form-group">
               <label for="name">Name:</label>
-              <input type="text" class="form-control" id="name" name="name" />
+              <input type="text" class="form-control" id="name" name="name" required="required" />
             </div>
             <!-- Description -->
             <div class="form-group">
               <label for="description">Description:</label>
-              <textarea class="form-control" id="description" name="description"></textarea>
+              <textarea class="form-control" id="description" name="description" required="required"></textarea>
             </div>
             <!-- Price -->
             <div class="form-group">
               <label for="price">Price:</label>
               <div class="input-group">
-                <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" />
+                <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" required="required" />
                 <div class="input-group-append">
                   <span class="input-group-text">€</span>
                 </div>
@@ -30,7 +30,7 @@
             <!-- Quantity -->
             <div class="form-group">
               <label for="quantity">Quantity:</label>
-              <input type="number" class="form-control" id="quantity" name="quantity" min="1" step="1" />
+              <input type="number" class="form-control" id="quantity" name="quantity" min="1" step="1" required="required" />
             </div>
             <!-- Category -->
             <div class="form-group">
@@ -44,7 +44,7 @@
             <!-- Serial code -->
             <div class="form-group">
               <label for="serial_code">Serial code:</label>
-              <input type="text" class="form-control" id="serial_code" name="serial_code" />
+              <input type="text" class="form-control" id="serial_code" name="serial_code" required="required" />
             </div>
             <!-- Submit -->
             <button type="submit" class="btn btn-primary">Add item</button>

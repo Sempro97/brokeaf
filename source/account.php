@@ -12,6 +12,7 @@ $email = "adriana90@example.net";
 /* Test User */
 /* $email = "adrain.johnson@example.com"; */
 
+/* Uncomment when merge */
 /* $email = $_SESSION['email']; */
 require_once 'utilities/user-seller-only.php';
 
