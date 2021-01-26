@@ -8,39 +8,44 @@
           <?php foreach ($template['items'] as $item) { ?>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0"><?php echo $item['name']; ?></h6>
+                <h6 class="my-0">Name: <?php echo $item['name']; ?></h6>
+                <h8 class="my-0">Quantity: <?php echo $item['quantity']; ?></h8>
               </div>
-              <span class="text-muted"><?php echo $item['price']; ?>&euro;</span>
+              <div>
+                <span class="text-muted"><?php echo $item['price']; ?>&euro;</span>
+                <h6 class="my-0"><?php echo ($item['price'] * $item['quantity']) ?>&euro;</h6>
+              </div>
             </li>
           <?php } ?>
             <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
+              <span>Total (EUR)</span>
               <strong id="strongTotal"></strong>
             </li>
           </ul>
         </div>
         <div class="col-md-8 order-md-1">
+        <?php $user = $template['user']; ?>
           <h4 class="mb-3">Billing address</h4>
           <form>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First name</label>
-                <input type="text" class="form-control" id="firstName" value="">
+                <input type="text" class="form-control" id="firstName" value="<?php echo $user['name']; ?>" readonly>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last name</label>
-                <input type="text" class="form-control" id="lastName"value="">
+                <input type="text" class="form-control" id="lastName"value="<?php echo $user['surname']; ?>" readonly>
               </div>
             </div>
 
             <div class="mb-3">
               <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <input type="email" class="form-control" id="email" value="<?php echo $user['email']; ?>" readonly>
             </div>
 
             <div class="mb-3">
               <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St">
+              <input type="text" class="form-control" id="address" value="<?php echo $user['address']; ?>" readonly>
             </div>
 
             <h4 class="mb-3">Payment</h4>
@@ -60,14 +65,14 @@
               </div>
             </div>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+            <button class="btn btn-primary btn-lg btn-block" id="btnCheckout" type="submit">Continue to checkout</button>
           </form>
         </div>
       </div>
 
 <script>
+  var idList = <?php echo json_encode($item['IdList']); ?>;
   $('document').ready(function() {
-    var idList = <?php echo json_encode($item['IdList']); ?>;
     var values = {
         "idList" : idList,
       }
@@ -80,4 +85,23 @@
   function setTotal(total) {
     document.getElementById("strongTotal").textContent = total.toFixed(2) + ' \u20AC';
   }
+
+  $('form').on('submit', function(event) {
+      event.preventDefault();
+      var btnpressed = $(document.activeElement).attr('id'); //bottone premuto
+
+      var values = {
+        "btnpressed" : btnpressed,
+        "idList": idList
+      }
+
+      $.post({
+      url: "api/checkout.php",
+      data: values,
+      dataType: "json",
+      success: function (response) {
+        alert(response);
+      },
+    });
+  });
 </script>

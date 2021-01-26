@@ -431,4 +431,22 @@ class Database
 
         return $total;
     }
+
+    public function insert_order($email) {
+        $user = self::get_user_from_email($email);
+
+        $query = "INSERT INTO Order_UserWeb (email, cap, city, name, surname, phoneNumber, province, address, datePayment, IdList)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('sissssssii', $user['email'], $user['name'], $user['surname'], $user['phoneNumber'], $user['province'], $user['address'], date("Y-m-d h:i:s"), $user['IdList']);
+        $statement->execute();
+    }
+
+    public function insert_user_order_notification($email) {
+        $query = "INSERT INTO NotificationUser (idNotification, path, date, idDesc, emailSeller, emailUser)
+                    VALUE (2, ?, ?, 0, NULL, ?)";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('sis', "www.brokeaf.com/source/ordine1", date("Y-m-d h:i:s"), $email)
+        $statement->execute();
+    }
 }

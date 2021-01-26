@@ -1,9 +1,15 @@
 <?php
-    require '../utilities/database.php';
-    $database = new Database();
-
+    require_once '../utilities/bootstrap.php';
+    require_once '../utilities/exit-json.php';
     $idList = $_POST['idList'];
+    $btnpressed = $_POST['btnpressed'];
+    $email = $_POST['email'];
+
+    if ($btnpressed == "btnCheckout") {
+        //exit_json($email);
+        //$database->insert_order($email);;
+    }
 
     $total = $database->calculate_cart_total($idList);;
-    echo json_encode($total);
+    exit_json($total);
 ?>
