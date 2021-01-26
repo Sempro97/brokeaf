@@ -1,13 +1,7 @@
 <?php
-<<<<<<< HEAD
-const ITEM_COUNT = 5;
-require_once 'utilities/database.php';
-$database = new Database();
-=======
 
 require_once 'utilities/bootstrap.php';
 const ITEM_COUNT = 5;
->>>>>>> master
 $template['title'] = 'Index';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
