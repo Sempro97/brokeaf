@@ -1,10 +1,35 @@
 $(function () {
-  $("form:not(header form)").on("submit", function (event) {
+  $("#edit").on("submit", function (event) {
     event.preventDefault();
     let formData = new FormData(this);
     editItem(formData);
   });
+  $("#delete").on("submit", function (event) {
+    event.preventDefault();
+    let formData = new FormData(this);
+    deleteItem(formData);
+  });
 });
+
+function deleteItem(formData) {
+  $.post({
+    url: "api/delete-item.php",
+    data: formData,
+    dataType: "json",
+    contentType: false,
+    processData: false,
+    success: function (response) {
+      if (response === true) {
+        window.location.replace("seller-items.php");
+      } else {
+        showAlert("danger", "An error occurred while trying to delete the item: " + response);
+      }
+    },
+    error: function (response) {
+      showAlert("danger", "An error occurred while trying to delete the item.");
+    },
+  });
+}
 
 function editItem(formData) {
   $.post({
