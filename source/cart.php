@@ -1,6 +1,7 @@
 <?php
 
 require 'utilities/bootstrap.php';
+require 'utilities/user-only.php';
 $cart = $database->get_cart('adrain.johnson@example.com');
 $template['cart'] = $cart;
 $template['title'] = 'Cart';
