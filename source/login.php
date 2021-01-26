@@ -9,6 +9,7 @@ $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
     'bootstrap/js/bootstrap.bundle.min.js',
     'js/login.js',
+    'js/sha512.js',
 ];
 $template['header'] = 'Login';
 $template['content'] = 'templates/login.php';

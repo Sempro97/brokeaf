@@ -245,7 +245,7 @@ class Database
     {
         $user = self::is_user($email);
         $table = $user ? 'UserWeb' : 'Seller';
-        $query = "SELECT email, password FROM {$table} WHERE email=? LIMIT 1";
+        $query = "SELECT email, password, salt FROM {$table} WHERE email=? LIMIT 1";
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
             error_log('Failed to login user: ('.self::$instance->errno.') '.self::$instance->error);
@@ -255,8 +255,9 @@ class Database
         $statement->bind_param('s', $email);
         $statement->execute();
         $statement->store_result();
-        $statement->bind_result($email, $saved_password);
+        $statement->bind_result($email, $saved_password, $salt);
         $statement->fetch();
+        $password = hash('sha512', $password.$salt);
         if ($statement->num_rows < 1) {
             error_log('Tried to login a non-existing user.');
 
@@ -274,13 +275,13 @@ class Database
     public function register_user($user)
     {
         
-        $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province, salt) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         if($statement = self::$instance->prepare($query)){
             try{
             error_log(print_r($user,true));    
-            $statement->bind_param('isssisssss', 
+            $statement->bind_param('isssissssss', 
             $a = $user["cap"],
             $user["address"],
             $user["city"],
@@ -290,8 +291,10 @@ class Database
             $user["surname"],
             $user["password"],
             $user["phoneNumber"],
-            $user["province"]);
-            error_log("--"); 
+            $user["province"],
+            $user["salt"],
+        );
+            
             $statement->execute();
                     }
                     catch (Exception $excp) {
@@ -312,8 +315,8 @@ class Database
 
     public function register_seller($seller)
     {
-        $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province, salt)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
         if($statement = self::$instance->prepare($query)) {
             $statement->bind_param('issssssssss', $a = $seller["cap"],
@@ -326,7 +329,8 @@ class Database
          $seller["surname"],
          $seller["password"],
          $seller["phone"],
-         $seller["province"]);
+         $seller["province"],
+         $seller["salt"]);
             $statement->execute();
         } else {
             error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
