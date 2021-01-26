@@ -297,14 +297,14 @@ class Database
             $statement->execute();
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return 0;
+            return false;
         }
         if ($statement->affected_rows == 1) {
-            error_log('userok');
-            return 1;
+            error_log('Updated an user!');
+            return true;
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return 0;
+            return false;
         }
     }
 
@@ -333,6 +333,7 @@ class Database
             return false;
         }
         if($statement->affected_rows == 1){
+            error_log('Updated an seller!');
             return true;
         } else {
             error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);

@@ -27,27 +27,27 @@ if($user["companyName"] !== NULL){
 if($userType === "UserWeb"){
     if($user["password"] != $database->get_user_from_email($_SESSION['email'])["password"])
     {
-        $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-        $password = $user["password"];
-        //Hash password
-        $user["password"] = hash('sha512',$password.$random_salt);
-        $user["salt"] = $random_salt;
+        hashUsersPW();
     }
-    error_log("entra");
     $result = $database->update_user($user);
 }else{
     if($user["password"] != $database->get_seller_from_email($_SESSION['email'])["password"])
     {
-        $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-        $password = $user["password"];
-        //Hash password
-        $user["password"] = hash('sha512',$password.$random_salt);
-        $user["salt"] = $random_salt;
+        hashUsersPW();
     }
     $result = $database->update_seller($user);
 }
 
 if (0 === $result) {
-    exit_json('Account was not modified.');
+    exit_json('Account was not modified, maybe you have not change any fields');
 }
 exit_json(true);
+
+function hashUsersPW(){
+        global $user;
+        $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+        $password = $user["password"];
+        //Hash password
+        $user["password"] = hash('sha512',$password.$random_salt);
+        $user["salt"] = $random_salt;
+}
