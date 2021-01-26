@@ -203,6 +203,18 @@ class Database
         return array_column($distances, 'item');
     }
 
+    public function get_img_item($serialCode)
+    {
+        $query = "SELECT Image.path FROM Image
+                       WHERE Image.serialCode = ? ";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $serialCode);
+        $statement->execute();
+        $result = $statement->get_result();
+        
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function get_items_by_category($category, $count)
     {
         $query = 'SELECT * FROM Item 
