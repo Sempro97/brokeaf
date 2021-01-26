@@ -32,8 +32,9 @@
             <div class="form-group">
               <label for="category">Category:</label>
               <select class="form-control" id="category" name="category">
-                <?php foreach ($template['categories'] as $category) { ?>
-                <option><?php echo $category; ?></option><?php } ?>
+<?php foreach ($template['categories'] as $category) { // TODO: Add the current item category as the first one. ?>
+                <option><?php echo $category; ?></option>
+<?php } ?>
               </select>
             </div>
             <!-- Serial code -->
