@@ -89,6 +89,31 @@ class Database
         return 1 === $statement->affected_rows;
     }
 
+    public function edit_item($item)
+    {
+        $query = 'UPDATE Item
+                  SET name=?, description=?, price=?, quantity=?, category=?
+                  WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to edit item: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param(
+            'ssssss',
+            $item['name'],
+            $item['description'],
+            $item['price'],
+            $item['quantity'],
+            $item['category'],
+            $item['serial_code']
+        );
+        $statement->execute();
+
+        return 1 === $statement->affected_rows;
+    }
+
     public function get_item($serial_code)
     {
         $query = 'SELECT * FROM Item WHERE serialCode=?';
@@ -152,6 +177,17 @@ class Database
                   LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('si', $category, $count);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function get_items_by_seller($email)
+    {
+        $query = 'SELECT * FROM Item WHERE emailSeller=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
         $statement->execute();
         $result = $statement->get_result();
 
@@ -382,6 +418,11 @@ class Database
         $result = $statement->get_result();
 
         return 1 == $result->num_rows;
+    }
+
+    public function is_owner($email, $item)
+    {
+        return $email == $item['emailSeller'];
     }
 
     public function remove_notification($id)
