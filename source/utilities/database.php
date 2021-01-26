@@ -30,7 +30,7 @@ class Database
 
     public function account_exists($email)
     {
-        $query = 'SELECT email FROM UsersWeb,Seller WHERE email=? LIMIT 1';
+        $query = 'SELECT email FROM UsersWeb, Seller WHERE email=? LIMIT 1';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
