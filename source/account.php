@@ -15,8 +15,10 @@ if ($email ? false : true) {
 $seller = $database->is_seller($email);
 if ($seller) {
     $template['user'] = $database->get_seller_from_email($email);
+    $template['user']["salt"]="";
 } else {
     $template['user'] = $database->get_user_from_email($email);
+    $template['user']["salt"]="";
 }
 $template['header'] = 'Account';
 $template['content'] = 'templates/account.php';

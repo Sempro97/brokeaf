@@ -23,15 +23,22 @@ if (null !== $user['companyName']) {
 // Database //
 //////////////
 
-// The password must be re-salted.
+/* The password must be re-salted if new, 
+otherwise retrieve the old salt to not invalid the existing password */
 if ('UserWeb' === $userType) {
-    if ($user['password'] != $database->get_user_from_email($_SESSION['email'])['password']) {
+    $userOnDB = $database->get_user_from_email($_SESSION['email']);
+    if ($user['password'] != $userOnDB['password']) {
         hashUsersPassword();
+    } else {
+        $user['salt'] = $userOnDB['salt'];
     }
     $result = $database->update_user($user);
 } else {
-    if ($user['password'] != $database->get_seller_from_email($_SESSION['email'])['password']) {
+    $sellerOnDB = $database->get_seller_from_email($_SESSION['email']);
+    if ($user['password'] != $sellerOnDB['password']) {
         hashUsersPassword();
+    } else {
+        $user['salt'] = $sellerOnDB['salt'];
     }
     $result = $database->update_seller($user);
 }
