@@ -1,7 +1,9 @@
 <?php
 
 require_once 'utilities/bootstrap.php';
-//TODO: check if login is already fired
+if ($_SESSION['email'] ? true : false) {
+    header('Location: index.php');
+}
 $template['title'] = 'Registration';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
