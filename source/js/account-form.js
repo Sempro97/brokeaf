@@ -6,11 +6,7 @@ $(function () {
 
   /* Hide hashed password */
   $oldPW = $("#password").val();
-  $oldSalt = $("#salt").val();
-  console.log($oldPW);
   $("#password").val("");
-  $("#salt").prev().remove();
-  $("#salt");
 
   $("form").submit(function (event) {
     event.preventDefault();
@@ -21,7 +17,6 @@ $(function () {
       $("#password").val(hash);
     } else {
       $("#password").val($oldPW);
-      $("#salt").val($oldSalt);
     }
     let formData = new FormData(this);
     updateUser(formData);

@@ -30,6 +30,8 @@ $cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
                       <div class="dropdown-divider"></div>
 <?php } if ($seller || $user) { ?>
                       <a class="dropdown-item" href="account.php">Account</a>
+                      <a class="dropdown-item" href="registration.php">Registration</a>
+                      <div class="dropdown-divider"></div>
 <?php } ?>
                       <a class="dropdown-item" href="categories.php">Categories</a>
 <?php if ($seller || $user) { ?>
