@@ -5,12 +5,13 @@ $template['title'] = 'Account';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
     'bootstrap/js/bootstrap.bundle.min.js',
-    'js/account-form.js'
+    'js/account-form.js',
+    'js/sha512.js'
 ];
 /* Test Seller */
-$email = "adriana90@example.net";
+/* $email = "adriana90@example.net"; */
 /* Test User */
-/* $email = "adrain.johnson@example.com"; */
+$email = "adrain.johnson@example.com";
 
 /* Uncomment when merge */
 /* $email = $_SESSION['email']; */

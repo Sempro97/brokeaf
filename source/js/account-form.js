@@ -8,6 +8,12 @@ $(function () {
 
   $("form").submit(function (event) {
     event.preventDefault();
+    //Hash new password
+    if ($("#password").val() != "") {
+      var password = $("#password").val();
+      var hash = hex_sha512(password);
+      $("#password").val(hash);
+    }
     let formData = new FormData(this);
     updateUser(formData);
   });

@@ -57,30 +57,32 @@ create table ListItems (
      constraint IDListItem_ID primary key (IdList));
 
 create table Seller (
-     name char(64) not null,
-     surname char(64) not null,
-     email char(64) not null,
-     password char(255) not null,
      cap numeric(16) not null,
      address char(64) not null,
      city char(64) not null,
-     phoneNumber char(16) not null,
-     province char(64) not null,
      companyAddress char(64) not null,
      companyName char(64) not null,
+     email char(64) not null,
+     name char(64) not null,
+     surname char(64) not null,
+     password char(255) not null,
+     phoneNumber char(16) not null,
+     province char(64) not null,
+     salt CHAR(128) DEFAULT 0 NOT NULL,
      constraint IDSeller primary key (email));
      
 create table UserWeb (
-     IdList numeric(16),
-     name char(64) not null,
-     surname char(64) not null,
-     email char(64) not null,
-     password char(255) not null,
-     phoneNumber char(64) not null,
      cap numeric(16) not null,
      address char(64) not null,
      city char(64) not null,
+     email char(64) not null,
+     IdList numeric(16),
+     name char(64) not null,
+     surname char(64) not null,
+     password char(255) not null,
+     phoneNumber char(64) not null,
      province char(64) not null,
+     salt CHAR(128) DEFAULT 0 NOT NULL,
      constraint IDUserWeb primary key (email),
      constraint FKshop_ID unique (IdList));
 

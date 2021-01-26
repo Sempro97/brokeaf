@@ -279,6 +279,79 @@ class Database
         }
     }
 
+    public function update_user($user)
+    {
+        
+        $query = 'UPDATE UserWeb
+                  SET cap = ?, address = ?, city = ?, IdList = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
+                  WHERE email = ? ';
+
+        if($statement = self::$instance->prepare($query)){
+            try{
+            error_log(print_r($user,true));    
+            $statement->bind_param('ississsssss', 
+            $a = $user["cap"],
+            $user["address"],
+            $user["city"],
+            $a = NULL,
+            $user["name"],
+            $user["surname"],
+            $user["password"],
+            $user["phoneNumber"],
+            $user["province"],
+            $user["salt"],
+            $user["email"],
+        );
+            
+            $statement->execute();
+                    }
+                    catch (Exception $excp) {
+                        error_log(print_r($excp,true));
+                    }
+        } else {
+            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return 0;
+        }
+        if ($statement->affected_rows == 1) {
+            error_log('userok');
+            return 1;
+        } else {
+            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return 0;
+        }
+    }
+
+    public function update_seller($seller)
+    {
+        $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province, salt)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+        if($statement = self::$instance->prepare($query)) {
+            $statement->bind_param('issssssssss', $a = $seller["cap"],
+         $seller["address"],
+         $seller["city"],
+         $seller["companyAddress"],
+         $seller["companyName"],
+         $seller["email"],
+         $seller["name"],
+         $seller["surname"],
+         $seller["password"],
+         $seller["phone"],
+         $seller["province"],
+         $seller["salt"]);
+            $statement->execute();
+        } else {
+            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return 0;
+        }
+        if($statement->affected_rows == 1){
+            return 1;
+        } else {
+            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+            return 0;
+    }
+}
+
     public function is_user($email)
     {
         $query = 'SELECT * FROM UserWeb WHERE email=?';
