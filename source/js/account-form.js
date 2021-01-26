@@ -3,8 +3,14 @@ $(function () {
   $("#IdList").parent().html("");
 
   $("#phoneNumber").prev().text("Phone number:");
+
   /* Hide hashed password */
+  $oldPW = $("#password").val();
+  $oldSalt = $("#salt").val();
+  console.log($oldPW);
   $("#password").val("");
+  $("#salt").prev().remove();
+  $("#salt");
 
   $("form").submit(function (event) {
     event.preventDefault();
@@ -13,6 +19,9 @@ $(function () {
       var password = $("#password").val();
       var hash = hex_sha512(password);
       $("#password").val(hash);
+    } else {
+      $("#password").val($oldPW);
+      $("#salt").val($oldSalt);
     }
     let formData = new FormData(this);
     updateUser(formData);
@@ -28,13 +37,16 @@ function updateUser(formData) {
     processData: false,
     success: function (response) {
       if (response === true) {
+        $("#password").val("");
         showAlert("success", "Account update successfully.");
       } else {
+        $("#password").val("");
         showAlert("danger", "An error occurred while trying to update the account: " + response);
       }
     },
     error: function (response) {
-      showAlert("danger", "An error occurred while trying to add the item.");
+      $("#password").val("");
+      showAlert("danger", "Connection error.");
     },
   });
 }

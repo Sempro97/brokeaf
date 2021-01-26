@@ -39,26 +39,6 @@ class Database
         return 1 === $result->num_rows;
     }
 
-    public function getFakeUserForTest()
-    {
-        $query = 'SELECT * FROM UserWeb ORDER BY RAND() LIMIT 1';
-        $statement = self::$instance->prepare($query);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function getFakeSellerForTest()
-    {
-        $query = 'SELECT * FROM Seller ORDER BY RAND() LIMIT 1';
-        $statement = self::$instance->prepare($query);
-        $statement->execute();
-        $result = $statement->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
     public function add_image($path, $serial_code)
     {
         $query = 'INSERT INTO Image (path, serialCode) VALUES (?, ?)';
@@ -287,7 +267,6 @@ class Database
                   WHERE email = ? ';
 
         if($statement = self::$instance->prepare($query)){
-            try{
             error_log(print_r($user,true));    
             $statement->bind_param('ississsssss', 
             $a = $user["cap"],
@@ -304,10 +283,6 @@ class Database
         );
             
             $statement->execute();
-                    }
-                    catch (Exception $excp) {
-                        error_log(print_r($excp,true));
-                    }
         } else {
             error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
             return 0;
@@ -323,32 +298,33 @@ class Database
 
     public function update_seller($seller)
     {
-        $query = 'INSERT INTO Seller (cap, address, city, companyAddress,companyName, email, name, surname, password, phoneNumber, province, salt)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $query = 'UPDATE UserWeb
+                  SET cap = ?, address = ?, city = ?,companyAddress = ?,companyName = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
+                  WHERE email = ? ';
 
         if($statement = self::$instance->prepare($query)) {
-            $statement->bind_param('issssssssss', $a = $seller["cap"],
+            $statement->bind_param('isssssssssss', $a = $seller["cap"],
          $seller["address"],
          $seller["city"],
          $seller["companyAddress"],
          $seller["companyName"],
-         $seller["email"],
          $seller["name"],
          $seller["surname"],
          $seller["password"],
          $seller["phone"],
          $seller["province"],
-         $seller["salt"]);
+         $seller["salt"],
+         $seller["email"]);
             $statement->execute();
         } else {
             error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return 0;
+            return false;
         }
         if($statement->affected_rows == 1){
-            return 1;
+            return true;
         } else {
             error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
-            return 0;
+            return false;
     }
 }
 
