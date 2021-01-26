@@ -3,7 +3,8 @@ $(function () {
     event.preventDefault();
     values = $(this).serializeArray();
     // TODO: Hash password before sending it to the server.
-    // values[1].value = hex_sha512(values[1].value);
+    values[1].value = hex_sha512(values[1].value);
+    console.log("Hashed:" + values[1].value);
     $.post({
       url: "api/login.php",
       data: values,
