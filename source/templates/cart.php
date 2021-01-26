@@ -15,57 +15,58 @@
               <h5 class="mb-4">Cart (<span id="cart-number"></span> items)</h5>
               <?php foreach ($template["cart"] as $item): ?>
               <!-- Item -->
-              <div id="item" class="row mb-2" >
-                <script>
-                  counter++;
-                  maxItems++;
-                </script>
-                <script> document.getElementById("item").id = "item" + counter; </script>
-                <!-- TO DO: Sostituire col con una flexa -->
-                <div class="col-4 col-md-4 mb-3 mb-md-0">
-                  <img class="img-fluid rounded" src="https://via.placeholder.com/150" alt="Sample" />
-                </div>
-                <div class="col-8 col-md-8">
-                  <div>
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <p class="h5" id="txtname"><?php echo $item["name"]; ?></p>
-                        <p class="mb-2"><strong id="txtprice"><?php echo $item["price"]; ?>&euro;</strong></p>
-                        <script> document.getElementById("txtprice").id = "txtprice" + counter; </script>
-                        <p class="mb-3">Availability: <?php echo $item["stock"]; ?></p>
+              <div id="item">
+                <div class="row mb-2" >
+                  <script>
+                    counter++;
+                    maxItems++;
+                  </script>
+                  <script> document.getElementById("item").id = "item" + counter; </script>
+                  <div class="col-4 col-md-4 mb-3 mb-md-0">
+                    <img class="img-fluid rounded" src="https://via.placeholder.com/150" alt="Sample" />
+                  </div>
+                  <div class="col-8 col-md-8">
+                    <div>
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <p class="h5" id="txtname"><?php echo $item["name"]; ?></p>
+                          <p class="mb-2"><strong id="txtprice"><?php echo $item["price"]; ?>&euro;</strong></p>
+                          <script> document.getElementById("txtprice").id = "txtprice" + counter; </script>
+                          <p class="mb-3">Availability: <?php echo $item["stock"]; ?></p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div id="quantity" class="row align-items-center">
-              <script> document.getElementById("quantity").id = "quantity" + counter; </script>
-                <div class="col-12 col-md-4">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-outline-secondary" type="submit" id="minus" onClick="">-</button>
-                      <script> document.getElementById("minus").id = "minus" + counter; </script>
+                <div id="quantity" class="row align-items-center">
+                <script> document.getElementById("quantity").id = "quantity" + counter; </script>
+                  <div class="col-12 col-md-4">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" type="submit" id="minus" onClick="">-</button>
+                        <script> document.getElementById("minus").id = "minus" + counter; </script>
+                      </div>
+                      <input type="text" id="txtquantity" class="form-control " value="<?php echo $item["quantity"]; ?>" readonly/>
+                      <script> document.getElementById("txtquantity").id = "txtquantity" + counter; </script>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="plus">+</button>
+                        <script> document.getElementById("plus").id = "plus" + counter; </script>
+                      </div>
                     </div>
-                    <input type="text" id="txtquantity" class="form-control " value="<?php echo $item["quantity"]; ?>" readonly/>
-                    <script> document.getElementById("txtquantity").id = "txtquantity" + counter; </script>
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="submit" id="plus">+</button>
-                      <script> document.getElementById("plus").id = "plus" + counter; </script>
+                  </div>
+                  <div class="col-12 col-md-8 mt-2 mt-md-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                        <button type="submit" id="btnremove" class="btn btn-primary btn-block waves-effect waves-light">Remove Item</button>
+                        <script> document.getElementById("btnremove").id = "btnremove" + counter; </script>              
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-12 col-md-8 mt-2 mt-md-0">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <button type="submit" id="btnremove" class="btn btn-primary btn-block waves-effect waves-light">Remove Item</button>
-                      <script> document.getElementById("btnremove").id = "btnremove" + counter; </script>              
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <?php endforeach; ?>
               <hr class="mb-4" />
+              </div>
+              <?php endforeach; ?>             
             </div>
           </div>
 
@@ -102,7 +103,7 @@
                 </li>
               </ul>
 
-              <button type="button" class="btn btn-primary btn-block waves-effect waves-light">Go to checkout</button>
+              <button type="button" id="btnCheckout" class="btn btn-primary btn-block waves-effect waves-light">Go to checkout</button>
             </div>
           </div>
         </div>
@@ -177,11 +178,13 @@
             counter--;
             document.getElementById("cart-number").innerHTML = counter;
             document.getElementById("item" + itemNumber).remove();
-            document.getElementById("btnremove" + itemNumber).remove();
-            document.getElementById("quantity" + itemNumber).remove();
           }
 
           setTotal(calculateTotal());
       }, "json")
+    });
+
+    $('#btnCheckout').on('click', function(){
+      window.location.href = "checkout.php";
     });
 </script>

@@ -1,10 +1,6 @@
 <?php
-  require 'utilities/database.php';
-  session_start();
-  $database = new Database();
-
   require 'utilities/bootstrap.php';
-  $cart = $database->get_cart($_SESSION['email']);
+  $cart = $database->get_cart("adrain.johnson@example.com");
   $template["cart"] = $cart;
   $template["title"] = "Cart";
   $template['scripts'] = [
