@@ -192,12 +192,11 @@ class Database
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function get_img_item($serialCode)
+    public function get_item_image($serial_code)
     {
-        $query = 'SELECT Image.path FROM Image
-                       WHERE Image.serialCode = ? ';
+        $query = 'SELECT path FROM Image WHERE serialCode=?';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $serialCode);
+        $statement->bind_param('s', $serial_code);
         $statement->execute();
         $result = $statement->get_result();
 
