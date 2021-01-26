@@ -10,7 +10,7 @@ if ($notifications_count > 0) {
 $seller = $database->is_seller($email);
 $user = $database->is_user($email);
 $icon = $user ? 'fa-user' : ($seller ? 'fa-user-tie' : '');
-$cart_button_status = $seller ? 'disabled' : '';
+$cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
 ?>
     <header>
       <div class="container">
