@@ -89,6 +89,67 @@ class Database
         return 1 === $statement->affected_rows;
     }
 
+    public function delete_image($serial_code)
+    {
+        $query = 'DELETE FROM Image WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to delete image: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+
+        return 1 === self::$instance->affected_rows;
+    }
+
+    public function delete_item($serial_code)
+    {
+        $result = self::delete_image($serial_code);
+        if (false === $result) {
+            error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $query = 'DELETE FROM Item WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+
+        return 1 === self::$instance->affected_rows;
+    }
+
+    public function edit_item($item)
+    {
+        $query = 'UPDATE Item
+                  SET name=?, description=?, price=?, quantity=?, category=?
+                  WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to edit item: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param(
+            'ssssss',
+            $item['name'],
+            $item['description'],
+            $item['price'],
+            $item['quantity'],
+            $item['category'],
+            $item['serial_code']
+        );
+        $statement->execute();
+
+        return 1 === $statement->affected_rows;
+    }
+
     public function get_item($serial_code)
     {
         $query = 'SELECT * FROM Item WHERE serialCode=?';
@@ -152,6 +213,17 @@ class Database
                   LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('si', $category, $count);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function get_items_by_seller($email)
+    {
+        $query = 'SELECT * FROM Item WHERE emailSeller=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $email);
         $statement->execute();
         $result = $statement->get_result();
 
@@ -384,6 +456,11 @@ class Database
         return 1 == $result->num_rows;
     }
 
+    public function is_owner($email, $item)
+    {
+        return $email == $item['emailSeller'];
+    }
+
     public function remove_notification($id)
     {
         $query = 'DELETE FROM NotificationUser WHERE idNotification=?;';
@@ -394,30 +471,49 @@ class Database
         return 1 === $statement->affected_rows;
     }
 
-    public function get_cart($email) {
-        $query = "SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.emailSeller, Item.quantity AS stock
+    public function get_cart($email)
+    {
+        $query = 'SELECT ItemDetails.serialCode, ItemDetails.positionIndex, ItemDetails.quantity, ItemDetails.price, Item.name, ListItems.IdList, Item.quantity AS stock
         FROM (((ItemDetails
         INNER JOIN ListItems
         ON ListItems.IdList = ItemDetails.IdList)
         INNER JOIN Item
         ON ItemDetails.serialCode = Item.serialCode)
         INNER JOIN UserWeb
-        ON ListItems.IdList = UserWeb.IdList) WHERE UserWeb.email = ?";
+        ON ListItems.IdList = UserWeb.IdList) WHERE UserWeb.email = ?';
 
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
         $result = $statement->get_result();
+
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function calculate_cart_total($idList) {
-        $query = "SELECT ItemDetails.price, ItemDetails.quantity
+    public function remove_item_from_cart($serialCode, $idList)
+    {
+        $query = 'DELETE FROM ItemDetails WHERE serialCode=? AND IdList=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('si', $serialCode, $idList);
+        $statement->execute();
+    }
+
+    public function set_cart_item_quantity($quantity, $serialCode, $idList)
+    {
+        $query = 'UPDATE ItemDetails SET quantity=? WHERE serialCode=? AND IdList=?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('isi', $quantity, $serialCode, $idList);
+        $statement->execute();
+    }
+
+    public function calculate_cart_total($idList)
+    {
+        $query = 'SELECT ItemDetails.price, ItemDetails.quantity
         FROM ((ItemDetails
         INNER JOIN Item
         ON ItemDetails.serialCode = Item.serialCode)
         INNER JOIN ListItems
-        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?";
+        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
 
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $idList);
