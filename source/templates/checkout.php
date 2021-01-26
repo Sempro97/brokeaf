@@ -80,7 +80,7 @@
       }
 
       $.post("api/checkout.php", values, function(response) {
-        //setTotal(response);
+        setTotal(response);
       }, "json")
   });
 
@@ -103,7 +103,8 @@
       data: values,
       dataType: "json",
       success: function (response) {
-        console.log(response);
+        //TO DO Decommentare le funzioni su api/checkout.php
+        window.location.href = "successful.php";
       },
     });
   });
