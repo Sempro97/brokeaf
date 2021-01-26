@@ -17,14 +17,14 @@ $(function () {
       // Retrieve the form values.
       let formData = new FormData(this);
       // Send the request to the server.
-      sendAddItemRequest(formData);
+      sendRegistrationRequest(formData);
     } else {
       showAlert("danger", "check the highlighted fields!");
     }
   });
 });
 
-function sendAddItemRequest(formData) {
+function sendRegistrationRequest(formData) {
   $.post({
     url: "api/check-registration.php",
     data: formData,
@@ -63,7 +63,7 @@ function emailCheck() {
   }
 }
 
-/* Change button state Seller/User */
+/* Change button state seller/user. */
 function changeActive() {
   var disabled = $("button.btn-primary").removeClass("btn-primary active").attr("disabled", "true");
   var enabled = $("button.btn-secondary").removeClass("btn-secondary disabled").removeAttr("disabled");
@@ -72,7 +72,7 @@ function changeActive() {
   registrationType();
 }
 
-/* Change input fileds fot Seller/User */
+/* Change input fields for seller/user. */
 function registrationType() {
   if ($("#buttonUser").hasClass("btn-primary")) {
     alert("WARNING! The registration as Seller is only permitted to autorized Company!");
@@ -222,21 +222,21 @@ function registrationType() {
 Final control for empty field, password equity.
 Execute the crypt password algorithm.
 Return false on error.
-Return true on success
+Return true on success.
 */
 function validation() {
-  /* Email is valid */
+  /* Email is valid. */
   if (!emailCheck()) {
     return false;
   }
-  /* Check equal password */
+  /* Check equal password. */
   if ($("#password").val() != $("#cpassword").val()) {
     $("#cpassword").addClass("is-invalid");
     $("#cp").html('<span class="text-danger">Password and confirm password not matched!</span>');
     return false;
   }
 
-  /* T&C check */
+  /* T&C check. */
   if (!document.getElementById("condition").checked) {
     $("#condition").addClass("is-invalid");
     $("#cTeC").html('<span class="text-danger">You must accept T&C!</span>');
@@ -244,7 +244,7 @@ function validation() {
   } else {
     $("#condition").removeClass("is-invalid");
   }
-  //Mark incomplete input
+  // Mark incomplete input.
   $("#singnupFrom input[id!='condition'][name!='submit']").each(function () {
     if ($(this).val() == "") {
       $(this).addClass("is-invalid");
@@ -252,12 +252,12 @@ function validation() {
       return false;
     }
   });
-  //Global control
+  // Global control.
   if ($(".is-invalid").length) {
     return false;
   }
 
-  //All good. Crypt password
+  // All good. Crypt password.
   var password = $("#password").val();
   var hash = hex_sha512(password);
   $("#password").val(hash);
