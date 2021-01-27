@@ -30,7 +30,6 @@ $cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
                       <div class="dropdown-divider"></div>
 <?php } if ($seller || $user) { ?>
                       <a class="dropdown-item" href="account.php">Account</a>
-                      <a class="dropdown-item" href="registration.php">Registration</a>
                       <div class="dropdown-divider"></div>
 <?php } ?>
                       <a class="dropdown-item" href="categories.php">Categories</a>
@@ -43,6 +42,7 @@ $cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
                       <a class="dropdown-item disabled"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
 <?php } ?>
 <?php if ($show_login) { ?>
+                      <a class="dropdown-item" href="registration.php">Registration</a>
                       <a class="dropdown-item" href="login.php">Login</a>
 <?php } else { ?>
                       <a class="dropdown-item" href="logout.php">Logout</a>

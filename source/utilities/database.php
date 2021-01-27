@@ -352,7 +352,7 @@ class Database
         if ($statement = self::$instance->prepare($query)) {
             error_log(print_r($user, true));
             $statement->bind_param(
-                'ississsssss',
+                'isssssssss',
                 $a = $user['cap'],
                 $user['address'],
                 $user['city'],
