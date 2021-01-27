@@ -13,7 +13,9 @@
           <div class="card wish-list mb-4">
             <div class="card-body">
               <h5 class="mb-4">Cart (<span id="cart-number"></span> items)</h5>
+              <label class="d-none" id="lblquantity" for="txtquantity">Quantity:</label>
               <?php foreach ($template['cart'] as $item) { ?>
+              <?php $image = $database->get_item_image($item['serialCode']); ?>
               <!-- Item -->
               <div id="item">
                 <div class="row mb-2" >
@@ -23,7 +25,7 @@
                   </script>
                   <script> document.getElementById("item").id = "item" + counter; </script>
                   <div class="col-4 col-md-4 mb-3 mb-md-0">
-                    <img class="img-fluid rounded" src="https://via.placeholder.com/150" alt="Sample" />
+                    <img class="mr-3 img-thumbnail" src="../images/<?php echo $image[0]['path']; ?>" alt="<?php echo $item['name']; ?>" />
                   </div>
                   <div class="col-8 col-md-8">
                     <div>
@@ -32,7 +34,7 @@
                           <p class="h5" id="txtname"><?php echo $item['name']; ?></p>
                           <p class="mb-2"><strong id="txtprice"><?php echo $item['price']; ?>&euro;</strong></p>
                           <script> document.getElementById("txtprice").id = "txtprice" + counter; </script>
-                          <p class="mb-3">Availability: <?php echo $item['stock']; ?></p>
+                          <p class="mb-3" id="txtAvailability">Availability: <?php echo $item['stock']; ?></p>
                         </div>
                       </div>
                     </div>
@@ -47,7 +49,7 @@
                         <button class="btn btn-outline-secondary" type="submit" id="minus" onClick="">-</button>
                         <script> document.getElementById("minus").id = "minus" + counter; </script>
                       </div>
-                      <input type="text" id="txtquantity" class="form-control " value="<?php echo $item['quantity']; ?>" readonly/>
+                      <input type="text" id="txtquantity" class="form-control" value="<?php echo $item['quantity']; ?>" readonly/>
                       <script> document.getElementById("txtquantity").id = "txtquantity" + counter; </script>
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit" id="plus">+</button>
@@ -74,7 +76,10 @@
           <div class="card mb-4">
             <div class="card-body">
               <h5 class="mb-4">We accept</h5>
-              <i class="fab fa-paypal mr-2"></i>
+              <span class="fab fa-paypal fa-2x mr-2"></span>
+              <span class="fab fa-cc-visa fa-2x mr-2"></span>
+              <span class="fab fa-cc-mastercard fa-2x mr-2"></span>
+              <span class="fab fa-cc-amex fa-2x"></span>
             </div>
           </div>
           <!-- Card -->
@@ -96,7 +101,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                   <div>
                     <strong>Total amount</strong>
-                    <br />
+                    <br/>
                     <strong> (including IVA) </strong>
                   </div>
                   <span><strong id="spanIva"><?php echo $item['total']; ?>&euro;</strong></span>

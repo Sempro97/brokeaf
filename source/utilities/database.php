@@ -106,13 +106,14 @@ class Database
 
     public function delete_item($serial_code)
     {
-        $result = self::delete_image($serial_code);
-        if (false === $result) {
-            error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
+        // $result = self::delete_image($serial_code);
+        // if (false === $result) {
+        //     error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
 
-            return false;
-        }
-        $query = 'DELETE FROM Item WHERE serialCode=?';
+        //     return false;
+        // }
+
+        $query = 'UPDATE Item SET isVerified=0 WHERE serialCode=?';
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
             error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
@@ -152,7 +153,7 @@ class Database
 
     public function get_item($serial_code)
     {
-        $query = 'SELECT * FROM Item WHERE serialCode=?';
+        $query = 'SELECT * FROM Item WHERE serialCode=? AND isVerified=1';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $serial_code);
         $statement->execute();
@@ -174,7 +175,7 @@ class Database
 
     public function get_items_by_name($name, $count)
     {
-        $query = 'SELECT * FROM Item';
+        $query = 'SELECT * FROM Item WHERE isVerified=1';
         $statement = self::$instance->prepare($query);
         $statement->execute();
         $result = $statement->get_result();
@@ -209,7 +210,7 @@ class Database
                   WHERE Item.category=(
                                         SELECT name FROM Category
                                         WHERE Category.name=?
-                  )
+                  ) AND isVerified=1
                   LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('si', $category, $count);
@@ -221,7 +222,7 @@ class Database
 
     public function get_items_by_seller($email)
     {
-        $query = 'SELECT * FROM Item WHERE emailSeller=?';
+        $query = 'SELECT * FROM Item WHERE emailSeller=? AND isVerified=1';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
@@ -232,7 +233,7 @@ class Database
 
     public function get_random_items($count)
     {
-        $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
+        $query = 'SELECT * FROM Item WHERE isVerified=1 ORDER BY RAND() LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('i', $count);
         $statement->execute();
@@ -311,6 +312,26 @@ class Database
         }
 
         return $orders;
+    }
+
+    public function get_sold_items($email)
+    {
+        $query = 'SELECT datePayment, Order_UserWeb.IdList, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.name, Item.serialCode
+                  FROM Order_UserWeb
+                  INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
+                  INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  WHERE emailSeller=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve seller orders: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     public function login($email, $password)
@@ -591,11 +612,8 @@ class Database
     public function calculate_cart_total($idList)
     {
         $query = 'SELECT ItemDetails.price, ItemDetails.quantity
-        FROM ((ItemDetails
-        INNER JOIN Item
-        ON ItemDetails.serialCode = Item.serialCode)
-        INNER JOIN ListItems
-        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
+                    FROM ItemDetails
+                    WHERE ItemDetails.IdList = ?';
 
         $statement = self::$instance->prepare($query);
         $statement->bind_param('i', $idList);
@@ -663,7 +681,7 @@ class Database
 
     public function newIDList()
     {
-        $query = 'INSERT into ListItems Values(0)';
+        $query = 'INSERT into ListItems VALUE (NULL)';
         $statement = self::$instance->prepare($query);
         $statement->execute();
         error_log(print_r(self::$instance->insert_id, true));
@@ -684,7 +702,7 @@ class Database
     public function insert_user_order_notification($email)
     {
         $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
-                    VALUE ('www.brokeaf.com/source/ordine1', ?, 0, NULL, ?)";
+                    VALUE ('', ?, 0, NULL, ?)";
         $statement = self::$instance->prepare($query);
         $statement->bind_param('ss', date('Y-m-d h:i:s'), $email);
         $statement->execute();
@@ -695,19 +713,49 @@ class Database
         $cart = self::get_cart($email);
 
         foreach ($cart as $item) {
+            $path = 'http://localhost:8080/product.php?id='.$item['serialCode'];
             $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
-                    VALUE ('www.brokeaf.com/source/ordine1', ?, 1, ?, NULL)";
+                        VALUE (?, ?, 1, ?, NULL)";
             $statement = self::$instance->prepare($query);
-            $statement->bind_param('ss', date('Y-m-d h:i:s'), $item['emailSeller']);
+            $statement->bind_param('sss',$path, date('Y-m-d h:i:s'), $item['emailSeller']);
             $statement->execute();
         }
     }
 
-    public function delete_cart($IdList)
-    {
-        $query = 'DELETE FROM ItemDetails WHERE ItemDetails.IdList = ?';
+    public function insert_item_sold_out_notification($item) {
+        $path = 'http://localhost:8080/product.php?id='.$item['serialCode'];
+        $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
+                    VALUE (?, ?, 2, ?, NULL)";
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('i', $IdList);
+        $statement->bind_param('sss',$path, date('Y-m-d h:i:s'), $item['emailSeller']);
         $statement->execute();
+    }
+
+    public function remove_item_availability($email) {
+        $cart = self::get_cart($email);
+
+        foreach ($cart as $item) {
+            $restock = $item['stock'] - $item['quantity'];
+            $query = "UPDATE Item SET quantity=?
+                        WHERE Item.serialCode = ?";
+            $statement = self::$instance->prepare($query);
+            $statement->bind_param('is',$restock, $item['serialCode']);
+            $statement->execute();
+
+            if($restock == 0) {
+                self::insert_item_sold_out_notification($item);
+            }
+        }
+    }
+
+    public function delete_cart($email)
+    {
+        $new_list = self::newIDList();
+        $query = 'UPDATE UserWeb SET UserWeb.IdList = ?
+                        WHERE UserWeb.email = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('is', $new_list, $email);
+        $statement->execute();
+        error_log($new_list);
     }
 }
