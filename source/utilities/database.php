@@ -313,6 +313,26 @@ class Database
         return $orders;
     }
 
+    public function get_sold_items($email)
+    {
+        $query = 'SELECT datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode, Item.
+                  FROM Order_UserWeb
+                  INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
+                  INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  WHERE emailSeller=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to retrieve seller orders: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $email);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function login($email, $password)
     {
         $user = self::is_user($email);
