@@ -4,16 +4,16 @@ isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name
   <div class="row">
     <div class="col-sm-12 rounded pt-2">
       <div class="card mt-4">
-        <h3 class="card-title"><?php  echo $template['item']['name'] ; ?></h3>
+        <h3 class="card-title"><?php  echo $template['item']['name']; ?></h3>
         <img class="d-block w-100 img-thumbnail Image-fluid"
         src="../images/<?php echo $image[0]['path']; ?>"
-          alt="image of <?php  echo $template['item']['name'] ; 
+          alt="image of <?php  echo $template['item']['name'];
           ?>"
            style="max-width: 50%;"
            />
         <div class="card-body">
           <h4>
-            Price: <small><?php  echo $template['item']['price'] ; ?></small>
+            Price: <small><?php  echo $template['item']['price']; ?></small>
           </h4>
           <p>Status: <small>Available</small></p>
           <form>
@@ -42,12 +42,12 @@ isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name
             
           <div class="pt-2">
             <p>
-              Sold by <a href="https://www.w3schools.com"><?php  echo $template['item']['emailSeller'] ; ?></a>
+              Sold by <a href="https://www.w3schools.com"><?php  echo $template['item']['emailSeller']; ?></a>
             </p>
           </div>
           <div class="alert alert-danger d-none invisible" role="alert"></div>
           <p class="card-text">
-            <?php  echo $template['item']['description'] ; ?>
+            <?php  echo $template['item']['description']; ?>
           </p>
         </div>
       </div>
