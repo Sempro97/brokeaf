@@ -34,15 +34,18 @@ isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name
                 </div>
                 <button id="add-to-cart" type="button" class="btn btn-success">
                 <span class="fas fa-cart-arrow-down"></span>
-                </button>                
+                </button>  
               </div>
+               
             </div>
             </form>
+            
           <div class="pt-2">
             <p>
-              Sold by <a href="https://www.w3schools.com"><?php  echo $template['item']['email'] ; ?></a>
+              Sold by <a href="https://www.w3schools.com"><?php  echo $template['item']['emailSeller'] ; ?></a>
             </p>
           </div>
+          <div class="alert alert-danger d-none invisible" role="alert"></div>
           <p class="card-text">
             <?php  echo $template['item']['description'] ; ?>
           </p>

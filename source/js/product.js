@@ -35,6 +35,8 @@ $(function () {
       data.append("quantity", $("#quantity-item").val());
       data.append("serialCode", $.urlParam("id"));
       changeCart(data);
+    } else {
+      showAlert("danger", "0 is not a quantity valid for insert in cart.");
     }
   });
 
@@ -51,15 +53,14 @@ function changeCart(data) {
     contentType: false,
     processData: false,
     success: function (response) {
-      if (response === true) {
-        showAlert("success", "Item added successfully.");
-        $("form:not(header form)").trigger("reset");
+      if (response == "Cart updated.") {
+        showAlert("success", response);
       } else {
         showAlert("danger", "An error occurred while trying to add the item: " + response);
       }
     },
     error: function (response) {
-      showAlert("danger", "An error occurred while trying to add the item.");
+      showAlert("danger", "An error occurred while trying to add the item." + response);
     },
   });
 }

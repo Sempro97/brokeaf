@@ -500,12 +500,13 @@ class Database
 
     public function set_cart_item_quantity($quantity, $serialCode, $idList)
     {
+        error_log(print_r($quantity. $serialCode. $idList,true) );
         $query = 'UPDATE ItemDetails SET quantity=? WHERE serialCode=? AND IdList=?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('isi', $quantity, $serialCode, $idList);
         $statement->execute();
         $result = $statement->get_result();
-
+        error_log("______________________update cart ok , value :". print_r($result->num_rows,true));
         return 1 == $result->num_rows;
     }
 
@@ -519,7 +520,7 @@ class Database
         ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
 
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $idList);
+        $statement->bind_param('i', $idList);
         $statement->execute();
         $rows = $statement->get_result();
 
@@ -539,10 +540,10 @@ class Database
                   and UserWeb.email = ? 
                   and ItemDetails.serialCode = ?';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('si', $_SESSION['email'],$serialCode);
+        $statement->bind_param('ss', $_SESSION['email'],$serialCode);
         $statement->execute();
         $result = $statement->get_result();
-
+        error_log("______________________is in cart ok , value :". print_r($result->num_rows,true));
         return 1 == $result->num_rows;
     }
 
@@ -556,27 +557,27 @@ class Database
         ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
 
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $idList);
+        $statement->bind_param('i',$a =intval($idList));
         $statement->execute();
         $rows = $statement->get_result();
-        $total=0;
-        foreach ($rows as $row) {
-            // Calculate the total price of the order.
-            $total += 1;
-        }
-
-        return $total;
+        error_log("______________________get num cart ok , value :". print_r($rows->num_rows,true));
+        return $rows->num_rows;
     }
 
     public function insert_cart_item($quantity,$serialCode, $idList, $price , $positionIndex )
     {
+        error_log("______________________insert cart started , value :". print_r($quantity,true));
+        error_log(print_r($serialCode,true));
+        error_log(print_r($idList,true));
+        error_log(print_r($price,true));
+        error_log(print_r($positionIndex,true));
         $query = 'INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `quantity`, `price`, `positionIndex`) 
                   VALUES (?, ?, ?, ?, ?, ?);';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('siisi', $quantity, $serialCode, $idList, $price, $positionIndex);
+        $statement->bind_param('ssiii', $serialCode, $price,$idList, $quantity, $positionIndex);
         $statement->execute();
         $result = $statement->get_result();
-
+        error_log("______________________insert cart ok , value :". print_r($result->num_rows,true));
         return 1 == $result->num_rows;
     }
 
