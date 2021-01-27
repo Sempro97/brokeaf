@@ -28,19 +28,24 @@ $cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
                       <a class="dropdown-item" href="add-item.php">Add item</a>
                       <a class="dropdown-item" href="seller-items.php">Manage items</a>
                       <div class="dropdown-divider"></div>
+<?php } if ($seller || $user) { ?>
+                      <a class="dropdown-item" href="account.php">Account</a>
+                      <div class="dropdown-divider"></div>
 <?php } ?>
                       <a class="dropdown-item" href="categories.php">Categories</a>
-<?php if ($show_login) { ?>
-                      <a class="dropdown-item" href="login.php">Login</a>
-<?php } else { ?>
-                      <a class="dropdown-item" href="logout.php">Logout</a>
-<?php } if ($seller || $user) { ?>
+<?php if ($seller || $user) { ?>
                       <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
 <?php } if ($user) { ?>
                       <a class="dropdown-item" href="user-orders.php">Orders</a>
 <?php } if ($seller || $user) { ?>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item disabled"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
+<?php } ?>
+<?php if ($show_login) { ?>
+                      <a class="dropdown-item" href="registration.php">Registration</a>
+                      <a class="dropdown-item" href="login.php">Login</a>
+<?php } else { ?>
+                      <a class="dropdown-item" href="logout.php">Logout</a>
 <?php } ?>
                     </li>
                   </ul>

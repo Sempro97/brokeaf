@@ -225,7 +225,8 @@ INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, 
      VALUES ('1', 'Memoria di massa dalle alte prestazioni, 5 Mb/s in lettura e scrittura', '4.38', 'Chiavetta USB', '9876711578', 'hackett.eleanore@example.org', 'Informatica');
 
 /* For test purpose pw is user */
-INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`, `salt`) VALUES ('1158', '8638 Rupert Village Apt. 105', 'Wilhelmineside', 'user@u.it', 2, 'Jennyfer', 'Willms', '58379e96d4920098d346cf140e5d335bef56a68d23d1a8b0a646168172c29e68fdfa186bc9989c4de0ce11e8284ee14c46b782b67c0b9ed4d31ed4e9c2eb2f16', '3464459410', 'Bulgaria', 'bcd714a4878c00f3beb2d1641792676b638854035c616bb5b91e66a43843317939e903522f31ab911dbbb37602c0c8afc6846c225873415e43b9cdeac3116f13');
+INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`, `salt`)
+     VALUES ('1158', '8638 Rupert Village Apt. 105', 'Wilhelmineside', 'user@u.it', 2, 'Jennyfer', 'Willms', '58379e96d4920098d346cf140e5d335bef56a68d23d1a8b0a646168172c29e68fdfa186bc9989c4de0ce11e8284ee14c46b782b67c0b9ed4d31ed4e9c2eb2f16', '3464459410', 'Bulgaria', 'bcd714a4878c00f3beb2d1641792676b638854035c616bb5b91e66a43843317939e903522f31ab911dbbb37602c0c8afc6846c225873415e43b9cdeac3116f13');
 
 
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
