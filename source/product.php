@@ -1,6 +1,12 @@
 <?php
 /* i.e. http://localhost:8080/product.php?id=4943693566 */
 require_once 'utilities/bootstrap.php';
+require_once 'utilities/user-only.php';
+$template['scripts'] = [
+    'js/jquery-3.4.1.min.js',
+    'bootstrap/js/bootstrap.bundle.min.js',
+    'js/product.js',
+];
 $product = $_GET["id"] ?? -1;
 /* Get without serialCode */
 if($product == -1){
@@ -14,11 +20,9 @@ if($product == -1){
         $image = $database->get_item_image($product); 
         $template['title'] = $template['item']['name'];
         $template['content'] = 'templates/product.php';
-        var_dump($imag1e[0]);
     } else {
         $template['title'] = 'Articolo not found!';
         $template['content'] = 'templates/error.php'; 
-        var_dump($template['item']);
     }
 }
 require_once 'templates/base.php';
