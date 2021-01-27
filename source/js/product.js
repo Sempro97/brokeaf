@@ -9,6 +9,7 @@ $(function () {
     $("#quantity-item").val(function (i, origText) {
       let x = String(Number(origText) - 1);
       if (x == "-1") {
+        removeRequest();
         return 0;
       } else {
         return x;
