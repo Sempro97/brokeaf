@@ -233,7 +233,6 @@ INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("Your order was succ
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("One of your items has been sold.",'1');
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("One of your items is out of stock.",'2');
 
-<<<<<<< HEAD
 INSERT INTO `NotificationUser` (`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
 INSERT INTO `NotificationUser` (`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','mckenzie.christine@example.net',NULL);
 
@@ -258,37 +257,6 @@ INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, 
 
 INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) VALUES ('adrain.johnson@example.com', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP(), '3');
 INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) VALUES ('adrain.johnson@example.com', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP()- 1, '4');
-=======
-INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) 
-     VALUES (1,'0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'user@u.it');
-INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) 
-     VALUES (2,'0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','seller@s.it',NULL);
-
-INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', 5);
-INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP()-1, '1', 1);
-
-
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('4943693566', 1, '1', '5', '2.87');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', 1, '2', '4', '1.32');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', 2, '1', '1', '18.6');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('7775972008', 2, '2', '1', '19.99');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('8791859210', 2, '3', '5', '19.69');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9150815034', 2, '4', '3', '3.36');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9876711578', 2, '5', '2', '12.73');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', 3, '1', '1', '17.76');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', 3, '2', '2', '12.86');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', 4, '1', '4', '1.32');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', 4, '2', '1', '18.6');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1952322448', 5, '1', '5', '9.57');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', 5, '2', '1', '17.76');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', 5, '3', '2', '12.86');
-
-
-INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) 
-     VALUES ('user@u.it', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP(), 3);
-INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) 
-     VALUES ('user@u.it', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP()- 1, 4);
->>>>>>> 7dab8b76c9cf82e38385b26ce94a45d656759808
 
 INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1313932365', 'image-2.jpg');
 INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1952322448', 'image-6.jpg');
