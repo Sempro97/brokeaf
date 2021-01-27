@@ -32,12 +32,12 @@
                 <form id="shoppingButton">
                   <label for="quantity-item">Quantity:</label>
                   <div class="form-row mb-2">
-                    <div class="col">
+                    <div class="col-md-4">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <button id="minus-item" class="btn btn-dark"><span class="fas fa-minus"></span></button>
                         </div>
-                          <input type="text" id="quantity-item" value="0" class="input-group-text" disabled />
+                        <input type="text" id="quantity-item" value="1" class="form-control text-center" disabled />
                         <div class="input-group-append">
                           <button id="plus-item" class="btn btn-dark"><span class="fas fa-plus"></span></button>
                         </div>
