@@ -64,7 +64,7 @@
               </div>
             </fieldset>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" id="btnCheckout" type="submit">Continue to checkout</button>
+            <button class="btn btn-primary btn-lg btn-block mb-3" id="btnCheckout" type="submit">Continue to checkout</button>
           </form>
         </div>
       </div>
