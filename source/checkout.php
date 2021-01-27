@@ -1,4 +1,5 @@
 <?php
+
 require_once 'utilities/bootstrap.php';
 $template['title'] = 'Index';
 $template['scripts'] = [

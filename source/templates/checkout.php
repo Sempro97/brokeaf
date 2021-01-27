@@ -13,7 +13,7 @@
               </div>
               <div>
                 <span class="text-muted"><?php echo $item['price']; ?>&euro;</span>
-                <h6 class="my-0"><?php echo ($item['price'] * $item['quantity']) ?>&euro;</h6>
+                <h6 class="my-0"><?php echo $item['price'] * $item['quantity']; ?>&euro;</h6>
               </div>
             </li>
           <?php } ?>

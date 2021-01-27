@@ -1,4 +1,5 @@
 <?php
+
 require_once '/var/www/html/utilities/secure-session-start.php';
 secure_session_start();
 require_once '/var/www/html/utilities/database.php';
