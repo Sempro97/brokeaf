@@ -10,5 +10,5 @@ $template['scripts'] = [
 $template['header'] = 'Orders';
 $template['content'] = 'templates/seller-orders.php';
 $email = $_SESSION['email'];
-$template['items'] = $database->get_sold_items($email);
+$template['orders'] = $database->get_sold_items($email);
 require_once 'templates/base.php';

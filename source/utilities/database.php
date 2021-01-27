@@ -316,7 +316,7 @@ class Database
 
     public function get_sold_items($email)
     {
-        $query = 'SELECT datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode, Item.
+        $query = 'SELECT datePayment, Order_UserWeb.IdList, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.name, Item.serialCode
                   FROM Order_UserWeb
                   INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
                   INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
