@@ -16,7 +16,7 @@
             <!-- Price -->
             <div class="row">
               <div class="col p-0">
-                <span class="h4">Price: <?php echo $template['item']['price']; ?></span>
+                <span class="h4">Price: <?php echo $template['item']['price']; ?>&euro;</span>
               </div>
             </div>
             <!-- Status -->
