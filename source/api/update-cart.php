@@ -1,6 +1,6 @@
 <?php
 
-require '../utilities/database.php';
+require_once '../utilities/database.php';
 $database = new Database();
 
 $itemCode = $_POST['itemCode'];

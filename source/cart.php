@@ -1,7 +1,7 @@
 <?php
 
-require 'utilities/bootstrap.php';
-require 'utilities/user-only.php';
+require_once 'utilities/bootstrap.php';
+require_once 'utilities/user-only.php';
 $email = $_SESSION['email'];
 $cart = $database->get_cart($email);
 $template['cart'] = $cart;
@@ -11,4 +11,4 @@ $template['scripts'] = [
     'bootstrap/js/bootstrap.bundle.min.js',
 ];
 $template['content'] = 'templates/cart.php';
-require 'templates/base.php';
+require_once 'templates/base.php';
