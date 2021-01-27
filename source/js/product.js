@@ -57,7 +57,7 @@ function changeCart(data) {
       if (response == "Cart updated." || response == "insert cart") {
         showAlert("success", response);
       } else {
-        showAlert("danger", "An error occurred while trying to add the item: " + response);
+        showAlert("success", response);
       }
     },
     error: function (response) {
