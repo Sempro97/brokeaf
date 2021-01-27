@@ -203,18 +203,6 @@ class Database
         return array_column($distances, 'item');
     }
 
-    public function get_img_item($serialCode)
-    {
-        $query = "SELECT Image.path FROM Image
-                       WHERE Image.serialCode = ? ";
-        $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $serialCode);
-        $statement->execute();
-        $result = $statement->get_result();
-        
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
     public function get_items_by_category($category, $count)
     {
         $query = 'SELECT * FROM Item 
@@ -355,6 +343,15 @@ class Database
         }
     }
 
+    public function newIDList(){
+        
+        $query = 'INSERT into ListItems Values(0)';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();    
+        error_log(print_r(self::$instance->insert_id, true));
+        return  self::$instance->insert_id;     
+    }
+
     public function register_user($user)
     {
         $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province, salt) 
@@ -374,7 +371,7 @@ class Database
                 $user['address'],
                 $user['city'],
                 $user['email'],
-                $a = null,
+                $a = $user['idList'],
                 $user['name'],
                 $user['surname'],
                 $user['password'],

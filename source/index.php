@@ -18,4 +18,5 @@ if ($search) {
 } else {
     $template['items'] = $database->get_random_items(ITEM_COUNT);
 }
+var_dump($database->newIDList());
 require_once 'templates/base.php';

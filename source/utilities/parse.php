@@ -1,5 +1,6 @@
 <?php
 
+
 function parse_item($post)
 {
     // TODO: Parse it for real.
@@ -16,6 +17,7 @@ function parse_item($post)
 
 function parse_user($post)
 {
+    require_once 'utilities/bootstrap.php';
     // TODO: Parse it for real.
     $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
     $user = [];
@@ -23,13 +25,14 @@ function parse_user($post)
     $user['address'] = $post['address'];
     $user['city'] = $post['city'];
     $user['email'] = $post['email'];
-    $user['IdList'] = null;
+    $user['IdList'] = $database->newIDList();
     $user['name'] = $post['name'];
     $user['surname'] = $post['surname'];
     $user['password'] = hash('sha512', $post['password'].$random_salt);
     $user['phoneNumber'] = $post['phone'];
     $user['province'] = $post['province'];
     $user['salt'] = $random_salt;
+    error_log(print_r($user['IdList'],true));
 
     return $user;
 }
