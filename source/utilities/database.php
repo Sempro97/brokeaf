@@ -277,10 +277,11 @@ class Database
 
     public function get_orders($email)
     {
-        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
+        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.name, Item.serialCode, Image.path
                   FROM Order_UserWeb
                   INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
                   INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  INNER JOIN Image ON Image.serialCode=Item.serialCode
                   WHERE email=?';
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
