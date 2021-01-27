@@ -30,7 +30,7 @@ if ($quantity <= $availability && $quantity >= 0) {
     
 
 if ('btnremove' == $btnpressed) {
-    //$database->remove_item_from_cart($itemCode, $idList);
+    $database->remove_item_from_cart($itemCode, $idList);
     $result['btn'] = 'removed';
 }
 

@@ -296,10 +296,12 @@ INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `sur
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('71155', '634 Schiller Highway', 'North Casey', 'yundt.selmer@example.net', NULL, 'Eduardo', 'Pacocha', '12', '3461936253', 'United Arab Emirates');
 INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('34747', '806 Elmo Wells Apt. 193', 'Lake Orlandview', 'zstiedemann@example.com', NULL, 'Domenica', 'Grimes', '47', '3464493252', 'Nicaragua');
 
-INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
+INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("Your order was successfully fullfilled.",'0');
+INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("One of your items has been sold.",'1');
+INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("One of your items is out of stock.",'2');
 
-INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
-INSERT INTO `NotificationUser` (`idNotification`,`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('1','0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','mckenzie.christine@example.net',NULL);
+INSERT INTO `NotificationUser` (`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
+INSERT INTO `NotificationUser` (`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','mckenzie.christine@example.net',NULL);
 
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', '0');
 INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP()-1, '1', '1');

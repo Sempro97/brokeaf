@@ -13,6 +13,7 @@
           <div class="card wish-list mb-4">
             <div class="card-body">
               <h5 class="mb-4">Cart (<span id="cart-number"></span> items)</h5>
+              <label class="d-none" id="lblquantity" for="txtquantity">Quantity:</label>
               <?php foreach ($template['cart'] as $item) { ?>
               <?php $image = $database->get_item_image($item['serialCode']); ?>
               <!-- Item -->
@@ -48,7 +49,7 @@
                         <button class="btn btn-outline-secondary" type="submit" id="minus" onClick="">-</button>
                         <script> document.getElementById("minus").id = "minus" + counter; </script>
                       </div>
-                      <input type="text" id="txtquantity" class="form-control " value="<?php echo $item['quantity']; ?>" readonly/>
+                      <input type="text" id="txtquantity" class="form-control" value="<?php echo $item['quantity']; ?>" readonly/>
                       <script> document.getElementById("txtquantity").id = "txtquantity" + counter; </script>
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit" id="plus">+</button>
@@ -75,7 +76,7 @@
           <div class="card mb-4">
             <div class="card-body">
               <h5 class="mb-4">We accept</h5>
-              <i class="fab fa-paypal mr-2"></i>
+              <span class="fab fa-paypal mr-2"></span>
             </div>
           </div>
           <!-- Card -->
