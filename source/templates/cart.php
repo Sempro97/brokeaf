@@ -14,6 +14,7 @@
             <div class="card-body">
               <h5 class="mb-4">Cart (<span id="cart-number"></span> items)</h5>
               <?php foreach ($template['cart'] as $item) { ?>
+              <?php $image = $database->get_item_image($item['serialCode']); ?>
               <!-- Item -->
               <div id="item">
                 <div class="row mb-2" >
@@ -23,7 +24,7 @@
                   </script>
                   <script> document.getElementById("item").id = "item" + counter; </script>
                   <div class="col-4 col-md-4 mb-3 mb-md-0">
-                    <img class="img-fluid rounded" src="https://via.placeholder.com/150" alt="Sample" />
+                    <img class="mr-3 img-thumbnail" src="../images/<?php echo $image[0]['path']; ?>" alt="<?php echo $item['name']; ?>" />
                   </div>
                   <div class="col-8 col-md-8">
                     <div>
@@ -32,7 +33,7 @@
                           <p class="h5" id="txtname"><?php echo $item['name']; ?></p>
                           <p class="mb-2"><strong id="txtprice"><?php echo $item['price']; ?>&euro;</strong></p>
                           <script> document.getElementById("txtprice").id = "txtprice" + counter; </script>
-                          <p class="mb-3">Availability: <?php echo $item['stock']; ?></p>
+                          <p class="mb-3" id="txtAvailability">Availability: <?php echo $item['stock']; ?></p>
                         </div>
                       </div>
                     </div>
