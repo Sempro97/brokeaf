@@ -2,12 +2,12 @@
 
 // i.e. http://localhost:8080/product.php?id=4943693566
 require_once 'utilities/bootstrap.php';
-require_once 'utilities/user-only.php';
 $template['scripts'] = [
     'js/jquery-3.4.1.min.js',
     'bootstrap/js/bootstrap.bundle.min.js',
     'js/product.js',
 ];
+$email = $_SESSION['email'];
 $product = $_GET['id'] ?? -1;
 // Get without serialCode
 if (-1 == $product) {
