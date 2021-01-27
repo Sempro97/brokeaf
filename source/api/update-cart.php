@@ -1,6 +1,6 @@
 <?php
 
-require '../utilities/database.php';
+require_once '../utilities/database.php';
 require_once '../utilities/exit-json.php';
 $database = new Database();
 
