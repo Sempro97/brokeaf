@@ -76,7 +76,10 @@
           <div class="card mb-4">
             <div class="card-body">
               <h5 class="mb-4">We accept</h5>
-              <span class="fab fa-paypal mr-2"></span>
+              <span class="fab fa-paypal fa-2x mr-2"></span>
+              <span class="fab fa-cc-visa fa-2x mr-2"></span>
+              <span class="fab fa-cc-mastercard fa-2x mr-2"></span>
+              <span class="fab fa-cc-amex fa-2x"></span>
             </div>
           </div>
           <!-- Card -->
@@ -98,7 +101,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                   <div>
                     <strong>Total amount</strong>
-                    <br />
+                    <br/>
                     <strong> (including IVA) </strong>
                   </div>
                   <span><strong id="spanIva"><?php echo $item['total']; ?>&euro;</strong></span>
