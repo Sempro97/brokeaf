@@ -10,7 +10,7 @@ if ($notifications_count > 0) {
 $seller = $database->is_seller($email);
 $user = $database->is_user($email);
 $icon = $user ? 'fa-user' : ($seller ? 'fa-user-tie' : '');
-$cart_button_status = $seller ? 'disabled' : '';
+$cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
 ?>
     <header>
       <div class="container">
@@ -28,13 +28,12 @@ $cart_button_status = $seller ? 'disabled' : '';
                       <a class="dropdown-item" href="add-item.php">Add item</a>
                       <a class="dropdown-item" href="seller-items.php">Manage items</a>
                       <div class="dropdown-divider"></div>
+<?php } if ($seller || $user) { ?>
+                      <a class="dropdown-item" href="account.php">Account</a>
+                      <div class="dropdown-divider"></div>
 <?php } ?>
                       <a class="dropdown-item" href="categories.php">Categories</a>
-<?php if ($show_login) { ?>
-                      <a class="dropdown-item" href="login.php">Login</a>
-<?php } else { ?>
-                      <a class="dropdown-item" href="logout.php">Logout</a>
-<?php } if ($seller || $user) { ?>
+<?php if ($seller || $user) { ?>
                       <a class="dropdown-item" href="notifications.php"><?php echo $notifications_dropdown_item_text; ?></a>
 <?php } if ($user) { ?>
                       <a class="dropdown-item" href="user-orders.php">Orders</a>
@@ -42,12 +41,18 @@ $cart_button_status = $seller ? 'disabled' : '';
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item disabled"><?php echo $email; ?> - <span class="fas <?php echo $icon; ?>"></span></a>
 <?php } ?>
+<?php if ($show_login) { ?>
+                      <a class="dropdown-item" href="registration.php">Registration</a>
+                      <a class="dropdown-item" href="login.php">Login</a>
+<?php } else { ?>
+                      <a class="dropdown-item" href="logout.php">Logout</a>
+<?php } ?>
                     </li>
                   </ul>
                 </div>
               </div>
               <div class="p-2 pt-3">
-                <span class="d-block h1 text-center">BrokeAF</span>
+                <a class="d-block h1 text-center" href="index.php" style="color: #212529; text-decoration: none;">BrokeAF</a>
               </div>
               <!-- This search bar is only visible for wider than small (sm) screens -->
               <div class="p-2 d-none d-md-block flex-fill">
@@ -64,9 +69,7 @@ $cart_button_status = $seller ? 'disabled' : '';
                 </form>
               </div>
               <div class="pl-2">
-                <button type="button" class="btn btn-dark <?php echo $cart_button_status; ?>">
-                  <span class="fas fa-shopping-cart"></span>
-                </button>
+                <a class="btn btn-dark <?php echo $cart_button_status; ?>" href="cart.php" role="button"><span class="fas fa-shopping-cart"></span></a>
               </div>
             </div>
           </div>

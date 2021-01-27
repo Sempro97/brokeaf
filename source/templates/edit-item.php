@@ -2,7 +2,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <form>
+          <form id="edit">
             <!-- Name -->
             <div class="form-group">
               <label for="name">Name:</label>
@@ -44,6 +44,14 @@
             </div>
             <!-- Submit -->
             <button type="submit" class="btn btn-primary">Save changes</button>
+          </form>
+          <form id="delete" class="mt-3">
+            <!-- Serial code -->
+            <div class="d-none form-group">
+              <label for="serial_code">Serial code:</label>
+              <input type="text" class="form-control" id="serial_code" name="serial_code" required="required" value="<?php echo $item['serialCode']; ?>" readonly/>
+            </div>
+            <button type="submit" class="btn btn-danger">Delete item</button>
           </form>
         </div>
       </div>

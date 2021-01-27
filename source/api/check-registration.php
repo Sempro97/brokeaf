@@ -7,6 +7,7 @@ require_once '../utilities/parse.php';
 
 // User already registered check.
 $email = $_POST['email'];
+
 $user_exists = $database->get_user_from_email($email) ? true : false;
 $seller_exists = $database->get_seller_from_email($email) ? true : false;
 if ($user_exists || $seller_exists) {
@@ -17,6 +18,7 @@ if ($user_exists || $seller_exists) {
         $seller = parse_seller($_POST);
         $results = $database->register_seller($seller);
     } else {
+        $_POST['IdList'] = intval($database->newIDList());
         $user = parse_user($_POST);
         $results = $database->register_user($user);
     }

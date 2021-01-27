@@ -2,78 +2,56 @@
 
 # Stories
 
-## User
+- User
+	- Add item to shopping cart
+	- Buy items in shopping cart
+	- Login
+	- Registration
+		- Address
+		- City
+		- Email
+		- Name
+		- Password
+		- Phone number
+		- Province
+		- Surname
+	- Update user information
 
-### Add item to shopping cart
+- Seller
+	- Add item to shop
+	- Register
+		- Address
+		- City
+		- Company address
+		- Company name
+		- Email
+		- Name
+		- Password
+		- Phone number
+		- Province
+		- Surname
+	- Remove item from shop
+	- Update item information
+	- See orders details
 
-### Buy items in shopping cart
+# Wow elements
 
-### Login
+- Choose address at checkout
+- Coupons
+- Discounts
+- Multiple addresses
+- Multiple payment options
+- Collect points
+- Private items
+- Shopping cart with cookies
 
-### Registration
+# Notifications
 
-- Address
-- City
-- Email
-- Name
-- Password
-- Phone number
-- Province
-- Surname
+- User
+	- Item in cart not in stock
+	- Price changed in cart
+	- Order shipment
 
-### Update user information
-
-## Seller
-
-### Add item to shop
-
-### Register
-
-- Address
-- City
-- Company address
-- Company name
-- Email
-- Name
-- Password
-- Phone number
-- Province
-- Surname
-
-### Remove item from shop
-
-### Update item information
-
-### See orders details
-
-## Wow elements
-
-### Choose address at checkout
-
-### Coupons
-
-### Discounts
-
-### Multiple addresses
-
-### Multiple payment options
-
-### Collect points
-
-### Private items
-
-### Shopping cart with cookies
-
-## View notifications linked to an event
-
-### User
-
-- Item in cart not in stock
-- Price changed in cart
-- Order shipment
-
-### Seller
-
-- Item sold out
-- Item has been sold
-- Item is/not visible
+- Seller
+	- Item sold out
+	- Item has been sold
