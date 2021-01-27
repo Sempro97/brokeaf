@@ -233,7 +233,7 @@ class Database
 
     public function get_random_items($count)
     {
-        $query = 'SELECT * FROM Item ORDER BY RAND() LIMIT ?';
+        $query = 'SELECT * FROM Item WHERE isVerified=1 ORDER BY RAND() LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('i', $count);
         $statement->execute();
