@@ -121,6 +121,7 @@
 
 <script> 
   $( document ).ready(function() {
+    var cart = <?php echo json_encode($template['cart']); ?>;
     var idList = <?php echo json_encode($item['IdList']); ?>;
     var values = {
         "idList" : idList,
@@ -129,6 +130,10 @@
       $.post("api/update-cart.php", values, function(response) {
         setTotal(response['total'], idList);
       }, "json")
+
+      if (cart.length == 0) {
+        document.getElementById("btnCheckout").disabled = true; 
+      }
   });
 
     function calculateTotal() {
