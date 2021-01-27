@@ -130,11 +130,7 @@ create table Visitor (
 -- ___________________ 
 
 ALTER TABLE ListItems
-     MODIFY `IdList` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
-ALTER TABLE NotificationUser
-     MODIFY `idNotification` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+     MODIFY `IdList` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 alter table ItemDetails add constraint FKincorporates
      foreign key (IdList)
@@ -171,11 +167,11 @@ alter table Visitor add constraint FKwish_FK
 ALTER TABLE NotificationUser
      MODIFY `idNotification` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
-INSERT INTO `ListItems` (IdList) VALUES (1);
-INSERT INTO `ListItems` (IdList) VALUES (2);
-INSERT INTO `ListItems` (IdList) VALUES (3);
-INSERT INTO `ListItems` (IdList) VALUES (4);
-INSERT INTO `ListItems` (IdList) VALUES (5);
+INSERT INTO `ListItems` (IdList) VALUES (NULL);
+INSERT INTO `ListItems` (IdList) VALUES (NULL);
+INSERT INTO `ListItems` (IdList) VALUES (NULL);
+INSERT INTO `ListItems` (IdList) VALUES (NULL);
+INSERT INTO `ListItems` (IdList) VALUES (NULL);
    
 INSERT INTO `Category` (name,keywords) VALUES ('Utensili','cacciavite,fai da te');
 INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
@@ -233,30 +229,20 @@ INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("Your order was succ
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("One of your items has been sold.",'1');
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ("One of your items is out of stock.",'2');
 
-INSERT INTO `NotificationUser` (`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36',NULL,'adrain.johnson@example.com');
-INSERT INTO `NotificationUser` (`idDesc`,`path`,`date`,`emailSeller`,`emailUser`) VALUES ('0','www.brokeaf.com/source/ordine1','2015-11-05 14:29:36','mckenzie.christine@example.net',NULL);
-
-INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP(), '0', '0');
-INSERT INTO `Visitor` (`lastSeen`, `idVisitor`, `IdList`) VALUES (CURRENT_TIMESTAMP()-1, '1', '1');
-
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1952322448', '0', '1', '5', '9.57');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', '0', '2', '1', '17.76');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', '0', '3', '2', '12.86');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('4943693566', '1', '1', '5', '2.87');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', '1', '2', '4', '1.32');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1952322448', '1', '1', '5', '9.57');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', '1', '2', '1', '17.76');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', '1', '3', '2', '12.86');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('4943693566', '2', '1', '5', '2.87');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', '2', '2', '4', '1.32');
 INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', '2', '1', '1', '18.6');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('7775972008', '2', '2', '1', '19.99');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('8791859210', '2', '3', '5', '19.69');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9150815034', '2', '4', '3', '3.36');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9876711578', '2', '5', '2', '12.73');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', '3', '1', '1', '17.76');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', '3', '2', '2', '12.86');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', '4', '1', '4', '1.32');
-INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', '4', '2', '1', '18.6');
-
-
-INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) VALUES ('adrain.johnson@example.com', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP(), '3');
-INSERT INTO `Order_UserWeb` (`email`, `cap`,`city`, `name`, `surname`, `phoneNumber`, `province`, `address`, `datePayment`, `IdList`) VALUES ('adrain.johnson@example.com', '1158', 'Wilhelmineside', 'Jennyfer', 'Willms', '3464493252', 'Bulgaria', '806 Elmo Wells Apt. 193', CURRENT_TIMESTAMP()- 1, '4');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('7775972008', '3', '2', '1', '19.99');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('8791859210', '3', '3', '5', '19.69');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9150815034', '3', '4', '3', '3.36');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('9876711578', '3', '5', '2', '12.73');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3438720877', '4', '1', '1', '17.76');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('1313932365', '4', '2', '2', '12.86');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3577771822', '5', '1', '4', '1.32');
+INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `positionIndex`, `quantity`, `price`) VALUES ('3773158679', '5', '2', '1', '18.6');
 
 INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1313932365', 'image-2.jpg');
 INSERT INTO `Image` (`serialCode`, `path`) VALUES ('1952322448', 'image-6.jpg');

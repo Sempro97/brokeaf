@@ -681,7 +681,7 @@ class Database
 
     public function newIDList()
     {
-        $query = 'INSERT into ListItems Values(0)';
+        $query = 'INSERT into ListItems VALUE (NULL)';
         $statement = self::$instance->prepare($query);
         $statement->execute();
         error_log(print_r(self::$instance->insert_id, true));
@@ -748,11 +748,14 @@ class Database
         }
     }
 
-    public function delete_cart($IdList)
+    public function delete_cart($email)
     {
-        $query = 'DELETE FROM ItemDetails WHERE ItemDetails.IdList = ?';
+        $new_list = self::newIDList();
+        $query = 'UPDATE UserWeb SET UserWeb.IdList = ?
+                        WHERE UserWeb.email = ?';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('i', $IdList);
+        $statement->bind_param('is', $new_list, $email);
         $statement->execute();
+        error_log($new_list);
     }
 }
