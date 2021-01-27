@@ -11,13 +11,14 @@ if($product == -1){
     $template['item'] = $database->get_item($product);
     /* Check response DB */
     if($template['item'] != NULL){
-        $template['imagePath'] = $database->get_img_item($product)[0]['path'];
-        $template['title'] = $template['item'][0]['name'];
+        $image = $database->get_item_image($product); 
+        $template['title'] = $template['item']['name'];
         $template['content'] = 'templates/product.php';
+        var_dump($imag1e[0]);
     } else {
         $template['title'] = 'Articolo not found!';
         $template['content'] = 'templates/error.php'; 
-        var_dump($template['item'][0]);
+        var_dump($template['item']);
     }
 }
 require_once 'templates/base.php';

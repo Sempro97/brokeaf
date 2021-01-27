@@ -6,7 +6,7 @@ isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name
       <div class="card mt-4">
         <h3 class="card-title"><?php  echo $template['item']['name'] ; ?></h3>
         <img class="d-block w-100 img-thumbnail Image-fluid. max-width: 100%;"
-          src="images/<?php echo $template['imagePath']; ?>"
+        src="../images/<?php echo $image[0]['path']; ?>"
           alt="image of <?php  echo $template['item']['name'] ; 
           ?>"
            />
