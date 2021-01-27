@@ -89,6 +89,42 @@ class Database
         return 1 === $statement->affected_rows;
     }
 
+    public function delete_image($serial_code)
+    {
+        $query = 'DELETE FROM Image WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to delete image: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+
+        return 1 === self::$instance->affected_rows;
+    }
+
+    public function delete_item($serial_code)
+    {
+        $result = self::delete_image($serial_code);
+        if (false === $result) {
+            error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $query = 'DELETE FROM Item WHERE serialCode=?';
+        $statement = self::$instance->prepare($query);
+        if (false === $statement) {
+            error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        $statement->bind_param('s', $serial_code);
+        $statement->execute();
+
+        return 1 === self::$instance->affected_rows;
+    }
+
     public function edit_item($item)
     {
         $query = 'UPDATE Item
