@@ -1,6 +1,5 @@
 <?php
 
-
 function parse_item($post)
 {
     // TODO: Parse it for real.
@@ -16,7 +15,7 @@ function parse_item($post)
 }
 
 function parse_user($post)
-{ 
+{
     // TODO: Parse it for real.
     $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
     $userParsedParsed = [];
@@ -30,7 +29,7 @@ function parse_user($post)
     $userParsed['password'] = hash('sha512', $post['password'].$random_salt);
     $userParsed['phoneNumber'] = $post['phone'];
     $userParsed['province'] = $post['province'];
-    $userParsed['salt'] = $random_salt;    
+    $userParsed['salt'] = $random_salt;
 
     return $userParsed;
 }

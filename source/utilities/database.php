@@ -500,13 +500,14 @@ class Database
 
     public function set_cart_item_quantity($quantity, $serialCode, $idList)
     {
-        error_log(print_r($quantity. $serialCode. $idList,true) );
+        error_log(print_r($quantity.$serialCode.$idList, true));
         $query = 'UPDATE ItemDetails SET quantity=? WHERE serialCode=? AND IdList=?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('isi', $quantity, $serialCode, $idList);
         $statement->execute();
         $result = $statement->get_result();
-        error_log("______________________update cart ok , value :". print_r($result->num_rows,true));
+        error_log('______________________update cart ok , value :'.print_r($result->num_rows, true));
+
         return 1 == $result->num_rows;
     }
 
@@ -540,10 +541,11 @@ class Database
                   and UserWeb.email = ? 
                   and ItemDetails.serialCode = ?';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('ss', $_SESSION['email'],$serialCode);
+        $statement->bind_param('ss', $_SESSION['email'], $serialCode);
         $statement->execute();
         $result = $statement->get_result();
-        error_log("______________________is in cart ok , value :". print_r($result->num_rows,true));
+        error_log('______________________is in cart ok , value :'.print_r($result->num_rows, true));
+
         return 1 == $result->num_rows;
     }
 
@@ -557,39 +559,41 @@ class Database
         ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
 
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('i',$a =intval($idList));
+        $statement->bind_param('i', $a = intval($idList));
         $statement->execute();
         $rows = $statement->get_result();
-        error_log("______________________get num cart ok , value :". print_r($rows->num_rows,true));
+        error_log('______________________get num cart ok , value :'.print_r($rows->num_rows, true));
+
         return $rows->num_rows;
     }
 
-    public function insert_cart_item($quantity,$serialCode, $idList, $price , $positionIndex )
+    public function insert_cart_item($quantity, $serialCode, $idList, $price, $positionIndex)
     {
-        error_log("______________________insert cart started , value :". print_r($quantity,true));
-        error_log(print_r($serialCode,true));
-        error_log(print_r($idList,true));
-        error_log(print_r($price,true));
-        error_log(print_r($positionIndex,true));
+        error_log('______________________insert cart started , value :'.print_r($quantity, true));
+        error_log(print_r($serialCode, true));
+        error_log(print_r($idList, true));
+        error_log(print_r($price, true));
+        error_log(print_r($positionIndex, true));
         $query = 'INSERT INTO `ItemDetails` (`serialCode`, `price`, `IdList`, `quantity`, `positionIndex`) 
                   VALUES (?, ?, ?, ?, ?)';
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('ssiii', $serialCode, $price,$idList, $quantity, $positionIndex);
+        $statement->bind_param('ssiii', $serialCode, $price, $idList, $quantity, $positionIndex);
         $statement->execute();
-        error_log("______________________insert cart ok , value :". print_r($statement->affected_rows,true));
+        error_log('______________________insert cart ok , value :'.print_r($statement->affected_rows, true));
+
         return 1 == $statement->affected_rows;
     }
 
-    public function newIDList(){
-        
+    public function newIDList()
+    {
         $query = 'INSERT into ListItems Values(0)';
         $statement = self::$instance->prepare($query);
-        $statement->execute();    
+        $statement->execute();
         error_log(print_r(self::$instance->insert_id, true));
-        return  self::$instance->insert_id;     
+
+        return  self::$instance->insert_id;
     }
 
-    
     public function insert_order($email)
     {
         $user = self::get_user_from_email($email);
