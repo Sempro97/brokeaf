@@ -47,7 +47,7 @@ $cart_button_status = $seller ? 'disabled' : ($user ? '' : 'disabled');
                 </div>
               </div>
               <div class="p-2 pt-3">
-                <span class="d-block h1 text-center">BrokeAF</span>
+                <a class="d-block h1 text-center" href="index.php" style="color: #212529; text-decoration: none;">BrokeAF</a>
               </div>
               <!-- This search bar is only visible for wider than small (sm) screens -->
               <div class="p-2 d-none d-md-block flex-fill">

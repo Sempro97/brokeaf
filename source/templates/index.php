@@ -9,6 +9,7 @@
               <div class="align-self-center media-body">
                 <h2 class="h4"><?php echo $item['name']; ?></h2>
                 <span><?php echo $item['price']; ?>&euro;</span>
+                <a href="product.php?id=<?php echo $item['serialCode']; ?>" class="stretched-link"></a>
               </div>
             </div>
           </article>
