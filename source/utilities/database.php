@@ -343,15 +343,6 @@ class Database
         }
     }
 
-    public function newIDList(){
-        
-        $query = 'INSERT into ListItems Values(0)';
-        $statement = self::$instance->prepare($query);
-        $statement->execute();    
-        error_log(print_r(self::$instance->insert_id, true));
-        return  self::$instance->insert_id;     
-    }
-
     public function register_user($user)
     {
         $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province, salt) 
@@ -513,6 +504,9 @@ class Database
         $statement = self::$instance->prepare($query);
         $statement->bind_param('isi', $quantity, $serialCode, $idList);
         $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
     }
 
     public function calculate_cart_total($idList)
@@ -536,4 +530,64 @@ class Database
 
         return $total;
     }
+
+    public function is_in_cart_user($serialCode)
+    {
+        $query = 'SELECT UserWeb.IdList 
+                  FROM UserWeb,ItemDetails 
+                  WHERE UserWeb.IdList = ItemDetails.IdList 
+                  and UserWeb.email = ? 
+                  and ItemDetails.serialCode = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('si', $_SESSION['email'],$serialCode);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function get_num_element_cart($idList)
+    {
+        $query = 'SELECT ItemDetails.price, ItemDetails.quantity
+        FROM ((ItemDetails
+        INNER JOIN Item
+        ON ItemDetails.serialCode = Item.serialCode)
+        INNER JOIN ListItems
+        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
+
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('s', $idList);
+        $statement->execute();
+        $rows = $statement->get_result();
+        $total=0;
+        foreach ($rows as $row) {
+            // Calculate the total price of the order.
+            $total += 1;
+        }
+
+        return $total;
+    }
+
+    public function insert_cart_item($quantity,$serialCode, $idList, $price , $positionIndex )
+    {
+        $query = 'INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `quantity`, `price`, `positionIndex`) 
+                  VALUES (?, ?, ?, ?, ?, ?);';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('siisi', $quantity, $serialCode, $idList, $price, $positionIndex);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return 1 == $result->num_rows;
+    }
+
+    public function newIDList(){
+        
+        $query = 'INSERT into ListItems Values(0)';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();    
+        error_log(print_r(self::$instance->insert_id, true));
+        return  self::$instance->insert_id;     
+    }
+
+    
 }
