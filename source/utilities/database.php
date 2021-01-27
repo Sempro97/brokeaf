@@ -371,7 +371,7 @@ class Database
                 $user['address'],
                 $user['city'],
                 $user['email'],
-                $a = $user['idList'],
+                $a = $user['IdList'],
                 $user['name'],
                 $user['surname'],
                 $user['password'],

@@ -16,44 +16,42 @@ function parse_item($post)
 }
 
 function parse_user($post)
-{
-    require_once 'utilities/bootstrap.php';
+{ 
     // TODO: Parse it for real.
     $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-    $user = [];
-    $user['cap'] = intval($post['cap']);
-    $user['address'] = $post['address'];
-    $user['city'] = $post['city'];
-    $user['email'] = $post['email'];
-    $user['IdList'] = $database->newIDList();
-    $user['name'] = $post['name'];
-    $user['surname'] = $post['surname'];
-    $user['password'] = hash('sha512', $post['password'].$random_salt);
-    $user['phoneNumber'] = $post['phone'];
-    $user['province'] = $post['province'];
-    $user['salt'] = $random_salt;
-    error_log(print_r($user['IdList'],true));
+    $userParsedParsed = [];
+    $userParsed['cap'] = intval($post['cap']);
+    $userParsed['address'] = $post['address'];
+    $userParsed['city'] = $post['city'];
+    $userParsed['email'] = $post['email'];
+    $userParsed['IdList'] = $post['IdList'];
+    $userParsed['name'] = $post['name'];
+    $userParsed['surname'] = $post['surname'];
+    $userParsed['password'] = hash('sha512', $post['password'].$random_salt);
+    $userParsed['phoneNumber'] = $post['phone'];
+    $userParsed['province'] = $post['province'];
+    $userParsed['salt'] = $random_salt;    
 
-    return $user;
+    return $userParsed;
 }
 
 function parse_seller($post)
 {
     // TODO: Parse it for real.
     $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
-    $user = [];
-    $user['companyName'] = $post['companyName'];
-    $user['companyAddress'] = $post['companyAddress'];
-    $user['cap'] = intval($post['cap']);
-    $user['address'] = $post['address'];
-    $user['city'] = $post['city'];
-    $user['email'] = $post['email'];
-    $user['name'] = $post['name'];
-    $user['surname'] = $post['surname'];
-    $user['password'] = hash('sha512', $post['password'].$random_salt);
-    $user['phone'] = $post['phone'];
-    $user['province'] = $post['province'];
-    $user['salt'] = $random_salt;
+    $userParsed = [];
+    $userParsed['companyName'] = $post['companyName'];
+    $userParsed['companyAddress'] = $post['companyAddress'];
+    $userParsed['cap'] = intval($post['cap']);
+    $userParsed['address'] = $post['address'];
+    $userParsed['city'] = $post['city'];
+    $userParsed['email'] = $post['email'];
+    $userParsed['name'] = $post['name'];
+    $userParsed['surname'] = $post['surname'];
+    $userParsed['password'] = hash('sha512', $post['password'].$random_salt);
+    $userParsed['phone'] = $post['phone'];
+    $userParsed['province'] = $post['province'];
+    $userParsed['salt'] = $random_salt;
 
-    return $user;
+    return $userParsed;
 }
