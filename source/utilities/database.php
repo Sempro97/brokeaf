@@ -277,10 +277,11 @@ class Database
 
     public function get_orders($email)
     {
-        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
+        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.name, Item.serialCode, Image.path
                   FROM Order_UserWeb
                   INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
                   INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  INNER JOIN Image ON Image.serialCode=Item.serialCode
                   WHERE email=?';
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
@@ -341,6 +342,82 @@ class Database
 
             return true;
         }
+    }
+
+    public function update_user($user)
+    {
+        $query = 'UPDATE UserWeb
+                  SET cap = ?, address = ?, city = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
+                  WHERE email = ? ';
+
+        if ($statement = self::$instance->prepare($query)) {
+            error_log(print_r($user, true));
+            $statement->bind_param(
+                'isssssssss',
+                $a = $user['cap'],
+                $user['address'],
+                $user['city'],
+                $user['name'],
+                $user['surname'],
+                $user['password'],
+                $user['phoneNumber'],
+                $user['province'],
+                $user['salt'],
+                $user['email'],
+            );
+
+            $statement->execute();
+        } else {
+            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        if (1 == $statement->affected_rows) {
+            error_log('Updated an user!');
+
+            return true;
+        }
+        error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return false;
+    }
+
+    public function update_seller($seller)
+    {
+        $query = 'UPDATE UserWeb
+                  SET cap = ?, address = ?, city = ?,companyAddress = ?,companyName = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
+                  WHERE email = ? ';
+
+        if ($statement = self::$instance->prepare($query)) {
+            $statement->bind_param(
+                'isssssssssss',
+                $a = $seller['cap'],
+                $seller['address'],
+                $seller['city'],
+                $seller['companyAddress'],
+                $seller['companyName'],
+                $seller['name'],
+                $seller['surname'],
+                $seller['password'],
+                $seller['phone'],
+                $seller['province'],
+                $seller['salt'],
+                $seller['email']
+            );
+            $statement->execute();
+        } else {
+            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        if (1 == $statement->affected_rows) {
+            error_log('Updated an seller!');
+
+            return true;
+        }
+        error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return false;
     }
 
     public function register_user($user)
