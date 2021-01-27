@@ -612,11 +612,8 @@ class Database
     public function calculate_cart_total($idList)
     {
         $query = 'SELECT ItemDetails.price, ItemDetails.quantity
-        FROM ((ItemDetails
-        INNER JOIN Item
-        ON ItemDetails.serialCode = Item.serialCode)
-        INNER JOIN ListItems
-        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
+                    FROM ItemDetails
+                    WHERE ItemDetails.IdList = ?';
 
         $statement = self::$instance->prepare($query);
         $statement->bind_param('i', $idList);
@@ -716,11 +713,38 @@ class Database
         $cart = self::get_cart($email);
 
         foreach ($cart as $item) {
+            $path = 'http://localhost:8080/product.php?id='.$item['serialCode'];
             $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
-                    VALUE ('www.brokeaf.com/source/ordine1', ?, 1, ?, NULL)";
+                        VALUE (?, ?, 1, ?, NULL)";
             $statement = self::$instance->prepare($query);
-            $statement->bind_param('ss', date('Y-m-d h:i:s'), $item['emailSeller']);
+            $statement->bind_param('sss',$path, date('Y-m-d h:i:s'), $item['emailSeller']);
             $statement->execute();
+        }
+    }
+
+    public function insert_item_sold_out_notification($item) {
+        $path = 'http://localhost:8080/product.php?id='.$item['serialCode'];
+        $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
+                    VALUE (?, ?, 2, ?, NULL)";
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('sss',$path, date('Y-m-d h:i:s'), $item['emailSeller']);
+        $statement->execute();
+    }
+
+    public function remove_item_availability($email) {
+        $cart = self::get_cart($email);
+
+        foreach ($cart as $item) {
+            $restock = $item['stock'] - $item['quantity'];
+            $query = "UPDATE Item SET quantity=?
+                        WHERE Item.serialCode = ?";
+            $statement = self::$instance->prepare($query);
+            $statement->bind_param('is',$restock, $item['serialCode']);
+            $statement->execute();
+
+            if($restock == 0) {
+                self::insert_item_sold_out_notification($item);
+            }
         }
     }
 
