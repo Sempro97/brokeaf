@@ -6,8 +6,8 @@
           <?php foreach ($template['cart'] as $item) { ?>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h5 class="my-0">Name: <?php echo $item['name']; ?></h6>
-                <h5 class="my-0">Quantity: <?php echo $item['quantity']; ?></h6>
+                <h5 class="my-0">Name: <?php echo $item['name']; ?></h5>
+                <h6 class="my-0">Quantity: <?php echo $item['quantity']; ?></h6>
               </div>
               <div>
                 <span class="text-muted"><?php echo $item['price']; ?>&euro;</span>
