@@ -35,11 +35,15 @@
                     <div class="col-md-4">
                       <div class="input-group">
                         <div class="input-group-prepend">
-                          <button id="minus-item" class="btn btn-dark"><span class="fas fa-minus"></span></button>
+                          <button id="minus-item" class="btn btn-dark">
+                            <span class="fas fa-minus"></span>
+                          </button>
                         </div>
                         <input type="text" id="quantity-item" value="1" class="form-control text-center" disabled />
                         <div class="input-group-append">
-                          <button id="plus-item" class="btn btn-dark"><span class="fas fa-plus"></span></button>
+                          <button id="plus-item" class="btn btn-dark">
+                            <span class="fas fa-plus"></span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -56,22 +60,21 @@
             </div>
 <?php }?>
             <!-- Sold by -->
-              <div class="row pt-3">
-                <div class="col p-0">
-                  <span class="h6">Sold by</span>
-                  <a href="https://www.w3schools.com"><?php echo $template['item']['emailSeller']; ?></a>
-                </div>
+            <div class="row pt-3">
+              <div class="col p-0">
+                <span class="h6">Sold by</span>
+                <a href="https://www.w3schools.com"><?php echo $template['item']['emailSeller']; ?></a>
               </div>
-              <div class="row pt-3">
-                <div class="col p-0">
-                  <div class="alert alert-danger d-none invisible" role="alert"></div>
-                </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col p-0">
+                <div class="alert alert-danger d-none invisible" role="alert"></div>
               </div>
-              <!-- Description -->
-              <div class="row">
-                <div class="col p-0">
-                  <span class="h6"><?php echo $template['item']['description']; ?></span>
-                </div>
+            </div>
+            <!-- Description -->
+            <div class="row">
+              <div class="col p-0">
+                <span class="h6"><?php echo $template['item']['description']; ?></span>
               </div>
             </div>
           </div>
