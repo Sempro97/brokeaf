@@ -17,6 +17,7 @@ isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name
           </h4>
           <p>Status: <small>Available</small></p>
           <form>
+          <label for="quantity-item">Quantity:</label>
             <div class="form-row">
               <div class="col">
                 <div class="input-group mb-3">
@@ -25,7 +26,7 @@ isVerificated`, `description`, `price`, `name`, `serialCode`, `email`, `Kin_name
                     <button id="minus-item" class="btn input-group btn-dark">-</button>
                     </div>
                     <div class="input-group-append">
-                    <input type="text" id="quantity-item" value="0" class="input-group-text" disabled></input>
+                    <input type="text" id="quantity-item" value="0" class="input-group-text" disabled/>
                     </div>
                     <div class="input-group-append">
                     <button id="plus-item" class="btn input-group-append btn-dark">+</button>
