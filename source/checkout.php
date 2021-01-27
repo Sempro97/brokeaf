@@ -8,6 +8,11 @@ $template['scripts'] = [
 ];
 $template['content'] = 'templates/checkout.php';
 $cart = $database->get_cart($_SESSION['email']);
+
+if (count($cart) == 0) {
+    header('Location: index.php');
+}
+
 $user = $database->get_user_from_email($_SESSION['email']);
 $template['cart'] = $cart;
 $template['user'] = $user;
