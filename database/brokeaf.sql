@@ -178,6 +178,9 @@ INSERT INTO `ListItems` (IdList) VALUES (5);
 INSERT INTO `Category` (name,keywords) VALUES ('Utensili','cacciavite,fai da te');
 INSERT INTO `Category` (name,keywords) VALUES ('Informatica','usb,chiavetta');
 
+/* For test purpose pw is seller */
+INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`, `salt`) 
+     VALUES ('71773', '927 Noble Lock Suite 652', 'South Vicky', '80617 Kutch Meadow Apt. 008\nAn', 'Koch, Hickle and Balistreri', 'seller@s.it', 'Simone', 'Gutmann', 'a95b1468f3f893fe5a76779447ba0fbc2ead8fcfedd007d57c30f60e5c028cfb4e67b118037637ea2d6aeca26fb438ecd819b33fe472c1754db4b832c77de270', '3453479794', 'Mauritania','fa32903c4249ade63484615f896fb3ea58d3a6317fec4d0c8c0a681633aed0bc9b7aa2c26eb4efea43a41876154f84759134bc4c933fc98d1f72c5d43d888d19');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) 
      VALUES ('15353', '0695 Norbert Burgs Apt. 013', 'Karlfort', '537 Schuppe Track\nPort Miles,', 'Rogahn Group', 'adriana90@example.net', 'Hailie', 'Oberbrunner', '1', '3470328087', 'Saint Barthelemy');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) 
@@ -197,8 +200,6 @@ INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`,
           utkowski', 'pollich.bianka@example.com', 'Guillermo', 'Beier', '37', '3454150367', 'Palau');
 INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`) 
      VALUES ('31291', '0354 Stevie Garden Suite 384', 'North Norma', '918 Auer Manor\nSouth Everardo,', 'Brekke, Tremblay and Quitzon', 'irenner@example.org', 'Carolina', 'Halvorson', '60', '3461641147', 'Saint Vincent and the Grenadin');
-INSERT INTO `Seller` (`cap`, `address`, `city`, `companyAddress`, `companyName`, `email`, `name`, `surname`, `password`, `phoneNumber`, `province`, `salt`) 
-     VALUES ('71773', '927 Noble Lock Suite 652', 'South Vicky', '80617 Kutch Meadow Apt. 008\nAn', 'Koch, Hickle and Balistreri', 'seller@s.it', 'Simone', 'Gutmann', 'a95b1468f3f893fe5a76779447ba0fbc2ead8fcfedd007d57c30f60e5c028cfb4e67b118037637ea2d6aeca26fb438ecd819b33fe472c1754db4b832c77de270', '3453479794', 'Mauritania','fa32903c4249ade63484615f896fb3ea58d3a6317fec4d0c8c0a681633aed0bc9b7aa2c26eb4efea43a41876154f84759134bc4c933fc98d1f72c5d43d888d19');
 
 INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) 
      VALUES ('1', 'Con questo cacciavite si manipolano le viti a taglio', '7.91', 'Cacciavite a taglio', '1313932365', 'seller@s.it', 'Utensili');
@@ -221,7 +222,8 @@ INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, 
 INSERT INTO `Item` (`isVerified`, `description`, `price`, `name`, `serialCode`, `emailSeller`, `category`) 
      VALUES ('1', 'Memoria di massa dalle alte prestazioni, 5 Mb/s in lettura e scrittura', '4.38', 'Chiavetta USB', '9876711578', 'hackett.eleanore@example.org', 'Informatica');
 
-INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`) VALUES ('1158', '8638 Rupert Village Apt. 105', 'Wilhelmineside', 'user@u.it', 2, 'Jennyfer', 'Willms', '89', '3464459410', 'Bulgaria');
+/* For test purpose pw is user */
+INSERT INTO `UserWeb` (`cap`, `address`, `city`, `email`, `IdList`, `name`, `surname`, `password`, `phoneNumber`, `province`, `salt`) VALUES ('1158', '8638 Rupert Village Apt. 105', 'Wilhelmineside', 'user@u.it', 2, 'Jennyfer', 'Willms', '58379e96d4920098d346cf140e5d335bef56a68d23d1a8b0a646168172c29e68fdfa186bc9989c4de0ce11e8284ee14c46b782b67c0b9ed4d31ed4e9c2eb2f16', '3464459410', 'Bulgaria', 'bcd714a4878c00f3beb2d1641792676b638854035c616bb5b91e66a43843317939e903522f31ab911dbbb37602c0c8afc6846c225873415e43b9cdeac3116f13');
 
 
 INSERT INTO `Description` (`description`,`IdDesc`)  VALUES ('Il tuo acquisto e` avvenuto correttamente','0');
