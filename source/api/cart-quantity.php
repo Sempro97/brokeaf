@@ -23,7 +23,7 @@ if($database->is_in_cart_user($itemToAdd["serialCode"])){
 } else {
     error_log("insert cart" );
     $result['total'] = $database->get_num_element_cart($idlistToCheck) +1;
-    $database->insert_cart_item("22",$itemToAdd["serialCode"], $idlistToCheck, "22" , $result['total'] );
+    $database->insert_cart_item($_POST["quantity"],$itemToAdd["serialCode"], $idlistToCheck, $itemToAdd["price"] , $result['total'] );
     exit_json('Item insert in cart.');
 }
 

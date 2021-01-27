@@ -571,14 +571,13 @@ class Database
         error_log(print_r($idList,true));
         error_log(print_r($price,true));
         error_log(print_r($positionIndex,true));
-        $query = 'INSERT INTO `ItemDetails` (`serialCode`, `IdList`, `quantity`, `price`, `positionIndex`) 
-                  VALUES (?, ?, ?, ?, ?, ?);';
+        $query = 'INSERT INTO `ItemDetails` (`serialCode`, `price`, `IdList`, `quantity`, `positionIndex`) 
+                  VALUES (?, ?, ?, ?, ?)';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('ssiii', $serialCode, $price,$idList, $quantity, $positionIndex);
         $statement->execute();
-        $result = $statement->get_result();
-        error_log("______________________insert cart ok , value :". print_r($result->num_rows,true));
-        return 1 == $result->num_rows;
+        error_log("______________________insert cart ok , value :". print_r($statement->affected_rows,true));
+        return 1 == $statement->affected_rows;
     }
 
     public function newIDList(){

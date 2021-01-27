@@ -53,7 +53,7 @@ function changeCart(data) {
     contentType: false,
     processData: false,
     success: function (response) {
-      if (response == "Cart updated.") {
+      if (response == "Cart updated." || response == "insert cart") {
         showAlert("success", response);
       } else {
         showAlert("danger", "An error occurred while trying to add the item: " + response);
