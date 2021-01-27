@@ -106,13 +106,14 @@ class Database
 
     public function delete_item($serial_code)
     {
-        $result = self::delete_image($serial_code);
-        if (false === $result) {
-            error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
+        // $result = self::delete_image($serial_code);
+        // if (false === $result) {
+        //     error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
 
-            return false;
-        }
-        $query = 'DELETE FROM Item WHERE serialCode=?';
+        //     return false;
+        // }
+
+        $query = 'UPDATE Item SET isVerified=0 WHERE serialCode=?';
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
             error_log('Failed to delete item: ('.self::$instance->errno.') '.self::$instance->error);
@@ -152,7 +153,7 @@ class Database
 
     public function get_item($serial_code)
     {
-        $query = 'SELECT * FROM Item WHERE serialCode=?';
+        $query = 'SELECT * FROM Item WHERE serialCode=? AND isVerified=1';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $serial_code);
         $statement->execute();
@@ -174,7 +175,7 @@ class Database
 
     public function get_items_by_name($name, $count)
     {
-        $query = 'SELECT * FROM Item';
+        $query = 'SELECT * FROM Item WHERE isVerified=1';
         $statement = self::$instance->prepare($query);
         $statement->execute();
         $result = $statement->get_result();
@@ -209,7 +210,7 @@ class Database
                   WHERE Item.category=(
                                         SELECT name FROM Category
                                         WHERE Category.name=?
-                  )
+                  ) AND isVerified=1
                   LIMIT ?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('si', $category, $count);
@@ -221,7 +222,7 @@ class Database
 
     public function get_items_by_seller($email)
     {
-        $query = 'SELECT * FROM Item WHERE emailSeller=?';
+        $query = 'SELECT * FROM Item WHERE emailSeller=? AND isVerified=1';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('s', $email);
         $statement->execute();
