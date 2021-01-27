@@ -22,9 +22,9 @@
               <div class="row">
                 <div class="col">
                   <div class="media pb-3">
-                    <img src="https://via.placeholder.com/150" class="mr-3" alt="<?php echo $item['name']; ?>" />
+                    <img src="../images/<?php echo $item['path']; ?>" class="mr-3" alt="<?php echo $item['name']; ?>" style="width: 150px; height: 150px" />
                     <div class="align-self-center media-body">
-                      <h2><?php echo $item['name']; ?></h2>
+                      <h2 class="h4"><?php echo $item['name']; ?></h2>
                       <span class="d-block mb-2"><?php echo $item['price']; ?>&euro;</span>
                       <span class="d-block">Quantity: <?php echo $item['quantity']; ?></span>
                     </div>

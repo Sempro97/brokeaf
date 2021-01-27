@@ -277,10 +277,11 @@ class Database
 
     public function get_orders($email)
     {
-        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.serialCode
+        $query = 'SELECT email, datePayment, ItemDetails.IdList, ItemDetails.price, ItemDetails.quantity, Item.name, Item.serialCode, Image.path
                   FROM Order_UserWeb
                   INNER JOIN ItemDetails ON ItemDetails.IdList=Order_UserWeb.IdList
                   INNER JOIN Item ON Item.serialCode=ItemDetails.serialCode
+                  INNER JOIN Image ON Image.serialCode=Item.serialCode
                   WHERE email=?';
         $statement = self::$instance->prepare($query);
         if (false === $statement) {
@@ -343,6 +344,82 @@ class Database
         }
     }
 
+    public function update_user($user)
+    {
+        $query = 'UPDATE UserWeb
+                  SET cap = ?, address = ?, city = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
+                  WHERE email = ? ';
+
+        if ($statement = self::$instance->prepare($query)) {
+            error_log(print_r($user, true));
+            $statement->bind_param(
+                'isssssssss',
+                $a = $user['cap'],
+                $user['address'],
+                $user['city'],
+                $user['name'],
+                $user['surname'],
+                $user['password'],
+                $user['phoneNumber'],
+                $user['province'],
+                $user['salt'],
+                $user['email'],
+            );
+
+            $statement->execute();
+        } else {
+            error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        if (1 == $statement->affected_rows) {
+            error_log('Updated an user!');
+
+            return true;
+        }
+        error_log('Failed to insert User into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return false;
+    }
+
+    public function update_seller($seller)
+    {
+        $query = 'UPDATE UserWeb
+                  SET cap = ?, address = ?, city = ?,companyAddress = ?,companyName = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
+                  WHERE email = ? ';
+
+        if ($statement = self::$instance->prepare($query)) {
+            $statement->bind_param(
+                'isssssssssss',
+                $a = $seller['cap'],
+                $seller['address'],
+                $seller['city'],
+                $seller['companyAddress'],
+                $seller['companyName'],
+                $seller['name'],
+                $seller['surname'],
+                $seller['password'],
+                $seller['phone'],
+                $seller['province'],
+                $seller['salt'],
+                $seller['email']
+            );
+            $statement->execute();
+        } else {
+            error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+            return false;
+        }
+        if (1 == $statement->affected_rows) {
+            error_log('Updated an seller!');
+
+            return true;
+        }
+        error_log('Failed to insert Seller into MySQL database: ('.self::$instance->errno.') '.self::$instance->error);
+
+        return false;
+    }
+
     public function register_user($user)
     {
         $query = 'INSERT INTO UserWeb (cap, address, city, email, IdList, name, surname, password, phoneNumber, province, salt) 
@@ -362,7 +439,7 @@ class Database
                 $user['address'],
                 $user['city'],
                 $user['email'],
-                $a = null,
+                $a = $user['IdList'],
                 $user['name'],
                 $user['surname'],
                 $user['password'],
@@ -500,10 +577,15 @@ class Database
 
     public function set_cart_item_quantity($quantity, $serialCode, $idList)
     {
+        error_log(print_r($quantity.$serialCode.$idList, true));
         $query = 'UPDATE ItemDetails SET quantity=? WHERE serialCode=? AND IdList=?';
         $statement = self::$instance->prepare($query);
         $statement->bind_param('isi', $quantity, $serialCode, $idList);
         $statement->execute();
+        $result = $statement->get_result();
+        error_log('______________________update cart ok , value :'.print_r($result->num_rows, true));
+
+        return 1 == $result->num_rows;
     }
 
     public function calculate_cart_total($idList)
@@ -516,7 +598,7 @@ class Database
         ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
 
         $statement = self::$instance->prepare($query);
-        $statement->bind_param('s', $idList);
+        $statement->bind_param('i', $idList);
         $statement->execute();
         $rows = $statement->get_result();
 
@@ -526,6 +608,67 @@ class Database
         }
 
         return $total;
+    }
+
+    public function is_in_cart_user($serialCode)
+    {
+        $query = 'SELECT UserWeb.IdList 
+                  FROM UserWeb,ItemDetails 
+                  WHERE UserWeb.IdList = ItemDetails.IdList 
+                  and UserWeb.email = ? 
+                  and ItemDetails.serialCode = ?';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('ss', $_SESSION['email'], $serialCode);
+        $statement->execute();
+        $result = $statement->get_result();
+        error_log('______________________is in cart ok , value :'.print_r($result->num_rows, true));
+
+        return 1 == $result->num_rows;
+    }
+
+    public function get_num_element_cart($idList)
+    {
+        $query = 'SELECT ItemDetails.price, ItemDetails.quantity
+        FROM ((ItemDetails
+        INNER JOIN Item
+        ON ItemDetails.serialCode = Item.serialCode)
+        INNER JOIN ListItems
+        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
+
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('i', $a = intval($idList));
+        $statement->execute();
+        $rows = $statement->get_result();
+        error_log('______________________get num cart ok , value :'.print_r($rows->num_rows, true));
+
+        return $rows->num_rows;
+    }
+
+    public function insert_cart_item($quantity, $serialCode, $idList, $price, $positionIndex)
+    {
+        error_log('______________________insert cart started , value :'.print_r($quantity, true));
+        error_log(print_r($serialCode, true));
+        error_log(print_r($idList, true));
+        error_log(print_r($price, true));
+        error_log(print_r($positionIndex, true));
+        $query = 'INSERT INTO `ItemDetails` (`serialCode`, `price`, `IdList`, `quantity`, `positionIndex`) 
+                  VALUES (?, ?, ?, ?, ?)';
+        $statement = self::$instance->prepare($query);
+        $statement->bind_param('ssiii', $serialCode, $price, $idList, $quantity, $positionIndex);
+        $statement->execute();
+        error_log('______________________insert cart ok , value :'.print_r($statement->affected_rows, true));
+
+        return 1 == $statement->affected_rows;
+    }
+
+    public function newIDList()
+    {
+        $query = 'INSERT into ListItems Values(0)';
+        $statement = self::$instance->prepare($query);
+        $statement->execute();
+        error_log(print_r(self::$instance->insert_id, true));
+
+        return  self::$instance->insert_id;
     }
 
     public function insert_order($email)
