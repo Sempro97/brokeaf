@@ -702,7 +702,7 @@ class Database
     public function insert_user_order_notification($email)
     {
         $query = "INSERT INTO NotificationUser (path, date, idDesc, emailSeller, emailUser)
-                    VALUE ('www.brokeaf.com/source/ordine1', ?, 0, NULL, ?)";
+                    VALUE ('', ?, 0, NULL, ?)";
         $statement = self::$instance->prepare($query);
         $statement->bind_param('ss', date('Y-m-d h:i:s'), $email);
         $statement->execute();
