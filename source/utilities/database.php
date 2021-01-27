@@ -310,7 +310,7 @@ class Database
     public function update_user($user)
     {
         $query = 'UPDATE UserWeb
-                  SET cap = ?, address = ?, city = ?, IdList = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
+                  SET cap = ?, address = ?, city = ?, name = ?, surname = ?, password = ?, phoneNumber = ?, province = ?, salt = ? 
                   WHERE email = ? ';
 
         if ($statement = self::$instance->prepare($query)) {
@@ -320,7 +320,6 @@ class Database
                 $a = $user['cap'],
                 $user['address'],
                 $user['city'],
-                $a = null,
                 $user['name'],
                 $user['surname'],
                 $user['password'],
