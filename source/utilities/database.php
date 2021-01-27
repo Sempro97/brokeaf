@@ -612,11 +612,8 @@ class Database
     public function calculate_cart_total($idList)
     {
         $query = 'SELECT ItemDetails.price, ItemDetails.quantity
-        FROM ((ItemDetails
-        INNER JOIN Item
-        ON ItemDetails.serialCode = Item.serialCode)
-        INNER JOIN ListItems
-        ON ItemDetails.IdList = ListItems.IdList) WHERE ListItems.IdList = ?';
+                    FROM ItemDetails
+                    WHERE ItemDetails.IdList = ?';
 
         $statement = self::$instance->prepare($query);
         $statement->bind_param('i', $idList);

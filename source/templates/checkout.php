@@ -1,9 +1,7 @@
 <div class="container">
 <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your cart ()</span>
-          </h4>
+          <h5 class="mb-4">Cart (<span id="cart-number"></span> items)</h5>
           <ul class="list-group mb-3">
           <?php foreach ($template['cart'] as $item) { ?>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
@@ -74,15 +72,23 @@
 <script>
   var idList = <?php echo json_encode($user['IdList']); ?>;
   var email = <?php echo json_encode($user['email']); ?>;
+  var cart = <?php echo json_encode($template['cart']); ?>;
+  
+  document.getElementById("cart-number").innerHTML = cart.length;
 
   $('document').ready(function() {
     var values = {
-        "idList" : idList,
+        "idList" : idList
       }
-
-      $.post("api/checkout.php", values, function(response) {
-        setTotal(response);
-      }, "json")
+      
+    $.post({
+      url: "api/checkout.php",
+      data: values,
+      dataType: "json",
+      success: function (response) {
+      setTotal(response);
+      },
+    });
   });
 
   function setTotal(total) {
