@@ -10,6 +10,11 @@ error_log(print_r($idlistToCheck, true));
 error_log(print_r($itemToAdd['serialCode'], true));
 error_log('______________________');
 
+$itemQuantity = $itemToAdd['quantity'];
+
+if(intval($_POST['quantity']) > intval($itemQuantity) ){
+    exit_json("There aren't this amount of article in the store!");
+}
 /* Controllare:
     Id list user e verificare che il prodotto non si inserito - > allora insert,
     altrimenti eseguire un update
