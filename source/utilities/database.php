@@ -2,9 +2,9 @@
 
 class Database
 {
-    private const SERVER_NAME = 'mysql';
+    private const SERVER_NAME = 'localhost';
     private const USERNAME = 'root';
-    private const PASSWORD = 'root';
+    private const PASSWORD = '';
     private const DATABASE_NAME = 'brokeaf';
 
     private static $instance;
